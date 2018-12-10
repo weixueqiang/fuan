@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.EduSchoolSubjectMapper">
+    <resultMap id="BaseResultMap" type="com.xrj.bean.EduSchoolSubject">
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="SCHOOL_ID" property="schoolId" jdbcType="VARCHAR" />
+        <result column="TITLE" property="title" jdbcType="VARCHAR" />
+        <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
+        <result column="CODE" property="code" jdbcType="VARCHAR" />
+        <result column="ABBREVIATION" property="abbreviation" jdbcType="VARCHAR" />
+        <result column="THEME_COLOR" property="themeColor" jdbcType="VARCHAR" />
+        <result column="LEVEL" property="level" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="SORT" property="sort" jdbcType="INTEGER" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                        close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                        close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        <if test="fields == null">
+            ID, SCHOOL_ID, TITLE, SUBJECT_NAME, CODE, ABBREVIATION, THEME_COLOR, LEVEL, STATUS,
+            SORT, CREATE_TIME, UPDATE_TIME
+        </if>
+        <if test="fields != null">
+            ${fields}
+        </if>
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+        parameterType="com.xrj.bean.EduSchoolSubjectExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from edu_school_subject
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startRow != null">
+            limit #{startRow} , #{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    ID,SCHOOL_ID,TITLE,SUBJECT_NAME,CODE,ABBREVIATION,THEME_COLOR,LEVEL,STATUS,SORT,CREATE_TIME,UPDATE_TIME
+    from edu_school_subject
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from edu_school_subject
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.xrj.bean.EduSchoolSubjectExample">
+        delete from edu_school_subject
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.xrj.bean.EduSchoolSubject">
+    insert into edu_school_subject (ID, SCHOOL_ID, TITLE, 
+      SUBJECT_NAME, CODE, ABBREVIATION, 
+      THEME_COLOR, LEVEL, STATUS, 
+      SORT, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{schoolId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{subjectName,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{abbreviation,jdbcType=VARCHAR}, 
+      #{themeColor,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.xrj.bean.EduSchoolSubject">
+        insert into edu_school_subject
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="schoolId != null">
+                SCHOOL_ID,
+            </if>
+            <if test="title != null">
+                TITLE,
+            </if>
+            <if test="subjectName != null">
+                SUBJECT_NAME,
+            </if>
+            <if test="code != null">
+                CODE,
+            </if>
+            <if test="abbreviation != null">
+                ABBREVIATION,
+            </if>
+            <if test="themeColor != null">
+                THEME_COLOR,
+            </if>
+            <if test="level != null">
+                LEVEL,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="sort != null">
+                SORT,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="schoolId != null">
+                #{schoolId,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="subjectName != null">
+                #{subjectName,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="abbreviation != null">
+                #{abbreviation,jdbcType=VARCHAR},
+            </if>
+            <if test="themeColor != null">
+                #{themeColor,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.xrj.bean.EduSchoolSubjectExample"
+        resultType="java.lang.Integer">
+        select count(*) from edu_school_subject
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update edu_school_subject
+        <set>
+            <if test="record.id != null">
+                ID = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.schoolId != null">
+                SCHOOL_ID = #{record.schoolId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.title != null">
+                TITLE = #{record.title,jdbcType=VARCHAR},
+            </if>
+            <if test="record.subjectName != null">
+                SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.code != null">
+                CODE = #{record.code,jdbcType=VARCHAR},
+            </if>
+            <if test="record.abbreviation != null">
+                ABBREVIATION = #{record.abbreviation,jdbcType=VARCHAR},
+            </if>
+            <if test="record.themeColor != null">
+                THEME_COLOR = #{record.themeColor,jdbcType=VARCHAR},
+            </if>
+            <if test="record.level != null">
+                LEVEL = #{record.level,jdbcType=VARCHAR},
+            </if>
+            <if test="record.status != null">
+                STATUS = #{record.status,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sort != null">
+                SORT = #{record.sort,jdbcType=INTEGER},
+            </if>
+            <if test="record.createTime != null">
+                CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null">
+                UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update edu_school_subject
+        set ID = #{record.id,jdbcType=VARCHAR},
+        SCHOOL_ID = #{record.schoolId,jdbcType=VARCHAR},
+        TITLE = #{record.title,jdbcType=VARCHAR},
+        SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
+        CODE = #{record.code,jdbcType=VARCHAR},
+        ABBREVIATION = #{record.abbreviation,jdbcType=VARCHAR},
+        THEME_COLOR = #{record.themeColor,jdbcType=VARCHAR},
+        LEVEL = #{record.level,jdbcType=VARCHAR},
+        STATUS = #{record.status,jdbcType=VARCHAR},
+        SORT = #{record.sort,jdbcType=INTEGER},
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.EduSchoolSubject">
+        update edu_school_subject
+        <set>
+            <if test="schoolId != null">
+                SCHOOL_ID = #{schoolId,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                TITLE = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="subjectName != null">
+                SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                CODE = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="abbreviation != null">
+                ABBREVIATION = #{abbreviation,jdbcType=VARCHAR},
+            </if>
+            <if test="themeColor != null">
+                THEME_COLOR = #{themeColor,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                LEVEL = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                SORT = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xrj.bean.EduSchoolSubject">
+    update edu_school_subject
+    set SCHOOL_ID = #{schoolId,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      CODE = #{code,jdbcType=VARCHAR},
+      ABBREVIATION = #{abbreviation,jdbcType=VARCHAR},
+      THEME_COLOR = #{themeColor,jdbcType=VARCHAR},
+      LEVEL = #{level,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      SORT = #{sort,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <!--自定义-->
+    <select id="list" resultType="com.xrj.bean.EduSchoolSubject"
+        parameterType="com.xrj.bean.EduSchoolSubject">
+
+        select * from edu_school_subject ess
+        <where>
+            <if test="status != null ">
+                and ess.STATUS = #{status}
+            </if>
+            <if test="title != null ">
+                <bind name="vTitle" value="title"></bind>
+                and ess.TITLE = #{vTitle}
+            </if>
+            <if test="level != null ">
+                and ess.LEVEL = ${level}
+            </if>
+            <if test="abbreviation != null ">
+                and ess.ABBREVIATION = #{abbreviation}
+            </if>
+            <if test="code != null ">
+                and ess.CODE = #{code}
+            </if>
+            <if test="schoolId != null ">
+                and ess.SCHOOL_ID = #{schoolId}
+            </if>
+            <if test="subjectName != null ">
+                <bind name="vSubjectName" value="subjectName"></bind>
+                and ess.SUBJECT_NAME = #{vSubjectName}
+            </if>
+        </where>
+        order by ess.SORT, ess.CREATE_TIME desc
+    </select>
+	<select id="isExist" resultType="boolean">
+		SELECT COUNT(id)>0 
+			from edu_school_subject 
+		where status='NORMAL'  and (SUBJECT_NAME=#{subjectName} OR ABBREVIATION=#{abbreviation} ) 
+			<if test="id !=null and id!=''">
+				and id !=#{id}
+			</if>
+	</select>
+
+</mapper>

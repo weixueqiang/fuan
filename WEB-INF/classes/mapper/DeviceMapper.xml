@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.DeviceMapper" >
+  <resultMap id="BaseResultMap" type="com.xrj.bean.Device" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="DEVICE_NAME" property="deviceName" jdbcType="VARCHAR" />
+    <result column="DEVICE_NUMBER" property="deviceNumber" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="NUMBER" property="number" jdbcType="INTEGER" />
+    <result column="RESERVE_ID" property="reserveId" jdbcType="VARCHAR" />
+    <result column="SUR_NUMBER" property="surNumber" jdbcType="INTEGER" />
+    <result column="GOODS_TYPE" property="goodsType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, DEVICE_NAME, DEVICE_NUMBER, STATUS, USER_ID, USER_NAME, CREATE_TIME, NUMBER, 
+    RESERVE_ID, SUR_NUMBER, GOODS_TYPE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xrj.bean.DeviceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from device
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from device
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from device
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xrj.bean.DeviceExample" >
+    delete from device
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xrj.bean.Device" >
+    insert into device (ID, DEVICE_NAME, DEVICE_NUMBER, 
+      STATUS, USER_ID, USER_NAME, 
+      CREATE_TIME, NUMBER, RESERVE_ID, 
+      SUR_NUMBER, GOODS_TYPE)
+    values (#{id,jdbcType=VARCHAR}, #{deviceName,jdbcType=VARCHAR}, #{deviceNumber,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{number,jdbcType=INTEGER}, #{reserveId,jdbcType=VARCHAR}, 
+      #{surNumber,jdbcType=INTEGER}, #{goodsType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xrj.bean.Device" >
+    insert into device
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="deviceName != null" >
+        DEVICE_NAME,
+      </if>
+      <if test="deviceNumber != null" >
+        DEVICE_NUMBER,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="number != null" >
+        NUMBER,
+      </if>
+      <if test="reserveId != null" >
+        RESERVE_ID,
+      </if>
+      <if test="surNumber != null" >
+        SUR_NUMBER,
+      </if>
+      <if test="goodsType != null" >
+        GOODS_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null" >
+        #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNumber != null" >
+        #{deviceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="reserveId != null" >
+        #{reserveId,jdbcType=VARCHAR},
+      </if>
+      <if test="surNumber != null" >
+        #{surNumber,jdbcType=INTEGER},
+      </if>
+      <if test="goodsType != null" >
+        #{goodsType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xrj.bean.DeviceExample" resultType="java.lang.Integer" >
+    select count(*) from device
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update device
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceName != null" >
+        DEVICE_NAME = #{record.deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceNumber != null" >
+        DEVICE_NUMBER = #{record.deviceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.number != null" >
+        NUMBER = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.reserveId != null" >
+        RESERVE_ID = #{record.reserveId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.surNumber != null" >
+        SUR_NUMBER = #{record.surNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsType != null" >
+        GOODS_TYPE = #{record.goodsType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update device
+    set ID = #{record.id,jdbcType=VARCHAR},
+      DEVICE_NAME = #{record.deviceName,jdbcType=VARCHAR},
+      DEVICE_NUMBER = #{record.deviceNumber,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      USER_ID = #{record.userId,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      NUMBER = #{record.number,jdbcType=INTEGER},
+      RESERVE_ID = #{record.reserveId,jdbcType=VARCHAR},
+      SUR_NUMBER = #{record.surNumber,jdbcType=INTEGER},
+      GOODS_TYPE = #{record.goodsType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.Device" >
+    update device
+    <set >
+      <if test="deviceName != null" >
+        DEVICE_NAME = #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNumber != null" >
+        DEVICE_NUMBER = #{deviceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="number != null" >
+        NUMBER = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="reserveId != null" >
+        RESERVE_ID = #{reserveId,jdbcType=VARCHAR},
+      </if>
+      <if test="surNumber != null" >
+        SUR_NUMBER = #{surNumber,jdbcType=INTEGER},
+      </if>
+      <if test="goodsType != null" >
+        GOODS_TYPE = #{goodsType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xrj.bean.Device" >
+    update device
+    set DEVICE_NAME = #{deviceName,jdbcType=VARCHAR},
+      DEVICE_NUMBER = #{deviceNumber,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      NUMBER = #{number,jdbcType=INTEGER},
+      RESERVE_ID = #{reserveId,jdbcType=VARCHAR},
+      SUR_NUMBER = #{surNumber,jdbcType=INTEGER},
+      GOODS_TYPE = #{goodsType,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+   <!-- 自定义 -->
+    <select id="setPageList" resultType="map">
+		SELECT d.*
+			FROM `device` d
+		where d.GOODS_TYPE=#{goodsType}
+			<if test="name !=null and name !=''">
+				 and d.DEVICE_NAME like #{name}
+			</if>
+		ORDER BY d.id,d.CREATE_TIME
+  </select>
+  <select id="statistics" resultType="map">
+	select SUM(dre.NUMBER) total,d.DEVICE_NAME deviceName,COUNT(d.id) count,dre.user_id userId,dre.device_id deviceId 
+		from device_reserve dre 
+		join device d on d.id=dre.DEVICE_ID
+	WHERE dre.`STATUS`='4'  
+		and d.GOODS_TYPE=#{goodsType}
+		<if test="beginTime!=null">
+			and dre.AUDITOR_TIME BETWEEN #{beginTime} and #{endTime}
+		</if>
+		<if test="userId !=null and userId!=''">
+			and dre.USER_ID=#{userId}
+		</if>
+		<if test="name !=null and name!=''">
+			and d.device_name like #{name}
+		</if>
+	GROUP BY d.id, dre.USER_ID
+	ORDER BY dre.AUDITOR_TIME desc
+  </select>
+  
+  
+</mapper>

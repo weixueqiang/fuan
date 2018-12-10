@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xrj.mapper.BizContinuingEduMapper">
+  <resultMap id="BaseResultMap" type="com.xrj.bean.BizContinuingEdu">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="term_id" jdbcType="VARCHAR" property="termId" />
+    <result column="train_type" jdbcType="VARCHAR" property="trainType" />
+    <result column="train_content" jdbcType="VARCHAR" property="trainContent" />
+    <result column="train_object" jdbcType="VARCHAR" property="trainObject" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="info_id" jdbcType="TIMESTAMP" property="infoId" />
+    <result column="is_admin" jdbcType="VARCHAR" property="isAdmin" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, term_id, train_type, train_content, train_object, status, create_time, creator, 
+    edit_time
+  </sql>
+  <select id="selectByExample" parameterType="com.xrj.bean.BizContinuingEduExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />, '1' as is_admin
+    from biz_continuing_edu 
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause"  />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from biz_continuing_edu
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from biz_continuing_edu
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xrj.bean.BizContinuingEduExample">
+    delete from biz_continuing_edu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xrj.bean.BizContinuingEdu">
+    insert into biz_continuing_edu (ID, term_id, train_type, 
+      train_content, train_object, status, 
+      create_time, creator, edit_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{termId,jdbcType=VARCHAR}, #{trainType,jdbcType=VARCHAR}, 
+      #{trainContent,jdbcType=VARCHAR}, #{trainObject,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{editTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xrj.bean.BizContinuingEdu">
+    insert into biz_continuing_edu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="termId != null">
+        term_id,
+      </if>
+      <if test="trainType != null">
+        train_type,
+      </if>
+      <if test="trainContent != null">
+        train_content,
+      </if>
+      <if test="trainObject != null">
+        train_object,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="editTime != null">
+        edit_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="termId != null">
+        #{termId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainType != null">
+        #{trainType,jdbcType=VARCHAR},
+      </if>
+      <if test="trainContent != null">
+        #{trainContent,jdbcType=VARCHAR},
+      </if>
+      <if test="trainObject != null">
+        #{trainObject,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xrj.bean.BizContinuingEduExample" resultType="java.lang.Long">
+    select count(*) from biz_continuing_edu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update biz_continuing_edu
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.termId != null">
+        term_id = #{record.termId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainType != null">
+        train_type = #{record.trainType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainContent != null">
+        train_content = #{record.trainContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainObject != null">
+        train_object = #{record.trainObject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null">
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.editTime != null">
+        edit_time = #{record.editTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update biz_continuing_edu
+    set ID = #{record.id,jdbcType=VARCHAR},
+      term_id = #{record.termId,jdbcType=VARCHAR},
+      train_type = #{record.trainType,jdbcType=VARCHAR},
+      train_content = #{record.trainContent,jdbcType=VARCHAR},
+      train_object = #{record.trainObject,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      edit_time = #{record.editTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.BizContinuingEdu">
+    update biz_continuing_edu
+    <set>
+      <if test="termId != null">
+        term_id = #{termId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainType != null">
+        train_type = #{trainType,jdbcType=VARCHAR},
+      </if>
+      <if test="trainContent != null">
+        train_content = #{trainContent,jdbcType=VARCHAR},
+      </if>
+      <if test="trainObject != null">
+        train_object = #{trainObject,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        edit_time = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xrj.bean.BizContinuingEdu">
+    update biz_continuing_edu
+    set term_id = #{termId,jdbcType=VARCHAR},
+      train_type = #{trainType,jdbcType=VARCHAR},
+      train_content = #{trainContent,jdbcType=VARCHAR},
+      train_object = #{trainObject,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      edit_time = #{editTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectAndInfo" parameterType="com.xrj.bean.BizContinuingEdu" resultMap="BaseResultMap">
+    select t1.* , t2.id as info_id, '0' as is_admin from biz_continuing_edu  t1 left join biz_continuing_edu_info t2 
+       on t1.id = t2.continuing_edu_id and t2.audit_status != 'CANCEL' and  t2.teacher_id = #{teacherId,jdbcType=VARCHAR} 
+       where t1.status = 'NORMAL' 
+       <if test="termId != null and termId !='' ">
+         and t1.term_id = #{termId,jdbcType=VARCHAR}
+      </if>
+       <if test="trainType != null and trainType !='' ">
+         and t1.train_type = #{trainType,jdbcType=VARCHAR}
+      </if>
+      <if test="trainContent != null and trainContent !='' ">
+         and t1.train_content like concat('%',#{trainContent,jdbcType=VARCHAR},'%')
+      </if>
+      order by t1.create_time  desc
+  </select>
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xrj.mapper.BizInspectionTagMapper">
+	<sql id="_list">
+		${alias}.id,${alias}.create_time,${alias}.update_time,
+		${alias}.type,${alias}.title
+	</sql>
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		insert
+		into
+		biz_inspection_tag(id,create_time,update_time,type,title)
+		values(
+		#{id},
+		#{createTime},
+		#{updateTime},
+		#{type},
+		#{title}
+		)
+	</insert>
+
+	<update id="update">
+		update biz_inspection_tag a
+		<set>
+			<if test="createTime != null">a.create_time = #{createTime},</if>
+			<if test="updateTime != null">a.update_time = #{updateTime},</if>
+			<if test="type != null">a.type = #{type},</if>
+			<if test="title != null">a.title = #{title},</if>
+		</set>
+		where a.id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from biz_inspection_tag where id =
+		#{id}
+	</delete>
+
+	<select id="get" resultType="BizInspectionTag">
+		select
+		<include refid="_list">
+			<property name="alias" value="bit" />
+		</include>
+		from biz_inspection_tag bit
+		where bit.id = #{id}
+	</select>
+
+	<select id="getByType" resultType="BizInspectionTag">
+		select
+		<include refid="_list">
+			<property name="alias" value="bit" />
+		</include>
+		from biz_inspection_tag bit where bit.type = #{type}
+		order by
+		bit.update_time desc limit 1
+	</select>
+
+	<select id="setPageDataList" resultType="BizInspectionTag">
+		select
+		<include refid="_list">
+			<property name="alias" value="bit" />
+		</include>
+		from biz_inspection_tag bit
+	</select>
+</mapper>

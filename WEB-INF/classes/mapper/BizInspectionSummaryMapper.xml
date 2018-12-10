@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xrj.mapper.BizInspectionSummaryMapper">
+	<sql id="_list">
+		${alias}.id,${alias}.teacher_id,${alias}.security_clean,
+		${alias}.teaching,${alias}.problem_solve,${alias}.note,${alias}.date,${alias}.update_time,${alias}.create_time
+		,${alias}.teacher_name
+	</sql>
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+	insert
+	into
+	biz_inspection_summary( id,
+	teacher_id,
+	security_clean,
+	teaching,
+	problem_solve,
+	note,
+	date,
+	update_time,
+	create_time,
+	teacher_name)
+	values(
+	#{id},
+	#{teacherId},
+	#{securityClean},
+	#{teaching},
+	#{problemSolve},
+	#{note},
+	#{date},
+	#{updateTime},
+	#{createTime},
+	#{teacherName}
+	)
+	</insert>
+
+	<update id="update">
+		update biz_inspection_summary a
+		<set>
+			<if test="createTime != null">a.create_time = #{createTime},</if>
+			<if test="updateTime != null">a.update_time = #{updateTime},</if>
+			<if test="teacherName != null">a.teacher_name = #{teacherName},</if>
+			<if test="date != null">a.date = #{date},</if>
+			<if test="note != null">a.note = #{note},</if>
+			<if test="problemSolve != null">a.problem_solve = #{problemSolve},</if>
+			<if test="teaching != null">a.teaching = #{teaching},</if>
+			<if test="securityClean != null">a.security_clean = #{securityClean},</if>
+			<if test="teacherId != null">a.teacher_id = #{teacherId},</if>
+		</set>
+		where a.id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from biz_inspection_summary where id =
+		#{id}
+	</delete>
+
+	<select id="get" resultType="BizInspectionSummary">
+		select
+		<include refid="_list">
+			<property name="alias" value="bit" />
+		</include>
+		from biz_inspection_summary bit
+		where bit.id = #{id}
+	</select>
+	
+	
+	<select id="getByDate" resultType="BizInspectionSummary">
+		select
+		<include refid="_list">
+			<property name="alias" value="bit" />
+		</include>
+		from biz_inspection_summary bit
+		where DATE_FORMAT(bit.date,"%Y-%m-%d") = #{date} limit 1
+	</select>
+
+	<select id="list"
+		resultType="BizInspectionSummary">
+		select
+		<include refid="_list">
+			<property name="alias" value="bit" />
+		</include>
+		from biz_inspection_summary bit 
+		<where>
+			<if test="teacherId != null and teacherId != ''">
+				and bit.teacher_id = #{teacherId}
+			</if>
+			
+			<if test="beginTime != null and endTime != null">
+				 and bit.date >= concat(#{beginTime}," 00:00:00")
+				 <![CDATA[ and bit.date <= concat(#{endTime}," 23:59:59") ]]>
+			</if>
+			
+		</where>
+		order by bit.create_time desc
+	</select>
+	
+	<select id="isExist" resultType="boolean">
+		select count(1)>0 from biz_inspection_summary bis where 1=1 
+		<if test="id != null and id != ''">
+			<![CDATA[ and  id <> #{id} ]]>
+		</if>
+		
+		<if test="date != null">
+			and date >= concat(DATE_FORMAT(#{date},"%Y-%m-%d"), " 00:00:00") 
+			<![CDATA[
+			and date<= concat(DATE_FORMAT(#{date},"%Y-%m-%d"), " 23:59:59")
+			]]>
+		</if>
+	</select>
+</mapper>

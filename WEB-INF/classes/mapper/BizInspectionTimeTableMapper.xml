@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xrj.mapper.BizInspectionTimeTableMapper">
+	<sql id="_list">
+		${alias}.id,${alias}.teacher_id,${alias}.teacher_name,${alias}.status,${alias}.week_day,${alias}.create_time,${alias}.update_time
+	</sql>
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		insert
+		into
+		biz_inspection_time_table(id,teacher_id,`teacher_name`,status,week_day,create_time,update_time)
+		values(
+		#{id},
+		#{teacherId},
+		#{teacherName},
+		#{status},
+		#{weekDay},
+		#{createTime},
+		#{updateTime}
+		)
+	</insert>
+
+	<update id="update">
+		update biz_inspection_time_table a
+		<set>
+			<if test="teacherId != null">a.teacher_id = #{teacherId},</if>
+			<if test="teacherName != null">a.teacher_name = #{teacherName},</if>
+			<if test="status != null">a.status = #{status},</if>
+			<if test="weekDay != null">a.week_day = #{weekDay},</if>
+			<if test="createTime != null">a.create_time = #{createTime},</if>
+			<if test="updateTime != null">a.update_time = #{updateTime},</if>
+		</set>
+		where a.id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from biz_inspection_time_table where id =
+		#{id}
+	</delete>
+	
+	<delete id="deleteAll">
+		delete from biz_inspection_time_table
+	</delete>
+
+	<select id="get" resultType="BizInspectionTimeTable">
+		select
+		<include refid="_list">
+			<property name="alias" value="bi" />
+		</include>
+		from biz_inspection_time_table bi
+		where bi.id = #{id}
+	</select>
+
+	<select id="list" resultType="BizInspectionTimeTable">
+		select
+		bitb.*,GROUP_CONCAT(bitb.teacher_id)
+		teacherIds,GROUP_CONCAT(bitb.teacher_name) teacherNames from
+		biz_inspection_time_table bitb where bitb.status = 'NORMAL'
+		GROUP BY bitb.week_day
+	</select>
+
+	<select id="listByWeekDay" resultType="BizInspectionTimeTable">
+		select
+		<include refid="_list">
+			<property name="alias" value="bi" />
+		</include>
+		from biz_inspection_time_table bi
+		where bi.weekDay = #{weekDay} and bi.status = 'NORMAL'
+	</select>
+
+
+	<select id="getInspectionTimeTableByTeacher"
+		resultType="BizInspectionTimeTable">
+		select
+		<include refid="_list">
+			<property name="alias" value="bi" />
+		</include>
+		from biz_inspection_time_table bi
+		where bi.teacher_id = #{teacherId}
+		<if test="weekDay != null">
+			and bi.week_day = #{weekDay}
+		</if>
+		and bi.status = 'NORMAL'
+	</select>
+
+</mapper>

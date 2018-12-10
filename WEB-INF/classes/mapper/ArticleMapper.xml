@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.ArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.xrj.bean.Article" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="ATTACH" property="attach" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+    <result column="OPERATOR_NAME" property="operatorName" jdbcType="VARCHAR" />
+    <result column="OPERATOR_TYPE" property="operatorType" jdbcType="VARCHAR" />
+    <result column="SHOW_WAY" property="showWay" jdbcType="VARCHAR" />
+    <result column="RES_ID" property="resId" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="IMG_URL" property="imgUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.xrj.bean.Article" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      ID, TITLE, ATTACH, STATUS, OPERATOR_ID, OPERATOR_NAME, OPERATOR_TYPE, SHOW_WAY, RES_ID, 
+      CREATE_TIME, UPDATE_TIME, IMG_URL,CONTENT
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.xrj.bean.ArticleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xrj.bean.ArticleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    ID,TITLE,ATTACH,STATUS,OPERATOR_ID,OPERATOR_NAME,OPERATOR_TYPE,SHOW_WAY,RES_ID,CREATE_TIME,UPDATE_TIME,IMG_URL,CONTENT
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from article
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xrj.bean.ArticleExample" >
+    delete from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xrj.bean.Article" >
+    insert into article (ID, TITLE, ATTACH, 
+      STATUS, OPERATOR_ID, OPERATOR_NAME, 
+      OPERATOR_TYPE, SHOW_WAY, RES_ID, 
+      CREATE_TIME, UPDATE_TIME, IMG_URL, 
+      CONTENT)
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{attach,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{operatorId,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR}, 
+      #{operatorType,jdbcType=VARCHAR}, #{showWay,jdbcType=VARCHAR}, #{resId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{imgUrl,jdbcType=VARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xrj.bean.Article" >
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="attach != null" >
+        ATTACH,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID,
+      </if>
+      <if test="operatorName != null" >
+        OPERATOR_NAME,
+      </if>
+      <if test="operatorType != null" >
+        OPERATOR_TYPE,
+      </if>
+      <if test="showWay != null" >
+        SHOW_WAY,
+      </if>
+      <if test="resId != null" >
+        RES_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="imgUrl != null" >
+        IMG_URL,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null" >
+        #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorType != null" >
+        #{operatorType,jdbcType=VARCHAR},
+      </if>
+      <if test="showWay != null" >
+        #{showWay,jdbcType=VARCHAR},
+      </if>
+      <if test="resId != null" >
+        #{resId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xrj.bean.ArticleExample" resultType="java.lang.Integer" >
+    select count(*) from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update article
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        TITLE = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attach != null" >
+        ATTACH = #{record.attach,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorId != null" >
+        OPERATOR_ID = #{record.operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorName != null" >
+        OPERATOR_NAME = #{record.operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorType != null" >
+        OPERATOR_TYPE = #{record.operatorType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showWay != null" >
+        SHOW_WAY = #{record.showWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resId != null" >
+        RES_ID = #{record.resId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.imgUrl != null" >
+        IMG_URL = #{record.imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update article
+    set ID = #{record.id,jdbcType=VARCHAR},
+      TITLE = #{record.title,jdbcType=VARCHAR},
+      ATTACH = #{record.attach,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      OPERATOR_ID = #{record.operatorId,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{record.operatorName,jdbcType=VARCHAR},
+      OPERATOR_TYPE = #{record.operatorType,jdbcType=VARCHAR},
+      SHOW_WAY = #{record.showWay,jdbcType=VARCHAR},
+      RES_ID = #{record.resId,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      IMG_URL = #{record.imgUrl,jdbcType=VARCHAR},
+      CONTENT = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update article
+    set ID = #{record.id,jdbcType=VARCHAR},
+      TITLE = #{record.title,jdbcType=VARCHAR},
+      ATTACH = #{record.attach,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      OPERATOR_ID = #{record.operatorId,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{record.operatorName,jdbcType=VARCHAR},
+      OPERATOR_TYPE = #{record.operatorType,jdbcType=VARCHAR},
+      SHOW_WAY = #{record.showWay,jdbcType=VARCHAR},
+      RES_ID = #{record.resId,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      IMG_URL = #{record.imgUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.Article" >
+    update article
+    <set >
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null" >
+        ATTACH = #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorType != null" >
+        OPERATOR_TYPE = #{operatorType,jdbcType=VARCHAR},
+      </if>
+      <if test="showWay != null" >
+        SHOW_WAY = #{showWay,jdbcType=VARCHAR},
+      </if>
+      <if test="resId != null" >
+        RES_ID = #{resId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imgUrl != null" >
+        IMG_URL = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xrj.bean.Article" >
+    update article
+    set TITLE = #{title,jdbcType=VARCHAR},
+      ATTACH = #{attach,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      OPERATOR_ID = #{operatorId,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      OPERATOR_TYPE = #{operatorType,jdbcType=VARCHAR},
+      SHOW_WAY = #{showWay,jdbcType=VARCHAR},
+      RES_ID = #{resId,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      IMG_URL = #{imgUrl,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xrj.bean.Article" >
+    update article
+    set TITLE = #{title,jdbcType=VARCHAR},
+      ATTACH = #{attach,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      OPERATOR_ID = #{operatorId,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      OPERATOR_TYPE = #{operatorType,jdbcType=VARCHAR},
+      SHOW_WAY = #{showWay,jdbcType=VARCHAR},
+      RES_ID = #{resId,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      IMG_URL = #{imgUrl,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+    <!-- 自定义 -->
+  <resultMap type="Article" id="pageList" extends="BaseResultMap">
+  	<result column="editable" property="editable" jdbcType="BOOLEAN" />
+  </resultMap>
+  <select id="setPageList" resultMap="pageList">
+  	SELECT br.*,COUNT(ba.id)=0 editable 
+  		from article br
+		left JOIN business_audit ba on ba.ORDER_ID=br.id and ba.STATE='ACCEPTED'
+	WHERE 1=1
+		<if test="resId !=null and resId !=''">
+			and br.res_id=#{resId} 
+		</if>
+		<if test="status !=null and status !=''">
+			and br.STATUS=#{status}
+		</if>
+		<if test="title !=null and title !=''">
+			and br.title like #{status}
+		</if>
+		<if test="beginTime !=null and beginTime !=''">
+	 		br.CREATE_TIME BETWEEN #{beginTime} and #{endTime}
+		</if>
+	GROUP BY br.id 
+  	ORDER BY br.CREATE_TIME desc
+  </select>
+  
+  
+  
+  
+</mapper>

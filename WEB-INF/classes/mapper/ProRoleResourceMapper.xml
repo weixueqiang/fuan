@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.ProRoleResourceMapper" >
+  <resultMap id="BaseResultMap" type="com.xrj.bean.ProRoleResource" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ROLE_TEMPLATE_ID" property="roleTemplateId" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="RES_ID" property="resId" jdbcType="VARCHAR" />
+    <result column="DEPARTMENT_ID" property="departmentId" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="AUDITOR" property="auditor" jdbcType="VARCHAR" />
+    <result column="SECOND_AUDITOR" property="secondAuditor" jdbcType="VARCHAR" />
+    <result column="THIRD_AUDITOR" property="thirdAuditor" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      ID, ROLE_TEMPLATE_ID, USER_ID, RES_ID, DEPARTMENT_ID, TYPE, UPDATE_TIME, CREATE_TIME, 
+      AUDITOR, SECOND_AUDITOR, THIRD_AUDITOR
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xrj.bean.ProRoleResourceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pro_role_resource
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    ID,ROLE_TEMPLATE_ID,USER_ID,RES_ID,DEPARTMENT_ID,TYPE,UPDATE_TIME,CREATE_TIME,AUDITOR,SECOND_AUDITOR,THIRD_AUDITOR
+    from pro_role_resource
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from pro_role_resource
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xrj.bean.ProRoleResourceExample" >
+    delete from pro_role_resource
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xrj.bean.ProRoleResource" >
+    insert into pro_role_resource (ID, ROLE_TEMPLATE_ID, USER_ID, 
+      RES_ID, DEPARTMENT_ID, TYPE, 
+      UPDATE_TIME, CREATE_TIME, AUDITOR, 
+      SECOND_AUDITOR, THIRD_AUDITOR)
+    values (#{id,jdbcType=VARCHAR}, #{roleTemplateId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{resId,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{auditor,jdbcType=VARCHAR}, 
+      #{secondAuditor,jdbcType=VARCHAR}, #{thirdAuditor,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xrj.bean.ProRoleResource" >
+    insert into pro_role_resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="roleTemplateId != null" >
+        ROLE_TEMPLATE_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="resId != null" >
+        RES_ID,
+      </if>
+      <if test="departmentId != null" >
+        DEPARTMENT_ID,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="auditor != null" >
+        AUDITOR,
+      </if>
+      <if test="secondAuditor != null" >
+        SECOND_AUDITOR,
+      </if>
+      <if test="thirdAuditor != null" >
+        THIRD_AUDITOR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="roleTemplateId != null" >
+        #{roleTemplateId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="resId != null" >
+        #{resId,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="secondAuditor != null" >
+        #{secondAuditor,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdAuditor != null" >
+        #{thirdAuditor,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xrj.bean.ProRoleResourceExample" resultType="java.lang.Integer" >
+    select count(*) from pro_role_resource
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pro_role_resource
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleTemplateId != null" >
+        ROLE_TEMPLATE_ID = #{record.roleTemplateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resId != null" >
+        RES_ID = #{record.resId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentId != null" >
+        DEPARTMENT_ID = #{record.departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.auditor != null" >
+        AUDITOR = #{record.auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondAuditor != null" >
+        SECOND_AUDITOR = #{record.secondAuditor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdAuditor != null" >
+        THIRD_AUDITOR = #{record.thirdAuditor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pro_role_resource
+    set ID = #{record.id,jdbcType=VARCHAR},
+      ROLE_TEMPLATE_ID = #{record.roleTemplateId,jdbcType=VARCHAR},
+      USER_ID = #{record.userId,jdbcType=VARCHAR},
+      RES_ID = #{record.resId,jdbcType=VARCHAR},
+      DEPARTMENT_ID = #{record.departmentId,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      AUDITOR = #{record.auditor,jdbcType=VARCHAR},
+      SECOND_AUDITOR = #{record.secondAuditor,jdbcType=VARCHAR},
+      THIRD_AUDITOR = #{record.thirdAuditor,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.ProRoleResource" >
+    update pro_role_resource
+    <set >
+      <if test="roleTemplateId != null" >
+        ROLE_TEMPLATE_ID = #{roleTemplateId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="resId != null" >
+        RES_ID = #{resId,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        DEPARTMENT_ID = #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditor != null" >
+        AUDITOR = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="secondAuditor != null" >
+        SECOND_AUDITOR = #{secondAuditor,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdAuditor != null" >
+        THIRD_AUDITOR = #{thirdAuditor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xrj.bean.ProRoleResource" >
+    update pro_role_resource
+    set ROLE_TEMPLATE_ID = #{roleTemplateId,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      RES_ID = #{resId,jdbcType=VARCHAR},
+      DEPARTMENT_ID = #{departmentId,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      AUDITOR = #{auditor,jdbcType=VARCHAR},
+      SECOND_AUDITOR = #{secondAuditor,jdbcType=VARCHAR},
+      THIRD_AUDITOR = #{thirdAuditor,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 自定义 -->
+	<insert id="batchCreate">
+		INSERT INTO `fuan_school`.`pro_role_resource`
+		(`ID`, `ROLE_TEMPLATE_ID`, `RES_ID`,TYPE, `CREATE_TIME`)
+		value
+		<foreach collection="resourceIds" item="var" separator=",">
+			(UUID_SHORT(),#{roleId},#{var},'MENU',#{date})
+		</foreach>
+	</insert>
+	<insert id="batchCreateMore">
+		INSERT INTO `fuan_school`.`pro_role_resource`
+		(`ID`, `ROLE_TEMPLATE_ID`, USER_ID,`RES_ID`,DEPARTMENT_ID,TYPE,
+		`CREATE_TIME`,AUDITOR,SECOND_AUDITOR,THIRD_AUDITOR)
+		value
+		<if test="roles !=null">
+			<foreach collection="roles" item="var" separator=",">
+				(UUID_SHORT(),#{var},null,#{resId},null,'MENU',#{date},#{auditorids},#{secondAuditors},#{thirdAuditors})
+			</foreach>
+
+		</if>
+
+		<if test="deps !=null">
+			<if test="roles !=null">
+				,
+			</if>
+			<foreach collection="deps" item="var" separator=",">
+				(UUID_SHORT(),null,null,#{resId},#{var},'MENU',#{date},#{auditorids},#{secondAuditors},#{thirdAuditors})
+			</foreach>
+		</if>
+		<if test="users !=null">
+			<if test="deps !=null">
+				,
+			</if>
+			<if test="deps ==null and roles !=null">
+				,
+			</if>
+			<foreach collection="users" item="var" separator=",">
+				(UUID_SHORT(),null,#{var},#{resId},null,'MENU',#{date},#{auditorids},#{secondAuditors},#{thirdAuditors})
+			</foreach>
+		</if>
+		<if test="users==null and  deps==null and roles==null ">
+		(UUID_SHORT(),null,null,#{resId},null,'MENU',#{date},#{auditorids},#{secondAuditors},#{thirdAuditors})
+		</if>
+		
+	</insert>
+
+	<select id="findProResource" resultType="com.xrj.bean.ProRoleResource">
+		select prr.* from pro_resource pr join pro_role_resource prr on
+		pr.id=prr.RES_ID where pr.RES_CODE=#{resCode} 
+		and prr.AUDITOR is not null limit 0,1
+	</select>
+	<select id="isExistDefault" resultType="boolean">
+		SELECT COUNT(ba.id)>0 from business_audit ba 
+			join article art on art.id=ba.ORDER_ID
+		WHERE ba.BUSINESS_NAME='ARTICLE' AND ba.STATE='DEFAULT' 
+			AND art.RES_ID=#{resId}
+	</select>
+  
+</mapper>

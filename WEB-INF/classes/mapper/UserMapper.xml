@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.xrj.bean.User">
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+        <result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="CREATER" property="creater" jdbcType="VARCHAR" />
+        <result column="EDITOR" property="editor" jdbcType="VARCHAR" />
+        <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="TOKEN" property="token" jdbcType="VARCHAR" />
+        <result column="AVATAR" property="avatar" jdbcType="VARCHAR" />
+        <result column="REAL_NAME" property="realName" jdbcType="VARCHAR" />
+        <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                        close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                        close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        <if test="fields == null">
+            ID, CUSTOMER_ID, USER_NAME, PASSWORD, USER_TYPE, REMARKS, CREATE_DATE, CREATER, EDITOR,
+            MOBILE, STATUS, TOKEN, AVATAR, REAL_NAME, SEX
+        </if>
+        <if test="fields != null">
+            ${fields}
+        </if>
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xrj.bean.UserExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startRow != null">
+            limit #{startRow} , #{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    ID,CUSTOMER_ID,USER_NAME,PASSWORD,USER_TYPE,REMARKS,CREATE_DATE,CREATER,EDITOR,MOBILE,STATUS,TOKEN,AVATAR,REAL_NAME,SEX
+    from user
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.xrj.bean.UserExample">
+        delete from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.xrj.bean.User">
+        insert into user (ID, CUSTOMER_ID, USER_NAME,
+        PASSWORD, USER_TYPE, REMARKS,
+        CREATE_DATE, CREATER, EDITOR,
+        MOBILE, STATUS, TOKEN,
+        AVATAR, REAL_NAME, SEX
+        )
+        values (#{id,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR},
+        #{userName,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR},
+        #{createDate,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR},
+        #{mobile,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR},
+        #{avatar,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.xrj.bean.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="customerId != null">
+                CUSTOMER_ID,
+            </if>
+            <if test="userName != null">
+                USER_NAME,
+            </if>
+            <if test="password != null">
+                PASSWORD,
+            </if>
+            <if test="userType != null">
+                USER_TYPE,
+            </if>
+            <if test="remarks != null">
+                REMARKS,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="creater != null">
+                CREATER,
+            </if>
+            <if test="editor != null">
+                EDITOR,
+            </if>
+            <if test="mobile != null">
+                MOBILE,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="token != null">
+                TOKEN,
+            </if>
+            <if test="avatar != null">
+                AVATAR,
+            </if>
+            <if test="realName != null">
+                REAL_NAME,
+            </if>
+            <if test="sex != null">
+                SEX,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="customerId != null">
+                #{customerId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                #{userType,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creater != null">
+                #{creater,jdbcType=VARCHAR},
+            </if>
+            <if test="editor != null">
+                #{editor,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="token != null">
+                #{token,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.xrj.bean.UserExample"
+        resultType="java.lang.Integer">
+        select count(*) from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update user
+        <set>
+            <if test="record.id != null">
+                ID = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.customerId != null">
+                CUSTOMER_ID = #{record.customerId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userName != null">
+                USER_NAME = #{record.userName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.password != null">
+                PASSWORD = #{record.password,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userType != null">
+                USER_TYPE = #{record.userType,jdbcType=VARCHAR},
+            </if>
+            <if test="record.remarks != null">
+                REMARKS = #{record.remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createDate != null">
+                CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.creater != null">
+                CREATER = #{record.creater,jdbcType=VARCHAR},
+            </if>
+            <if test="record.editor != null">
+                EDITOR = #{record.editor,jdbcType=VARCHAR},
+            </if>
+            <if test="record.mobile != null">
+                MOBILE = #{record.mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="record.status != null">
+                STATUS = #{record.status,jdbcType=VARCHAR},
+            </if>
+            <if test="record.token != null">
+                TOKEN = #{record.token,jdbcType=VARCHAR},
+            </if>
+            <if test="record.avatar != null">
+                AVATAR = #{record.avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="record.realName != null">
+                REAL_NAME = #{record.realName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sex != null">
+                SEX = #{record.sex,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update user
+        set ID = #{record.id,jdbcType=VARCHAR},
+        CUSTOMER_ID = #{record.customerId,jdbcType=VARCHAR},
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+        PASSWORD = #{record.password,jdbcType=VARCHAR},
+        USER_TYPE = #{record.userType,jdbcType=VARCHAR},
+        REMARKS = #{record.remarks,jdbcType=VARCHAR},
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+        CREATER = #{record.creater,jdbcType=VARCHAR},
+        EDITOR = #{record.editor,jdbcType=VARCHAR},
+        MOBILE = #{record.mobile,jdbcType=VARCHAR},
+        STATUS = #{record.status,jdbcType=VARCHAR},
+        TOKEN = #{record.token,jdbcType=VARCHAR},
+        AVATAR = #{record.avatar,jdbcType=VARCHAR},
+        REAL_NAME = #{record.realName,jdbcType=VARCHAR},
+        SEX = #{record.sex,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.User">
+        update user
+        <set>
+            <if test="customerId != null">
+                CUSTOMER_ID = #{customerId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                USER_NAME = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                PASSWORD = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                USER_TYPE = #{userType,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creater != null">
+                CREATER = #{creater,jdbcType=VARCHAR},
+            </if>
+            <if test="editor != null">
+                EDITOR = #{editor,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                MOBILE = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="token != null">
+                TOKEN = #{token,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                AVATAR = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                REAL_NAME = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                SEX = #{sex,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xrj.bean.User">
+    update user
+    set CUSTOMER_ID = #{customerId,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      CREATER = #{creater,jdbcType=VARCHAR},
+      EDITOR = #{editor,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      TOKEN = #{token,jdbcType=VARCHAR},
+      AVATAR = #{avatar,jdbcType=VARCHAR},
+      REAL_NAME = #{realName,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <!-- 自定义 -->
+    <sql id="query_user_where">
+        <where>
+            <if test="status != null and status != ''">
+                AND u.STATUS = #{status}
+            </if>
+            <if test="creater != null and creater != ''">
+                AND u.CREATER = #{creater}
+            </if>
+            <if test="customerId != null and customerId != ''">
+                AND u.CUSTOMER_ID = #{customerId}
+            </if>
+            <if test="editor != null and editor != ''">
+                AND u.EDITOR = #{editor}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                AND u.MOBILE = #{mobile}
+            </if>
+            <if test="realName != null and realName != ''">
+                AND u.REAL_NAME = #{realName}
+            </if>
+            <if test="sex != null and sex != ''">
+                AND u.SEX = #{sex}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND u.USER_NAME = #{userName}
+            </if>
+            <if test="userType != null and userType != ''">
+                AND u.USER_TYPE = #{userType}
+            </if>
+        </where>
+    </sql>
+    <select id="list" parameterType="com.xrj.bean.User" resultType="com.xrj.bean.User">
+        SELECT * FROM user u
+        <include refid="query_user_where"></include>
+    </select>
+</mapper>

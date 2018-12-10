@@ -1,0 +1,45 @@
+# interceptor forward url
+callback_url=192.168.100.206:8080
+# login appId https://open-dev.dingtalk.com/#/index
+app_id=ding8fad2d9e10a4b6a935c2f4657eb6378f
+# login appSecret https://open-dev.dingtalk.com/#/index
+app_secret=lkkQL3lxSCREKQBW7r4wWK8324kSySufA7ACvDZTjcSlnlrAbaFBPGQq1CeZAdZ_
+# login for redirect url
+redirect_url=http://fuan.xrjcloud.com/PCadmin/
+# laboratory parent id
+laboratory_parent_id=9999999
+# hight school parent id 
+gz_parent_id=highSchoolDepartment
+# itemId for parent id
+item_parent_id=10000
+# images saved path
+#img_path=D:\\images
+# nginx images server url path
+#nginx_img_path=http://192.168.100.223:8080
+# file save path
+#file_path=D:\\images
+img_path=/data/files/fuan/upload/file/
+# nginx images server url path
+nginx_img_path=http://192.168.1.14:8090/upload/file/
+# file save path
+file_path=/data/files/fuan/upload/file/
+
+room_parent_id=bizRoomSubscribe
+
+roomZ_parent_id=roomzParentId
+
+roomJ_parent_id=roomJparentId
+
+# hight school grade parent id
+grade_mark=gradeMark
+# department parent id
+department_parent_id=@
+# itemId for parent id
+item_parent_id=10000
+# ½ÌÊ¦½±³ÍÀ¸Ä¿code
+teacher_commend_penalize_code=code:commendPenalize
+#qing jia liu cheng de code
+process_code=PROC-419D718E-C24D-4A9B-B488-8CFCE4433DFA
+
+
+

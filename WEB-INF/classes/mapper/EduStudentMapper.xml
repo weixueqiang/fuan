@@ -1,0 +1,833 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.EduStudentMapper">
+    <resultMap id="BaseResultMap" type="com.xrj.bean.EduStudent">
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="V_STUDENT_NO" property="vStudentNo" jdbcType="VARCHAR" />
+        <result column="NAME" property="name" jdbcType="VARCHAR" />
+        <result column="STUDENT_NO" property="studentNo" jdbcType="VARCHAR" />
+        <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+        <result column="SEX" property="sex" jdbcType="VARCHAR" />
+        <result column="NATION" property="nation" jdbcType="VARCHAR" />
+        <result column="CERT_NO" property="certNo" jdbcType="VARCHAR" />
+        <result column="FATHER_NAME" property="fatherName" jdbcType="VARCHAR" />
+        <result column="MOTHER_NAME" property="motherName" jdbcType="VARCHAR" />
+        <result column="GUARDIAN" property="guardian" jdbcType="VARCHAR" />
+        <result column="CONTACT_NUMBER" property="contactNumber" jdbcType="VARCHAR" />
+        <result column="CONTACT_NUMBER2" property="contactNumber2" jdbcType="VARCHAR" />
+        <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+        <result column="SALT" property="salt" jdbcType="VARCHAR" />
+        <result column="AVATAR" property="avatar" jdbcType="VARCHAR" />
+        <result column="UNIQ_NO" property="uniqNo" jdbcType="VARCHAR" />
+        <result column="SEAT_NO" property="seatNo" jdbcType="INTEGER" />
+        <result column="NATIVE_PLACE" property="nativePlace" jdbcType="VARCHAR" />
+        <result column="BIRTH_DAY" property="birthDay" jdbcType="TIMESTAMP" />
+        <result column="ENROL_DATE" property="enrolDate" jdbcType="TIMESTAMP" />
+        <result column="INTEREST" property="interest" jdbcType="VARCHAR" />
+        <result column="NATIVE_ADDRESS" property="nativeAddress" jdbcType="VARCHAR" />
+        <result column="NATIVE_TOWN" property="nativeTown" jdbcType="VARCHAR" />
+        <result column="NOTE" property="note" jdbcType="VARCHAR" />
+        <result column="TYPE" property="type" jdbcType="VARCHAR" />
+        <result column="UNIV_SCHOOL" property="univSchool" jdbcType="VARCHAR" />
+        <result column="CHILDREN_OF_THE_ARMY" property="childrenOfTheArmy" jdbcType="VARCHAR" />
+        <result column="WHETHER_FOREIGN" property="whetherForeign" jdbcType="VARCHAR" />
+        <result column="MIDDLE_SCHOOL" property="middleSchool" jdbcType="VARCHAR" />
+        <result column="LOCAL_POLICE_STATION" property="localPoliceStation" jdbcType="VARCHAR" />
+        <result column="NEARBY" property="nearby" jdbcType="VARCHAR" />
+        <result column="SEND_READER" property="sendReader" jdbcType="VARCHAR" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                        close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                        close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        <if test="fields == null">
+            ID, V_STUDENT_NO, NAME, STUDENT_NO, ADDRESS, SEX, NATION, CERT_NO, FATHER_NAME,
+            MOTHER_NAME,
+            GUARDIAN, CONTACT_NUMBER, CONTACT_NUMBER2, PASSWORD, SALT, AVATAR, UNIQ_NO, SEAT_NO,
+            NATIVE_PLACE, BIRTH_DAY, ENROL_DATE, INTEREST, NATIVE_ADDRESS, NATIVE_TOWN, NOTE,
+            TYPE, UNIV_SCHOOL, CHILDREN_OF_THE_ARMY, WHETHER_FOREIGN, MIDDLE_SCHOOL,
+            LOCAL_POLICE_STATION,
+            NEARBY, SEND_READER, UPDATE_TIME, CREATE_TIME, STATUS
+        </if>
+        <if test="fields != null">
+            ${fields}
+        </if>
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+        parameterType="com.xrj.bean.EduStudentExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from edu_student
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startRow != null">
+            limit #{startRow} , #{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    ID,V_STUDENT_NO,NAME,STUDENT_NO,ADDRESS,SEX,NATION,CERT_NO,FATHER_NAME,MOTHER_NAME,GUARDIAN,CONTACT_NUMBER,CONTACT_NUMBER2,PASSWORD,SALT,AVATAR,UNIQ_NO,SEAT_NO,NATIVE_PLACE,BIRTH_DAY,ENROL_DATE,INTEREST,NATIVE_ADDRESS,NATIVE_TOWN,NOTE,TYPE,UNIV_SCHOOL,CHILDREN_OF_THE_ARMY,WHETHER_FOREIGN,MIDDLE_SCHOOL,LOCAL_POLICE_STATION,NEARBY,SEND_READER,UPDATE_TIME,CREATE_TIME,STATUS
+    from edu_student
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from edu_student
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.xrj.bean.EduStudentExample">
+        delete from edu_student
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.xrj.bean.EduStudent">
+    insert into edu_student (ID, V_STUDENT_NO, NAME, 
+      STUDENT_NO, ADDRESS, SEX, 
+      NATION, CERT_NO, FATHER_NAME, 
+      MOTHER_NAME, GUARDIAN, CONTACT_NUMBER, 
+      CONTACT_NUMBER2, PASSWORD, SALT, 
+      AVATAR, UNIQ_NO, SEAT_NO, 
+      NATIVE_PLACE, BIRTH_DAY, ENROL_DATE, 
+      INTEREST, NATIVE_ADDRESS, NATIVE_TOWN, 
+      NOTE, TYPE, UNIV_SCHOOL, 
+      CHILDREN_OF_THE_ARMY, WHETHER_FOREIGN, MIDDLE_SCHOOL, 
+      LOCAL_POLICE_STATION, NEARBY, SEND_READER, 
+      UPDATE_TIME, CREATE_TIME, STATUS
+      )
+    values (#{id,jdbcType=VARCHAR}, #{vStudentNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{studentNo,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{nation,jdbcType=VARCHAR}, #{certNo,jdbcType=VARCHAR}, #{fatherName,jdbcType=VARCHAR}, 
+      #{motherName,jdbcType=VARCHAR}, #{guardian,jdbcType=VARCHAR}, #{contactNumber,jdbcType=VARCHAR}, 
+      #{contactNumber2,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR}, #{uniqNo,jdbcType=VARCHAR}, #{seatNo,jdbcType=INTEGER}, 
+      #{nativePlace,jdbcType=VARCHAR}, #{birthDay,jdbcType=TIMESTAMP}, #{enrolDate,jdbcType=TIMESTAMP}, 
+      #{interest,jdbcType=VARCHAR}, #{nativeAddress,jdbcType=VARCHAR}, #{nativeTown,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{univSchool,jdbcType=VARCHAR}, 
+      #{childrenOfTheArmy,jdbcType=VARCHAR}, #{whetherForeign,jdbcType=VARCHAR}, #{middleSchool,jdbcType=VARCHAR}, 
+      #{localPoliceStation,jdbcType=VARCHAR}, #{nearby,jdbcType=VARCHAR}, #{sendReader,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.xrj.bean.EduStudent">
+        insert into edu_student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="vStudentNo != null">
+                V_STUDENT_NO,
+            </if>
+            <if test="name != null">
+                NAME,
+            </if>
+            <if test="studentNo != null">
+                STUDENT_NO,
+            </if>
+            <if test="address != null">
+                ADDRESS,
+            </if>
+            <if test="sex != null">
+                SEX,
+            </if>
+            <if test="nation != null">
+                NATION,
+            </if>
+            <if test="certNo != null">
+                CERT_NO,
+            </if>
+            <if test="fatherName != null">
+                FATHER_NAME,
+            </if>
+            <if test="motherName != null">
+                MOTHER_NAME,
+            </if>
+            <if test="guardian != null">
+                GUARDIAN,
+            </if>
+            <if test="contactNumber != null">
+                CONTACT_NUMBER,
+            </if>
+            <if test="contactNumber2 != null">
+                CONTACT_NUMBER2,
+            </if>
+            <if test="password != null">
+                PASSWORD,
+            </if>
+            <if test="salt != null">
+                SALT,
+            </if>
+            <if test="avatar != null">
+                AVATAR,
+            </if>
+            <if test="uniqNo != null">
+                UNIQ_NO,
+            </if>
+            <if test="seatNo != null">
+                SEAT_NO,
+            </if>
+            <if test="nativePlace != null">
+                NATIVE_PLACE,
+            </if>
+            <if test="birthDay != null">
+                BIRTH_DAY,
+            </if>
+            <if test="enrolDate != null">
+                ENROL_DATE,
+            </if>
+            <if test="interest != null">
+                INTEREST,
+            </if>
+            <if test="nativeAddress != null">
+                NATIVE_ADDRESS,
+            </if>
+            <if test="nativeTown != null">
+                NATIVE_TOWN,
+            </if>
+            <if test="note != null">
+                NOTE,
+            </if>
+            <if test="type != null">
+                TYPE,
+            </if>
+            <if test="univSchool != null">
+                UNIV_SCHOOL,
+            </if>
+            <if test="childrenOfTheArmy != null">
+                CHILDREN_OF_THE_ARMY,
+            </if>
+            <if test="whetherForeign != null">
+                WHETHER_FOREIGN,
+            </if>
+            <if test="middleSchool != null">
+                MIDDLE_SCHOOL,
+            </if>
+            <if test="localPoliceStation != null">
+                LOCAL_POLICE_STATION,
+            </if>
+            <if test="nearby != null">
+                NEARBY,
+            </if>
+            <if test="sendReader != null">
+                SEND_READER,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="vStudentNo != null">
+                #{vStudentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="studentNo != null">
+                #{studentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="nation != null">
+                #{nation,jdbcType=VARCHAR},
+            </if>
+            <if test="certNo != null">
+                #{certNo,jdbcType=VARCHAR},
+            </if>
+            <if test="fatherName != null">
+                #{fatherName,jdbcType=VARCHAR},
+            </if>
+            <if test="motherName != null">
+                #{motherName,jdbcType=VARCHAR},
+            </if>
+            <if test="guardian != null">
+                #{guardian,jdbcType=VARCHAR},
+            </if>
+            <if test="contactNumber != null">
+                #{contactNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="contactNumber2 != null">
+                #{contactNumber2,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="uniqNo != null">
+                #{uniqNo,jdbcType=VARCHAR},
+            </if>
+            <if test="seatNo != null">
+                #{seatNo,jdbcType=INTEGER},
+            </if>
+            <if test="nativePlace != null">
+                #{nativePlace,jdbcType=VARCHAR},
+            </if>
+            <if test="birthDay != null">
+                #{birthDay,jdbcType=TIMESTAMP},
+            </if>
+            <if test="enrolDate != null">
+                #{enrolDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="interest != null">
+                #{interest,jdbcType=VARCHAR},
+            </if>
+            <if test="nativeAddress != null">
+                #{nativeAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="nativeTown != null">
+                #{nativeTown,jdbcType=VARCHAR},
+            </if>
+            <if test="note != null">
+                #{note,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="univSchool != null">
+                #{univSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="childrenOfTheArmy != null">
+                #{childrenOfTheArmy,jdbcType=VARCHAR},
+            </if>
+            <if test="whetherForeign != null">
+                #{whetherForeign,jdbcType=VARCHAR},
+            </if>
+            <if test="middleSchool != null">
+                #{middleSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="localPoliceStation != null">
+                #{localPoliceStation,jdbcType=VARCHAR},
+            </if>
+            <if test="nearby != null">
+                #{nearby,jdbcType=VARCHAR},
+            </if>
+            <if test="sendReader != null">
+                #{sendReader,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.xrj.bean.EduStudentExample"
+        resultType="java.lang.Integer">
+        select count(*) from edu_student
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update edu_student
+        <set>
+            <if test="record.id != null">
+                ID = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.vStudentNo != null">
+                V_STUDENT_NO = #{record.vStudentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.name != null">
+                NAME = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.studentNo != null">
+                STUDENT_NO = #{record.studentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.address != null">
+                ADDRESS = #{record.address,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sex != null">
+                SEX = #{record.sex,jdbcType=VARCHAR},
+            </if>
+            <if test="record.nation != null">
+                NATION = #{record.nation,jdbcType=VARCHAR},
+            </if>
+            <if test="record.certNo != null">
+                CERT_NO = #{record.certNo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fatherName != null">
+                FATHER_NAME = #{record.fatherName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.motherName != null">
+                MOTHER_NAME = #{record.motherName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.guardian != null">
+                GUARDIAN = #{record.guardian,jdbcType=VARCHAR},
+            </if>
+            <if test="record.contactNumber != null">
+                CONTACT_NUMBER = #{record.contactNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="record.contactNumber2 != null">
+                CONTACT_NUMBER2 = #{record.contactNumber2,jdbcType=VARCHAR},
+            </if>
+            <if test="record.password != null">
+                PASSWORD = #{record.password,jdbcType=VARCHAR},
+            </if>
+            <if test="record.salt != null">
+                SALT = #{record.salt,jdbcType=VARCHAR},
+            </if>
+            <if test="record.avatar != null">
+                AVATAR = #{record.avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="record.uniqNo != null">
+                UNIQ_NO = #{record.uniqNo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.seatNo != null">
+                SEAT_NO = #{record.seatNo,jdbcType=INTEGER},
+            </if>
+            <if test="record.nativePlace != null">
+                NATIVE_PLACE = #{record.nativePlace,jdbcType=VARCHAR},
+            </if>
+            <if test="record.birthDay != null">
+                BIRTH_DAY = #{record.birthDay,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.enrolDate != null">
+                ENROL_DATE = #{record.enrolDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.interest != null">
+                INTEREST = #{record.interest,jdbcType=VARCHAR},
+            </if>
+            <if test="record.nativeAddress != null">
+                NATIVE_ADDRESS = #{record.nativeAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="record.nativeTown != null">
+                NATIVE_TOWN = #{record.nativeTown,jdbcType=VARCHAR},
+            </if>
+            <if test="record.note != null">
+                NOTE = #{record.note,jdbcType=VARCHAR},
+            </if>
+            <if test="record.type != null">
+                TYPE = #{record.type,jdbcType=VARCHAR},
+            </if>
+            <if test="record.univSchool != null">
+                UNIV_SCHOOL = #{record.univSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="record.childrenOfTheArmy != null">
+                CHILDREN_OF_THE_ARMY = #{record.childrenOfTheArmy,jdbcType=VARCHAR},
+            </if>
+            <if test="record.whetherForeign != null">
+                WHETHER_FOREIGN = #{record.whetherForeign,jdbcType=VARCHAR},
+            </if>
+            <if test="record.middleSchool != null">
+                MIDDLE_SCHOOL = #{record.middleSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="record.localPoliceStation != null">
+                LOCAL_POLICE_STATION = #{record.localPoliceStation,jdbcType=VARCHAR},
+            </if>
+            <if test="record.nearby != null">
+                NEARBY = #{record.nearby,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sendReader != null">
+                SEND_READER = #{record.sendReader,jdbcType=VARCHAR},
+            </if>
+            <if test="record.updateTime != null">
+                UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.createTime != null">
+                CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.status != null">
+                STATUS = #{record.status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update edu_student
+        set ID = #{record.id,jdbcType=VARCHAR},
+        V_STUDENT_NO = #{record.vStudentNo,jdbcType=VARCHAR},
+        NAME = #{record.name,jdbcType=VARCHAR},
+        STUDENT_NO = #{record.studentNo,jdbcType=VARCHAR},
+        ADDRESS = #{record.address,jdbcType=VARCHAR},
+        SEX = #{record.sex,jdbcType=VARCHAR},
+        NATION = #{record.nation,jdbcType=VARCHAR},
+        CERT_NO = #{record.certNo,jdbcType=VARCHAR},
+        FATHER_NAME = #{record.fatherName,jdbcType=VARCHAR},
+        MOTHER_NAME = #{record.motherName,jdbcType=VARCHAR},
+        GUARDIAN = #{record.guardian,jdbcType=VARCHAR},
+        CONTACT_NUMBER = #{record.contactNumber,jdbcType=VARCHAR},
+        CONTACT_NUMBER2 = #{record.contactNumber2,jdbcType=VARCHAR},
+        PASSWORD = #{record.password,jdbcType=VARCHAR},
+        SALT = #{record.salt,jdbcType=VARCHAR},
+        AVATAR = #{record.avatar,jdbcType=VARCHAR},
+        UNIQ_NO = #{record.uniqNo,jdbcType=VARCHAR},
+        SEAT_NO = #{record.seatNo,jdbcType=INTEGER},
+        NATIVE_PLACE = #{record.nativePlace,jdbcType=VARCHAR},
+        BIRTH_DAY = #{record.birthDay,jdbcType=TIMESTAMP},
+        ENROL_DATE = #{record.enrolDate,jdbcType=TIMESTAMP},
+        INTEREST = #{record.interest,jdbcType=VARCHAR},
+        NATIVE_ADDRESS = #{record.nativeAddress,jdbcType=VARCHAR},
+        NATIVE_TOWN = #{record.nativeTown,jdbcType=VARCHAR},
+        NOTE = #{record.note,jdbcType=VARCHAR},
+        TYPE = #{record.type,jdbcType=VARCHAR},
+        UNIV_SCHOOL = #{record.univSchool,jdbcType=VARCHAR},
+        CHILDREN_OF_THE_ARMY = #{record.childrenOfTheArmy,jdbcType=VARCHAR},
+        WHETHER_FOREIGN = #{record.whetherForeign,jdbcType=VARCHAR},
+        MIDDLE_SCHOOL = #{record.middleSchool,jdbcType=VARCHAR},
+        LOCAL_POLICE_STATION = #{record.localPoliceStation,jdbcType=VARCHAR},
+        NEARBY = #{record.nearby,jdbcType=VARCHAR},
+        SEND_READER = #{record.sendReader,jdbcType=VARCHAR},
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+        STATUS = #{record.status,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.EduStudent">
+        update edu_student
+        <set>
+            <if test="vStudentNo != null">
+                V_STUDENT_NO = #{vStudentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="studentNo != null">
+                STUDENT_NO = #{studentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                ADDRESS = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                SEX = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="nation != null">
+                NATION = #{nation,jdbcType=VARCHAR},
+            </if>
+            <if test="certNo != null">
+                CERT_NO = #{certNo,jdbcType=VARCHAR},
+            </if>
+            <if test="fatherName != null">
+                FATHER_NAME = #{fatherName,jdbcType=VARCHAR},
+            </if>
+            <if test="motherName != null">
+                MOTHER_NAME = #{motherName,jdbcType=VARCHAR},
+            </if>
+            <if test="guardian != null">
+                GUARDIAN = #{guardian,jdbcType=VARCHAR},
+            </if>
+            <if test="contactNumber != null">
+                CONTACT_NUMBER = #{contactNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="contactNumber2 != null">
+                CONTACT_NUMBER2 = #{contactNumber2,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                PASSWORD = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                SALT = #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                AVATAR = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="uniqNo != null">
+                UNIQ_NO = #{uniqNo,jdbcType=VARCHAR},
+            </if>
+            <if test="seatNo != null">
+                SEAT_NO = #{seatNo,jdbcType=INTEGER},
+            </if>
+            <if test="nativePlace != null">
+                NATIVE_PLACE = #{nativePlace,jdbcType=VARCHAR},
+            </if>
+            <if test="birthDay != null">
+                BIRTH_DAY = #{birthDay,jdbcType=TIMESTAMP},
+            </if>
+            <if test="enrolDate != null">
+                ENROL_DATE = #{enrolDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="interest != null">
+                INTEREST = #{interest,jdbcType=VARCHAR},
+            </if>
+            <if test="nativeAddress != null">
+                NATIVE_ADDRESS = #{nativeAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="nativeTown != null">
+                NATIVE_TOWN = #{nativeTown,jdbcType=VARCHAR},
+            </if>
+            <if test="note != null">
+                NOTE = #{note,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                TYPE = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="univSchool != null">
+                UNIV_SCHOOL = #{univSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="childrenOfTheArmy != null">
+                CHILDREN_OF_THE_ARMY = #{childrenOfTheArmy,jdbcType=VARCHAR},
+            </if>
+            <if test="whetherForeign != null">
+                WHETHER_FOREIGN = #{whetherForeign,jdbcType=VARCHAR},
+            </if>
+            <if test="middleSchool != null">
+                MIDDLE_SCHOOL = #{middleSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="localPoliceStation != null">
+                LOCAL_POLICE_STATION = #{localPoliceStation,jdbcType=VARCHAR},
+            </if>
+            <if test="nearby != null">
+                NEARBY = #{nearby,jdbcType=VARCHAR},
+            </if>
+            <if test="sendReader != null">
+                SEND_READER = #{sendReader,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xrj.bean.EduStudent">
+    update edu_student
+    set V_STUDENT_NO = #{vStudentNo,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      STUDENT_NO = #{studentNo,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=VARCHAR},
+      NATION = #{nation,jdbcType=VARCHAR},
+      CERT_NO = #{certNo,jdbcType=VARCHAR},
+      FATHER_NAME = #{fatherName,jdbcType=VARCHAR},
+      MOTHER_NAME = #{motherName,jdbcType=VARCHAR},
+      GUARDIAN = #{guardian,jdbcType=VARCHAR},
+      CONTACT_NUMBER = #{contactNumber,jdbcType=VARCHAR},
+      CONTACT_NUMBER2 = #{contactNumber2,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      SALT = #{salt,jdbcType=VARCHAR},
+      AVATAR = #{avatar,jdbcType=VARCHAR},
+      UNIQ_NO = #{uniqNo,jdbcType=VARCHAR},
+      SEAT_NO = #{seatNo,jdbcType=INTEGER},
+      NATIVE_PLACE = #{nativePlace,jdbcType=VARCHAR},
+      BIRTH_DAY = #{birthDay,jdbcType=TIMESTAMP},
+      ENROL_DATE = #{enrolDate,jdbcType=TIMESTAMP},
+      INTEREST = #{interest,jdbcType=VARCHAR},
+      NATIVE_ADDRESS = #{nativeAddress,jdbcType=VARCHAR},
+      NATIVE_TOWN = #{nativeTown,jdbcType=VARCHAR},
+      NOTE = #{note,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      UNIV_SCHOOL = #{univSchool,jdbcType=VARCHAR},
+      CHILDREN_OF_THE_ARMY = #{childrenOfTheArmy,jdbcType=VARCHAR},
+      WHETHER_FOREIGN = #{whetherForeign,jdbcType=VARCHAR},
+      MIDDLE_SCHOOL = #{middleSchool,jdbcType=VARCHAR},
+      LOCAL_POLICE_STATION = #{localPoliceStation,jdbcType=VARCHAR},
+      NEARBY = #{nearby,jdbcType=VARCHAR},
+      SEND_READER = #{sendReader,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+    <select id="listByClassId" resultType="EduStudent">
+		SELECT es.name,es.id,esc.CLASS_ID classId,es.SEAT_NO seatNo
+			FROM edu_student es 
+			INNER JOIN edu_student_class esc ON es.ID=esc.STUDENT_ID 
+		WHERE esc.CLASS_ID=#{classId} AND
+			esc.STATUS='NORMAL' AND es.STATUS='NORMAL'
+			AND esc.YEAR_ID= #{curYear}
+		ORDER BY es.SEAT_NO
+	</select>
+    <select id="list" resultType="com.xrj.bean.EduStudent">
+        select es.*, ec.GRADE, ec.GRADE_ID, ec.TITLE, ec.ID CLASS_ID from edu_student es
+        LEFT JOIN edu_student_class esc ON esc.STUDENT_ID = es.ID AND esc.`STATUS` = 'NORMAL'
+        LEFT JOIN edu_class ec ON ec.`STATUS` = 'NORMAL' AND ec.ID = esc.CLASS_ID
+        <where>
+            <if test="eduStudent.name != null and eduStudent.name != '' ">
+                <bind name="vName" value="'%' + eduStudent.name + '%'"></bind>
+                and es.NAME LIKE #{vName}
+            </if>
+            <if test="eduStudent.status != null and eduStudent.status != '' ">
+                and es.STATUS = #{eduStudent.status}
+            </if>
+            <if test="eduStudent.type != null and eduStudent.type != ''">
+                and es.TYPE = #{eduStudent.type}
+            </if>
+            <if test="eduStudent.birthDay != null ">
+                and es.BIRTH_DAY = #{eduStudent.birthDay}
+            </if>
+            <if test="eduStudent.certNo != null and eduStudent.certNo != '' ">
+                and es.CERT_NO = #{eduStudent.certNo}
+            </if>
+            <if test="eduStudent.guardian != null and eduStudent.guardian != '' ">
+                and es.GUARDIAN = #{eduStudent.guardian}
+            </if>
+            <if test="eduStudent.seatNo != null ">
+                and es.SEAT_NO = #{eduStudent.seatNo}
+            </if>
+            <if test="eduStudent.sex != null and eduStudent.sex != '' ">
+                and es.SEX = #{eduStudent.sex}
+            </if>
+            <if test="eduStudent.studentNo != null and eduStudent.studentNo != '' ">
+                and es.STUDENT_NO = #{eduStudent.studentNo}
+            </if>
+            <if test="eduStudent.vStudentNo != null and eduStudent.vStudentNo != '' ">
+            <bind name="vvStudentNo" value="'%' + eduStudent.vStudentNo + '%'"></bind>
+                and es.V_STUDENT_NO LIKE #{vvStudentNo}
+            </if>
+            <if test="eduStudent.contactNumber != null and eduStudent.contactNumber != '' ">
+                and es.CONTACT_NUMBER = #{eduStudent.contactNumber}
+            </if>
+            <if test="eduStudent.contactNumber2 != null and eduStudent.name != '' ">
+                and es.CONTACT_NUMBER2 = #{eduStudent.contactNumber2}
+            </if>
+            <if test="eduStudent.enrolDate != null ">
+                and es.ENROL_DATE = #{eduStudent.enrolDate}
+            </if>
+            <if test="eduStudent.motherName != null and eduStudent.motherName != '' ">
+                <bind name="vmotherName" value="'%' + eduStudent.motherName + '%'"></bind>
+                and es.MOTHER_NAME LIKE #{vmotherName}
+            </if>
+            <if test="eduStudent.fatherName != null and eduStudent.fatherName != '' ">
+                <bind name="vfatherName" value="'%' + eduStudent.fatherName + '%'"></bind>
+                and es.FATHER_NAME LIKE #{vfatherName}
+            </if>
+            <if test="yearId != null and yearId != '' ">
+                AND esc.YEAR_ID = #{yearId}
+            </if>
+            <if test="gradeId != null and gradeId != '' ">
+                AND ec.GRADE_ID = #{gradeId}
+            </if>
+            <if test="eduStudent.classId != null and eduStudent.classId != '' ">
+                AND  ec.ID = #{eduStudent.classId}
+            </if>
+            <if test="title != null and title != '' ">
+                AND ec.TITLE = #{title}
+            </if>
+        </where>
+        order by es.V_STUDENT_NO, es.CREATE_TIME desc
+    </select>
+    <select id="detail" resultType="com.xrj.bean.EduStudent">
+        SELECT
+            es.*, ec.GRADE, ec.GRADE_ID, ec.TITLE, ec.ID CLASS_ID
+        FROM
+            edu_student es
+        LEFT JOIN edu_student_class esc ON esc.STUDENT_ID = es.ID AND esc.`STATUS` = 'NORMAL'
+        LEFT JOIN edu_class ec ON ec.`STATUS` = 'NORMAL' AND ec.ID = esc.CLASS_ID
+        WHERE
+            es.ID = #{id}
+    </select>
+    <select id="statistics" resultType="com.xrj.dto.StuClassStatisticsDto">
+        SELECT
+        ec.ID,
+        ec.GRADE_ID,
+        ec.GRADE,
+        ec.TITLE,
+        COUNT(es.ID) AS STU_NUM
+        FROM
+        edu_student es
+        INNER JOIN edu_student_class esc ON esc.STUDENT_ID = es.ID AND esc.`STATUS` = 'NORMAL'
+        INNER JOIN edu_class ec ON ec.ID = esc.CLASS_ID AND ec.`STATUS` = 'NORMAL'
+        INNER JOIN dictionaries d ON d.PARENT_ID = 'gradeMark' AND d.`STATUS` = '1' AND d.ID =
+        ec.GRADE_ID
+        <where>
+            <if test="gradeId != null  and gradeId != '' ">
+                AND ec.GRADE_ID = #{gradeId}
+            </if>
+            <if test="classId != null  and classId != '' ">
+                AND ec.ID = #{classId}
+            </if>
+        </where>
+        GROUP BY
+        ec.ID
+        ORDER BY
+        d.`CODE`,
+        ec.TITLE + 1
+    </select>
+</mapper>

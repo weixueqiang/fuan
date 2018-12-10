@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xrj.mapper.TbkDeployResourceMapper">
+	<sql id="_list">
+		${alias}.resource_id,${alias}.user_id
+	</sql>
+
+	<update id="batchInsert">
+		insert into 
+		tbk_deploy_resource(resource_id, user_id)
+		values
+		<foreach item="item" collection="list" separator=",">
+			(
+			#{item.resourceId},
+			#{item.userId}
+			)
+		</foreach>
+	</update>
+	
+	<delete id="deleteByResourceId">
+		delete from tbk_deploy_resource where resource_id = #{resourceId}
+	</delete>
+	
+	<select id="listByResourceId" resultType="TbkDeployResource">
+		select
+		<include refid="_list">
+			<property name="alias" value="td" />
+		</include>
+		from tbk_deploy_resource td where td.resource_id = #{resourceId}
+	</select>
+
+</mapper>

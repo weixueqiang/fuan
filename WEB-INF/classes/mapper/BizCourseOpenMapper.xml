@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xrj.mapper.BizCourseOpenMapper">
+  <resultMap id="BaseResultMap" type="com.xrj.bean.BizCourseOpen">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="elective_course_id" jdbcType="VARCHAR" property="electiveCourseId" />
+    <result column="give_teacher_id" jdbcType="VARCHAR" property="giveTeacherId" />
+    <result column="give_teacher_name" jdbcType="VARCHAR" property="giveTeacherName" />
+    <result column="live_teacher_id" jdbcType="VARCHAR" property="liveTeacherId" />
+    <result column="live_teacher_name" jdbcType="VARCHAR" property="liveTeacherName" />
+    <result column="place" jdbcType="VARCHAR" property="place" />
+    <result column="limit_num" jdbcType="INTEGER" property="limitNum" />
+    <result column="attend_time" jdbcType="VARCHAR" property="attendTime" />
+    <result column="term_id" jdbcType="VARCHAR" property="termId" />
+    <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="condition_set" jdbcType="VARCHAR" property="conditionSet" />
+    <result column="enroll_auto_audit" jdbcType="VARCHAR" property="enrollAutoAudit" />
+    <result column="auditor" jdbcType="VARCHAR" property="auditor" />
+    <result column="audit_time" jdbcType="TIMESTAMP" property="auditTime" />
+    <result column="audit_status" jdbcType="VARCHAR" property="auditStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, elective_course_id, give_teacher_id, give_teacher_name, live_teacher_id, live_teacher_name, 
+    place, limit_num, attend_time, term_id, begin_time, end_time, remark, condition_set, 
+    enroll_auto_audit, auditor, audit_time, audit_status, create_time, edit_time
+  </sql>
+  <select id="selectByExample" parameterType="com.xrj.bean.BizCourseOpenExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from biz_course_open
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from biz_course_open
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from biz_course_open
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xrj.bean.BizCourseOpenExample">
+    delete from biz_course_open
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xrj.bean.BizCourseOpen">
+    insert into biz_course_open (id, elective_course_id, give_teacher_id, 
+      give_teacher_name, live_teacher_id, live_teacher_name, 
+      place, limit_num, attend_time, 
+      term_id, begin_time, end_time, 
+      remark, condition_set, enroll_auto_audit, 
+      auditor, audit_time, audit_status, 
+      create_time, edit_time)
+    values (#{id,jdbcType=VARCHAR}, #{electiveCourseId,jdbcType=VARCHAR}, #{giveTeacherId,jdbcType=VARCHAR}, 
+      #{giveTeacherName,jdbcType=VARCHAR}, #{liveTeacherId,jdbcType=VARCHAR}, #{liveTeacherName,jdbcType=VARCHAR}, 
+      #{place,jdbcType=VARCHAR}, #{limitNum,jdbcType=INTEGER}, #{attendTime,jdbcType=VARCHAR}, 
+      #{termId,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{conditionSet,jdbcType=VARCHAR}, #{enrollAutoAudit,jdbcType=VARCHAR}, 
+      #{auditor,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP}, #{auditStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xrj.bean.BizCourseOpen">
+    insert into biz_course_open
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="electiveCourseId != null">
+        elective_course_id,
+      </if>
+      <if test="giveTeacherId != null">
+        give_teacher_id,
+      </if>
+      <if test="giveTeacherName != null">
+        give_teacher_name,
+      </if>
+      <if test="liveTeacherId != null">
+        live_teacher_id,
+      </if>
+      <if test="liveTeacherName != null">
+        live_teacher_name,
+      </if>
+      <if test="place != null">
+        place,
+      </if>
+      <if test="limitNum != null">
+        limit_num,
+      </if>
+      <if test="attendTime != null">
+        attend_time,
+      </if>
+      <if test="termId != null">
+        term_id,
+      </if>
+      <if test="beginTime != null">
+        begin_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="conditionSet != null">
+        condition_set,
+      </if>
+      <if test="enrollAutoAudit != null">
+        enroll_auto_audit,
+      </if>
+      <if test="auditor != null">
+        auditor,
+      </if>
+      <if test="auditTime != null">
+        audit_time,
+      </if>
+      <if test="auditStatus != null">
+        audit_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="editTime != null">
+        edit_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="electiveCourseId != null">
+        #{electiveCourseId,jdbcType=VARCHAR},
+      </if>
+      <if test="giveTeacherId != null">
+        #{giveTeacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="giveTeacherName != null">
+        #{giveTeacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="liveTeacherId != null">
+        #{liveTeacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="liveTeacherName != null">
+        #{liveTeacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="place != null">
+        #{place,jdbcType=VARCHAR},
+      </if>
+      <if test="limitNum != null">
+        #{limitNum,jdbcType=INTEGER},
+      </if>
+      <if test="attendTime != null">
+        #{attendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="termId != null">
+        #{termId,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null">
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="conditionSet != null">
+        #{conditionSet,jdbcType=VARCHAR},
+      </if>
+      <if test="enrollAutoAudit != null">
+        #{enrollAutoAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null">
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null">
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditStatus != null">
+        #{auditStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xrj.bean.BizCourseOpenExample" resultType="java.lang.Long">
+    select count(*) from biz_course_open
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update biz_course_open
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.electiveCourseId != null">
+        elective_course_id = #{record.electiveCourseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.giveTeacherId != null">
+        give_teacher_id = #{record.giveTeacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.giveTeacherName != null">
+        give_teacher_name = #{record.giveTeacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.liveTeacherId != null">
+        live_teacher_id = #{record.liveTeacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.liveTeacherName != null">
+        live_teacher_name = #{record.liveTeacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.place != null">
+        place = #{record.place,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limitNum != null">
+        limit_num = #{record.limitNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.attendTime != null">
+        attend_time = #{record.attendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.termId != null">
+        term_id = #{record.termId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beginTime != null">
+        begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conditionSet != null">
+        condition_set = #{record.conditionSet,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enrollAutoAudit != null">
+        enroll_auto_audit = #{record.enrollAutoAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditor != null">
+        auditor = #{record.auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditTime != null">
+        audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.auditStatus != null">
+        audit_status = #{record.auditStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.editTime != null">
+        edit_time = #{record.editTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update biz_course_open
+    set id = #{record.id,jdbcType=VARCHAR},
+      elective_course_id = #{record.electiveCourseId,jdbcType=VARCHAR},
+      give_teacher_id = #{record.giveTeacherId,jdbcType=VARCHAR},
+      give_teacher_name = #{record.giveTeacherName,jdbcType=VARCHAR},
+      live_teacher_id = #{record.liveTeacherId,jdbcType=VARCHAR},
+      live_teacher_name = #{record.liveTeacherName,jdbcType=VARCHAR},
+      place = #{record.place,jdbcType=VARCHAR},
+      limit_num = #{record.limitNum,jdbcType=INTEGER},
+      attend_time = #{record.attendTime,jdbcType=VARCHAR},
+      term_id = #{record.termId,jdbcType=VARCHAR},
+      begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      condition_set = #{record.conditionSet,jdbcType=VARCHAR},
+      enroll_auto_audit = #{record.enrollAutoAudit,jdbcType=VARCHAR},
+      auditor = #{record.auditor,jdbcType=VARCHAR},
+      audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
+      audit_status = #{record.auditStatus,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      edit_time = #{record.editTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.BizCourseOpen">
+    update biz_course_open
+    <set>
+      <if test="electiveCourseId != null">
+        elective_course_id = #{electiveCourseId,jdbcType=VARCHAR},
+      </if>
+      <if test="giveTeacherId != null">
+        give_teacher_id = #{giveTeacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="giveTeacherName != null">
+        give_teacher_name = #{giveTeacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="liveTeacherId != null">
+        live_teacher_id = #{liveTeacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="liveTeacherName != null">
+        live_teacher_name = #{liveTeacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="place != null">
+        place = #{place,jdbcType=VARCHAR},
+      </if>
+      <if test="limitNum != null">
+        limit_num = #{limitNum,jdbcType=INTEGER},
+      </if>
+      <if test="attendTime != null">
+        attend_time = #{attendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="termId != null">
+        term_id = #{termId,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null">
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="conditionSet != null">
+        condition_set = #{conditionSet,jdbcType=VARCHAR},
+      </if>
+      <if test="enrollAutoAudit != null">
+        enroll_auto_audit = #{enrollAutoAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null">
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null">
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditStatus != null">
+        audit_status = #{auditStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        edit_time = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xrj.bean.BizCourseOpen">
+    update biz_course_open
+    set elective_course_id = #{electiveCourseId,jdbcType=VARCHAR},
+      give_teacher_id = #{giveTeacherId,jdbcType=VARCHAR},
+      give_teacher_name = #{giveTeacherName,jdbcType=VARCHAR},
+      live_teacher_id = #{liveTeacherId,jdbcType=VARCHAR},
+      live_teacher_name = #{liveTeacherName,jdbcType=VARCHAR},
+      place = #{place,jdbcType=VARCHAR},
+      limit_num = #{limitNum,jdbcType=INTEGER},
+      attend_time = #{attendTime,jdbcType=VARCHAR},
+      term_id = #{termId,jdbcType=VARCHAR},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      condition_set = #{conditionSet,jdbcType=VARCHAR},
+      enroll_auto_audit = #{enrollAutoAudit,jdbcType=VARCHAR},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      audit_status = #{auditStatus,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      edit_time = #{editTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

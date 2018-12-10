@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.LaboratoryReserveMapper">
+    <resultMap id="BaseResultMap" type="com.xrj.bean.LaboratoryReserve">
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="LABORATORY_NAME" property="laboratoryName" jdbcType="VARCHAR" />
+        <result column="LABORATORY_ID" property="laboratoryId" jdbcType="VARCHAR" />
+        <result column="TOPIC" property="topic" jdbcType="VARCHAR" />
+        <result column="GRADES_CLASS" property="gradesClass" jdbcType="VARCHAR" />
+        <result column="CLASS_TIME" property="classTime" jdbcType="TIMESTAMP" />
+        <result column="DICTIONARIES_ID" property="dictionariesId" jdbcType="VARCHAR" />
+        <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="AUDITOR_TIME" property="auditorTime" jdbcType="TIMESTAMP" />
+        <result column="COURSEWARE_ID" property="coursewareId" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="WEEKDAY" property="weekday" jdbcType="VARCHAR" />
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+        <result column="AUDITOR_NAME" property="auditorName" jdbcType="VARCHAR" />
+        <result column="AUDITOT_USER_ID" property="auditotUserId" jdbcType="VARCHAR" />
+        <result column="RECORD" property="record" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                        close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                        close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        <if test="fields == null">
+            ID, LABORATORY_NAME, LABORATORY_ID, TOPIC, GRADES_CLASS, CLASS_TIME, DICTIONARIES_ID,
+            USER_ID, USER_NAME, STATUS, AUDITOR_TIME, COURSEWARE_ID, CREATE_TIME, WEEKDAY, REMARKS,
+            AUDITOR_NAME, AUDITOT_USER_ID
+        </if>
+        <if test="fields != null">
+            ${fields}
+        </if>
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+        parameterType="com.xrj.bean.LaboratoryReserveExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from laboratory_reserve
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startRow != null">
+            limit #{startRow} , #{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    ID,LABORATORY_NAME,LABORATORY_ID,TOPIC,GRADES_CLASS,CLASS_TIME,DICTIONARIES_ID,USER_ID,USER_NAME,STATUS,AUDITOR_TIME,COURSEWARE_ID,CREATE_TIME,WEEKDAY,REMARKS,AUDITOR_NAME,AUDITOT_USER_ID
+    ,RECORD from laboratory_reserve
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from laboratory_reserve
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.xrj.bean.LaboratoryReserveExample">
+        delete from laboratory_reserve
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.xrj.bean.LaboratoryReserve">
+    insert into laboratory_reserve (ID, LABORATORY_NAME, LABORATORY_ID, 
+      TOPIC, GRADES_CLASS, CLASS_TIME, 
+      DICTIONARIES_ID, USER_ID, USER_NAME, 
+      STATUS, AUDITOR_TIME, COURSEWARE_ID, 
+      CREATE_TIME, WEEKDAY, REMARKS, 
+      AUDITOR_NAME, AUDITOT_USER_ID)
+    values (#{id,jdbcType=VARCHAR}, #{laboratoryName,jdbcType=VARCHAR}, #{laboratoryId,jdbcType=VARCHAR}, 
+      #{topic,jdbcType=VARCHAR}, #{gradesClass,jdbcType=VARCHAR}, #{classTime,jdbcType=TIMESTAMP}, 
+      #{dictionariesId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{auditorTime,jdbcType=TIMESTAMP}, #{coursewareId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{weekday,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{auditorName,jdbcType=VARCHAR}, #{auditotUserId,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.xrj.bean.LaboratoryReserve">
+        insert into laboratory_reserve
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="laboratoryName != null">
+                LABORATORY_NAME,
+            </if>
+            <if test="laboratoryId != null">
+                LABORATORY_ID,
+            </if>
+            <if test="topic != null">
+                TOPIC,
+            </if>
+            <if test="gradesClass != null">
+                GRADES_CLASS,
+            </if>
+            <if test="classTime != null">
+                CLASS_TIME,
+            </if>
+            <if test="dictionariesId != null">
+                DICTIONARIES_ID,
+            </if>
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="userName != null">
+                USER_NAME,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="auditorTime != null">
+                AUDITOR_TIME,
+            </if>
+            <if test="coursewareId != null">
+                COURSEWARE_ID,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="weekday != null">
+                WEEKDAY,
+            </if>
+            <if test="remarks != null">
+                REMARKS,
+            </if>
+            <if test="auditorName != null">
+                AUDITOR_NAME,
+            </if>
+            <if test="auditotUserId != null">
+                AUDITOT_USER_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="laboratoryName != null">
+                #{laboratoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="laboratoryId != null">
+                #{laboratoryId,jdbcType=VARCHAR},
+            </if>
+            <if test="topic != null">
+                #{topic,jdbcType=VARCHAR},
+            </if>
+            <if test="gradesClass != null">
+                #{gradesClass,jdbcType=VARCHAR},
+            </if>
+            <if test="classTime != null">
+                #{classTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dictionariesId != null">
+                #{dictionariesId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="auditorTime != null">
+                #{auditorTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="coursewareId != null">
+                #{coursewareId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="weekday != null">
+                #{weekday,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="auditorName != null">
+                #{auditorName,jdbcType=VARCHAR},
+            </if>
+            <if test="auditotUserId != null">
+                #{auditotUserId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.xrj.bean.LaboratoryReserveExample"
+        resultType="java.lang.Integer">
+        select count(*) from laboratory_reserve
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update laboratory_reserve
+        <set>
+            <if test="record.id != null">
+                ID = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.laboratoryName != null">
+                LABORATORY_NAME = #{record.laboratoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.laboratoryId != null">
+                LABORATORY_ID = #{record.laboratoryId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.topic != null">
+                TOPIC = #{record.topic,jdbcType=VARCHAR},
+            </if>
+            <if test="record.gradesClass != null">
+                GRADES_CLASS = #{record.gradesClass,jdbcType=VARCHAR},
+            </if>
+            <if test="record.classTime != null">
+                CLASS_TIME = #{record.classTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.dictionariesId != null">
+                DICTIONARIES_ID = #{record.dictionariesId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userId != null">
+                USER_ID = #{record.userId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userName != null">
+                USER_NAME = #{record.userName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.status != null">
+                STATUS = #{record.status,jdbcType=VARCHAR},
+            </if>
+            <if test="record.auditorTime != null">
+                AUDITOR_TIME = #{record.auditorTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.coursewareId != null">
+                COURSEWARE_ID = #{record.coursewareId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.weekday != null">
+                WEEKDAY = #{record.weekday,jdbcType=VARCHAR},
+            </if>
+            <if test="record.remarks != null">
+                REMARKS = #{record.remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="record.auditorName != null">
+                AUDITOR_NAME = #{record.auditorName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.auditotUserId != null">
+                AUDITOT_USER_ID = #{record.auditotUserId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update laboratory_reserve
+        set ID = #{record.id,jdbcType=VARCHAR},
+        LABORATORY_NAME = #{record.laboratoryName,jdbcType=VARCHAR},
+        LABORATORY_ID = #{record.laboratoryId,jdbcType=VARCHAR},
+        TOPIC = #{record.topic,jdbcType=VARCHAR},
+        GRADES_CLASS = #{record.gradesClass,jdbcType=VARCHAR},
+        CLASS_TIME = #{record.classTime,jdbcType=TIMESTAMP},
+        DICTIONARIES_ID = #{record.dictionariesId,jdbcType=VARCHAR},
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+        STATUS = #{record.status,jdbcType=VARCHAR},
+        AUDITOR_TIME = #{record.auditorTime,jdbcType=TIMESTAMP},
+        COURSEWARE_ID = #{record.coursewareId,jdbcType=VARCHAR},
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+        WEEKDAY = #{record.weekday,jdbcType=VARCHAR},
+        REMARKS = #{record.remarks,jdbcType=VARCHAR},
+        AUDITOR_NAME = #{record.auditorName,jdbcType=VARCHAR},
+        AUDITOT_USER_ID = #{record.auditotUserId,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.LaboratoryReserve">
+        update laboratory_reserve
+        <set>
+            <if test="laboratoryName != null">
+                LABORATORY_NAME = #{laboratoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="laboratoryId != null">
+                LABORATORY_ID = #{laboratoryId,jdbcType=VARCHAR},
+            </if>
+            <if test="topic != null">
+                TOPIC = #{topic,jdbcType=VARCHAR},
+            </if>
+            <if test="gradesClass != null">
+                GRADES_CLASS = #{gradesClass,jdbcType=VARCHAR},
+            </if>
+            <if test="classTime != null">
+                CLASS_TIME = #{classTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dictionariesId != null">
+                DICTIONARIES_ID = #{dictionariesId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                USER_ID = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                USER_NAME = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="auditorTime != null">
+                AUDITOR_TIME = #{auditorTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="coursewareId != null">
+                COURSEWARE_ID = #{coursewareId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="weekday != null">
+                WEEKDAY = #{weekday,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="auditorName != null">
+                AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+            </if>
+            <if test="auditotUserId != null">
+                AUDITOT_USER_ID = #{auditotUserId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xrj.bean.LaboratoryReserve">
+    update laboratory_reserve
+    set LABORATORY_NAME = #{laboratoryName,jdbcType=VARCHAR},
+      LABORATORY_ID = #{laboratoryId,jdbcType=VARCHAR},
+      TOPIC = #{topic,jdbcType=VARCHAR},
+      GRADES_CLASS = #{gradesClass,jdbcType=VARCHAR},
+      CLASS_TIME = #{classTime,jdbcType=TIMESTAMP},
+      DICTIONARIES_ID = #{dictionariesId,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      AUDITOR_TIME = #{auditorTime,jdbcType=TIMESTAMP},
+      COURSEWARE_ID = #{coursewareId,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      WEEKDAY = #{weekday,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      AUDITOT_USER_ID = #{auditotUserId,jdbcType=VARCHAR},
+       RECORD = #{record,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <!-- 自定义 -->
+    <select id="list" resultType="com.xrj.bean.LaboratoryReserve">
+        SELECT * FROM laboratory_reserve lr
+        <where>
+            <if test="null != laboratoryReserve">
+                <if test="laboratoryReserve.laboratoryName != null">
+                    <bind name="vLaboratoryName" value="'%'+ laboratoryReserve.laboratoryName +'%'"></bind>
+                    AND lr.LABORATORY_NAME LIKE #{vLaboratoryName}
+                </if>
+                <if test="laboratoryReserve.topic != null">
+                    <bind name="vTopic" value="'%'+laboratoryReserve.topic+'%'"></bind>
+                    AND lr.TOPIC like #{vTopic}
+                </if>
+                <if test="null != laboratoryReserve.gradesClass">
+                    AND lr.GRADES_CLASS = #{laboratoryReserve.gradesClass}
+                </if>
+                <if test="null != laboratoryReserve.classTime">
+                    AND lr.CLASS_TIME = #{laboratoryReserve.classTime}
+                </if>
+                <if test="null != laboratoryReserve.dictionariesId">
+                    AND lr.DICTIONARIES_ID = #{laboratoryReserve.dictionariesId}
+                </if>
+                <if test="null != laboratoryReserve.userId">
+                    AND lr.USER_ID = #{laboratoryReserve.userId}
+                </if>
+                <if test="null != laboratoryReserve.userName">
+                    AND lr.USER_NAME = #{laboratoryReserve.userName}
+                </if>
+                <if test="null != laboratoryReserve.status">
+                    AND lr.STATUS = #{laboratoryReserve.status}
+                </if>
+                <if test="null != laboratoryReserve.auditorTime">
+                    AND lr.AUDITOR_TIME = #{laboratoryReserve.auditorTime}
+                </if>
+                <if test="null != laboratoryReserve.coursewareId">
+                    AND lr.COURSEWARE_ID = #{laboratoryReserve.coursewareId}
+                </if>
+                <if test="null != laboratoryReserve.weekday">
+                    AND lr.WEEKDAY = #{laboratoryReserve.weekday}
+                </if>
+                <if test="null != laboratoryReserve.auditorName">
+                    AND lr.AUDITOR_NAME = #{laboratoryReserve.auditorName}
+                </if>
+                <if test="null != laboratoryReserve.auditotUserId">
+                    AND lr.AUDITOT_USER_ID = #{laboratoryReserve.auditotUserId}
+                </if>
+                <if test="laboratoryReserve.laboratoryId != null">
+                    and lr.LABORATORY_ID = #{laboratoryReserve.laboratoryId}
+                </if>
+            </if>
+            <if test="null != beginTime and null != endTime">
+                and lr.CLASS_TIME <![CDATA[>=]]> #{beginTime} and lr.CLASS_TIME <![CDATA[<=]]> #{endTime}
+            </if>
+        </where>
+        ORDER by CREATE_TIME desc 
+    </select>
+  <!-- 自定义 -->
+    <select id="listTopic" resultType="com.xrj.bean.LaboratoryReserve">
+        SELECT * FROM laboratory_reserve lr
+        <where>
+            <if test="null != laboratoryReserve">
+                <if test="laboratoryReserve.laboratoryName != null">
+                    <bind name="vLaboratoryName" value="'%'+ laboratoryReserve.laboratoryName +'%'"></bind>
+                    AND lr.LABORATORY_NAME LIKE #{vLaboratoryName}
+                </if>
+                <if test="laboratoryReserve.topic != null">
+                    <bind name="vTopic" value="'%'+laboratoryReserve.topic+'%'"></bind>
+                    AND lr.TOPIC like #{vTopic}
+                </if>
+                <if test="null != laboratoryReserve.gradesClass">
+                    AND lr.GRADES_CLASS = #{laboratoryReserve.gradesClass}
+                </if>
+                <if test="null != laboratoryReserve.classTime">
+                    AND lr.CLASS_TIME = #{laboratoryReserve.classTime}
+                </if>
+                <if test="null != laboratoryReserve.dictionariesId">
+                    AND lr.DICTIONARIES_ID = #{laboratoryReserve.dictionariesId}
+                </if>
+                <if test="null != laboratoryReserve.userId">
+                    AND lr.USER_ID = #{laboratoryReserve.userId}
+                </if>
+                <if test="null != laboratoryReserve.userName">
+                    AND lr.USER_NAME = #{laboratoryReserve.userName}
+                </if>
+                <if test="null != laboratoryReserve.status">
+                    AND lr.STATUS = #{laboratoryReserve.status}
+                </if>
+                <if test="null != laboratoryReserve.auditorTime">
+                    AND lr.AUDITOR_TIME = #{laboratoryReserve.auditorTime}
+                </if>
+                <if test="null != laboratoryReserve.coursewareId">
+                    AND lr.COURSEWARE_ID = #{laboratoryReserve.coursewareId}
+                </if>
+                <if test="null != laboratoryReserve.weekday">
+                    AND lr.WEEKDAY = #{laboratoryReserve.weekday}
+                </if>
+                <if test="null != laboratoryReserve.auditorName">
+                    AND lr.AUDITOR_NAME = #{laboratoryReserve.auditorName}
+                </if>
+                <if test="null != laboratoryReserve.auditotUserId">
+                    AND lr.AUDITOT_USER_ID = #{laboratoryReserve.auditotUserId}
+                </if>
+                <if test="laboratoryReserve.laboratoryId != null">
+                    and lr.LABORATORY_ID = #{laboratoryReserve.laboratoryId}
+                </if>
+            </if>
+            <if test="null != beginTime and null != endTime">
+                and lr.CLASS_TIME <![CDATA[>=]]> #{beginTime} and lr.CLASS_TIME <![CDATA[<=]]> #{endTime}
+            </if>
+        </where>
+       group by TOPIC   ORDER by CREATE_TIME desc 
+    </select>
+
+
+</mapper>

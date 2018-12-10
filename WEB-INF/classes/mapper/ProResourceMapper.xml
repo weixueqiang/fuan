@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.ProResourceMapper">
+	<resultMap id="BaseResultMap" type="com.xrj.bean.ProResource">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="RES_NAME" property="resName" jdbcType="VARCHAR" />
+		<result column="RES_TYPE" property="resType" jdbcType="VARCHAR" />
+		<result column="RES_IMG" property="resImg" jdbcType="VARCHAR" />
+		<result column="SEQ" property="seq" jdbcType="INTEGER" />
+		<result column="URI" property="uri" jdbcType="VARCHAR" />
+		<result column="METHOD_NAME" property="methodName" jdbcType="VARCHAR" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+		<result column="EDIT_TIME" property="editTime" jdbcType="TIMESTAMP" />
+		<result column="EDITOR" property="editor" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="RES_CODE" property="resCode" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="RES_CSS" property="resCss" jdbcType="VARCHAR" />
+		<result column="ROOT_ID" property="rootId" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+		<result column="ARTICLE_TYPE" property="articleType" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		ID, RES_NAME, RES_TYPE, RES_IMG, SEQ, URI, METHOD_NAME,
+		CREATOR,
+		EDIT_TIME, EDITOR,
+		REMARK, RES_CODE, STATUS, RES_CSS, ROOT_ID,
+		CREATE_TIME, UPDATE_TIME,
+		PARENT_ID,
+		ARTICLE_TYPE
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.xrj.bean.ProResourceExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from pro_resource
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from pro_resource
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		pro_resource
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.xrj.bean.ProResourceExample">
+		delete from pro_resource
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.xrj.bean.ProResource">
+		insert into pro_resource (ID,
+		RES_NAME, RES_TYPE,
+		RES_IMG, SEQ, URI, METHOD_NAME,
+		CREATOR, EDIT_TIME,
+		EDITOR,
+		REMARK, RES_CODE, STATUS,
+		RES_CSS, ROOT_ID, CREATE_TIME,
+		UPDATE_TIME, PARENT_ID, ARTICLE_TYPE
+		)
+		values (#{id,jdbcType=VARCHAR},
+		#{resName,jdbcType=VARCHAR},
+		#{resType,jdbcType=VARCHAR},
+		#{resImg,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER},
+		#{uri,jdbcType=VARCHAR},
+		#{methodName,jdbcType=VARCHAR},
+		#{creator,jdbcType=VARCHAR}, #{editTime,jdbcType=TIMESTAMP},
+		#{editor,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{resCode,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR},
+		#{resCss,jdbcType=VARCHAR}, #{rootId,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{parentId,jdbcType=VARCHAR},
+		#{articleType,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.xrj.bean.ProResource">
+		insert into pro_resource
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="resName != null">
+				RES_NAME,
+			</if>
+			<if test="resType != null">
+				RES_TYPE,
+			</if>
+			<if test="resImg != null">
+				RES_IMG,
+			</if>
+			<if test="seq != null">
+				SEQ,
+			</if>
+			<if test="uri != null">
+				URI,
+			</if>
+			<if test="methodName != null">
+				METHOD_NAME,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="editTime != null">
+				EDIT_TIME,
+			</if>
+			<if test="editor != null">
+				EDITOR,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="resCode != null">
+				RES_CODE,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="resCss != null">
+				RES_CSS,
+			</if>
+			<if test="rootId != null">
+				ROOT_ID,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+			<if test="parentId != null">
+				PARENT_ID,
+			</if>
+			<if test="articleType != null">
+				ARTICLE_TYPE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="resName != null">
+				#{resName,jdbcType=VARCHAR},
+			</if>
+			<if test="resType != null">
+				#{resType,jdbcType=VARCHAR},
+			</if>
+			<if test="resImg != null">
+				#{resImg,jdbcType=VARCHAR},
+			</if>
+			<if test="seq != null">
+				#{seq,jdbcType=INTEGER},
+			</if>
+			<if test="uri != null">
+				#{uri,jdbcType=VARCHAR},
+			</if>
+			<if test="methodName != null">
+				#{methodName,jdbcType=VARCHAR},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="editTime != null">
+				#{editTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="editor != null">
+				#{editor,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="resCode != null">
+				#{resCode,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="resCss != null">
+				#{resCss,jdbcType=VARCHAR},
+			</if>
+			<if test="rootId != null">
+				#{rootId,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="articleType != null">
+				#{articleType,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.xrj.bean.ProResourceExample"
+		resultType="java.lang.Integer">
+		select count(*) from pro_resource
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update pro_resource
+		<set>
+			<if test="record.id != null">
+				ID = #{record.id,jdbcType=VARCHAR},
+			</if>
+			<if test="record.resName != null">
+				RES_NAME = #{record.resName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.resType != null">
+				RES_TYPE = #{record.resType,jdbcType=VARCHAR},
+			</if>
+			<if test="record.resImg != null">
+				RES_IMG = #{record.resImg,jdbcType=VARCHAR},
+			</if>
+			<if test="record.seq != null">
+				SEQ = #{record.seq,jdbcType=INTEGER},
+			</if>
+			<if test="record.uri != null">
+				URI = #{record.uri,jdbcType=VARCHAR},
+			</if>
+			<if test="record.methodName != null">
+				METHOD_NAME = #{record.methodName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.creator != null">
+				CREATOR = #{record.creator,jdbcType=VARCHAR},
+			</if>
+			<if test="record.editTime != null">
+				EDIT_TIME = #{record.editTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.editor != null">
+				EDITOR = #{record.editor,jdbcType=VARCHAR},
+			</if>
+			<if test="record.remark != null">
+				REMARK = #{record.remark,jdbcType=VARCHAR},
+			</if>
+			<if test="record.resCode != null">
+				RES_CODE = #{record.resCode,jdbcType=VARCHAR},
+			</if>
+			<if test="record.status != null">
+				STATUS = #{record.status,jdbcType=VARCHAR},
+			</if>
+			<if test="record.resCss != null">
+				RES_CSS = #{record.resCss,jdbcType=VARCHAR},
+			</if>
+			<if test="record.rootId != null">
+				ROOT_ID = #{record.rootId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createTime != null">
+				CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updateTime != null">
+				UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.parentId != null">
+				PARENT_ID = #{record.parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.articleType != null">
+				ARTICLE_TYPE = #{record.articleType,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update pro_resource
+		set ID = #{record.id,jdbcType=VARCHAR},
+		RES_NAME =
+		#{record.resName,jdbcType=VARCHAR},
+		RES_TYPE =
+		#{record.resType,jdbcType=VARCHAR},
+		RES_IMG =
+		#{record.resImg,jdbcType=VARCHAR},
+		SEQ =
+		#{record.seq,jdbcType=INTEGER},
+		URI = #{record.uri,jdbcType=VARCHAR},
+		METHOD_NAME = #{record.methodName,jdbcType=VARCHAR},
+		CREATOR =
+		#{record.creator,jdbcType=VARCHAR},
+		EDIT_TIME =
+		#{record.editTime,jdbcType=TIMESTAMP},
+		EDITOR =
+		#{record.editor,jdbcType=VARCHAR},
+		REMARK =
+		#{record.remark,jdbcType=VARCHAR},
+		RES_CODE =
+		#{record.resCode,jdbcType=VARCHAR},
+		STATUS =
+		#{record.status,jdbcType=VARCHAR},
+		RES_CSS =
+		#{record.resCss,jdbcType=VARCHAR},
+		ROOT_ID =
+		#{record.rootId,jdbcType=VARCHAR},
+		CREATE_TIME =
+		#{record.createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME =
+		#{record.updateTime,jdbcType=TIMESTAMP},
+		PARENT_ID =
+		#{record.parentId,jdbcType=VARCHAR},
+		ARTICLE_TYPE =
+		#{record.articleType,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.ProResource">
+		update pro_resource
+		<set>
+			<if test="resName != null">
+				RES_NAME = #{resName,jdbcType=VARCHAR},
+			</if>
+			<if test="resType != null">
+				RES_TYPE = #{resType,jdbcType=VARCHAR},
+			</if>
+			<if test="resImg != null">
+				RES_IMG = #{resImg,jdbcType=VARCHAR},
+			</if>
+			<if test="seq != null">
+				SEQ = #{seq,jdbcType=INTEGER},
+			</if>
+			<if test="uri != null">
+				URI = #{uri,jdbcType=VARCHAR},
+			</if>
+			<if test="methodName != null">
+				METHOD_NAME = #{methodName,jdbcType=VARCHAR},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="editTime != null">
+				EDIT_TIME = #{editTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="editor != null">
+				EDITOR = #{editor,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="resCode != null">
+				RES_CODE = #{resCode,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="resCss != null">
+				RES_CSS = #{resCss,jdbcType=VARCHAR},
+			</if>
+			<if test="rootId != null">
+				ROOT_ID = #{rootId,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="parentId != null">
+				PARENT_ID = #{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="articleType != null">
+				ARTICLE_TYPE = #{articleType,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.xrj.bean.ProResource">
+		update
+		pro_resource
+		set RES_NAME = #{resName,jdbcType=VARCHAR},
+		RES_TYPE =
+		#{resType,jdbcType=VARCHAR},
+		RES_IMG = #{resImg,jdbcType=VARCHAR},
+		SEQ =
+		#{seq,jdbcType=INTEGER},
+		URI = #{uri,jdbcType=VARCHAR},
+		METHOD_NAME =
+		#{methodName,jdbcType=VARCHAR},
+		CREATOR = #{creator,jdbcType=VARCHAR},
+		EDIT_TIME = #{editTime,jdbcType=TIMESTAMP},
+		EDITOR =
+		#{editor,jdbcType=VARCHAR},
+		REMARK = #{remark,jdbcType=VARCHAR},
+		RES_CODE = #{resCode,jdbcType=VARCHAR},
+		STATUS =
+		#{status,jdbcType=VARCHAR},
+		RES_CSS = #{resCss,jdbcType=VARCHAR},
+		ROOT_ID = #{rootId,jdbcType=VARCHAR},
+		CREATE_TIME =
+		#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME =
+		#{updateTime,jdbcType=TIMESTAMP},
+		PARENT_ID =
+		#{parentId,jdbcType=VARCHAR},
+		ARTICLE_TYPE =
+		#{articleType,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<!-- 自定义 -->
+	<select id="listByRole" resultType="map">
+		SELECT pr.*
+		from pro_role_resource prr
+		join pro_resource pr on
+		pr.id=prr.RES_ID and pr.status='1'
+		WHERE pr.RES_TYPE='MENU' and
+		prr.ROLE_TEMPLATE_ID in
+		<foreach collection="roleIds" open="(" close=")" separator=","
+			item="var">
+			#{var}
+		</foreach>
+		Group by pr.ID
+		ORDER BY pr.SEQ
+	</select>
+
+	<select id="isExist" resultType="boolean">
+		SELECT COUNT(pr.id)>0
+		from pro_resource pr
+		WHERE (pr.RES_NAME=#{resName}
+			<if test="resCode !=null and resCode!=''">
+				or pr.RES_CODE=#{resCode} 
+			</if>
+			)
+			<if test="id !=null and id !=''">
+				and pr.id!=#{id}
+			</if>
+			<if test="parentId !=null and parentId !=''">
+				and pr.parent_id=#{parentId}
+			</if>
+	</select>
+
+	<select id="listAll" resultType="map">
+		select *
+		from pro_resource
+		where
+		status='1' and res_type='MENU'
+		order by id
+	</select>
+	<select id="listTree" resultType="map">
+		SELECT pr.*
+		from pro_resource pr
+		WHERE pr.RES_TYPE='MENU' and pr.status='1'
+		Group by pr.ID
+		ORDER BY
+		pr.SEQ
+	</select>
+
+	<select id="listDefaultRes" resultType="map">
+		SELECT pr.*
+		from
+		pro_resource pr
+		WHERE
+		pr.RES_TYPE like (#{resType})
+		Group by pr.ID
+		ORDER
+		BY pr.SEQ
+	</select>
+	<select id="listTreeByUser" resultType="map">
+		SELECT pr.*
+		from pro_role_resource prr
+		join pro_resource pr on
+		pr.id=prr.RES_ID and pr.status='1'
+		WHERE pr.RES_TYPE='MENU' and
+		( 1=2
+		<if test="roleIds !=null and !roleIds.empty">
+			or prr.ROLE_TEMPLATE_ID in
+			<foreach collection="roleIds" open="(" close=")" separator=","
+				item="var">
+				#{var}
+			</foreach>
+		</if>
+		<if test="userid !=null and userid !=''">
+			or prr.user_id=#{userid}
+		</if>
+		<if test="deps !=null and !deps.empty">
+			or prr.DEPARTMENT_ID in
+			<foreach collection="deps" open="(" close=")" separator=","
+				item="var">
+				#{var}
+			</foreach>
+		</if>
+		)
+		Group by pr.ID
+		ORDER BY pr.SEQ
+	</select>
+
+	<select id="listUserIdProResource" resultType="map">
+		SELECT
+		pr.id,pr.res_name,pro.auditor,pro.second_auditor,pro.third_auditor
+		from pro_resource pr LEFT JOIN pro_role_resource pro on
+		pr.id=pro.RES_ID where
+		pr.ROOT_ID='#' and
+		pr.status='1'
+		<if test="resId !=null and resId !=''">
+			and pr.id=#{resId}
+		</if>
+		<if test="auditor !=null and auditor !=''">
+		and  pro.user_id=#{auditor} 
+		</if>
+	</select>
+
+  
+  <select id="findMuparent" resultType="map">
+  	SELECT pr.* 
+  		from pro_role_resource prr 
+		join pro_resource pr on pr.id=prr.RES_ID and pr.status='1'
+	WHERE pr.RES_TYPE='MENU' and   pr.id='100000000000'
+	Group by pr.ID
+	ORDER BY pr.SEQ
+  </select>
+  
+</mapper>

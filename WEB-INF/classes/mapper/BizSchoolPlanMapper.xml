@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.BizSchoolPlanMapper" >
+    <resultMap id="BaseResultMap" type="com.xrj.bean.BizSchoolPlan" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="TEACHER_ID" property="teacherId" jdbcType="VARCHAR" />
+        <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR" />
+        <result column="DEPARTMENT_ID" property="departmentId" jdbcType="VARCHAR" />
+        <result column="TITLE" property="title" jdbcType="VARCHAR" />
+        <result column="ATTACHMENT" property="attachment" jdbcType="VARCHAR" />
+        <result column="DATE" property="date" jdbcType="TIMESTAMP" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.xrj.bean.BizSchoolPlan" extends="BaseResultMap" >
+        <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+    </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+        <if test="fields == null" >
+            ID, TEACHER_ID, TEACHER_NAME, DEPARTMENT_ID, TITLE, ATTACHMENT, DATE, CREATE_TIME,
+            UPDATE_TIME, STATUS
+        </if>
+        <if test="fields != null" >
+            ${fields}
+        </if>
+    </sql>
+    <sql id="Blob_Column_List" >
+        CONTENT
+    </sql>
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.xrj.bean.BizSchoolPlanExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from biz_school_plan
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xrj.bean.BizSchoolPlanExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from biz_school_plan
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+        <if test="startRow != null" >
+            limit #{startRow} , #{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+        select
+        ID,TEACHER_ID,TEACHER_NAME,DEPARTMENT_ID,TITLE,ATTACHMENT,DATE,CREATE_TIME,UPDATE_TIME,STATUS,CONTENT
+        ,
+        <include refid="Blob_Column_List" />
+        from biz_school_plan
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from biz_school_plan
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.xrj.bean.BizSchoolPlanExample" >
+        delete from biz_school_plan
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.xrj.bean.BizSchoolPlan" >
+        insert into biz_school_plan (ID, TEACHER_ID, TEACHER_NAME,
+        DEPARTMENT_ID, TITLE, ATTACHMENT,
+        DATE, CREATE_TIME, UPDATE_TIME,
+        STATUS, CONTENT)
+        values (#{id,jdbcType=VARCHAR}, #{teacherId,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR},
+        #{departmentId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{attachment,jdbcType=VARCHAR},
+        #{date,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{status,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xrj.bean.BizSchoolPlan" >
+        insert into biz_school_plan
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="teacherId != null" >
+                TEACHER_ID,
+            </if>
+            <if test="teacherName != null" >
+                TEACHER_NAME,
+            </if>
+            <if test="departmentId != null" >
+                DEPARTMENT_ID,
+            </if>
+            <if test="title != null" >
+                TITLE,
+            </if>
+            <if test="attachment != null" >
+                ATTACHMENT,
+            </if>
+            <if test="date != null" >
+                DATE,
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME,
+            </if>
+            <if test="status != null" >
+                STATUS,
+            </if>
+            <if test="content != null" >
+                CONTENT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherId != null" >
+                #{teacherId,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherName != null" >
+                #{teacherName,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null" >
+                #{departmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null" >
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="attachment != null" >
+                #{attachment,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null" >
+                #{date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.xrj.bean.BizSchoolPlanExample" resultType="java.lang.Integer" >
+        select count(*) from biz_school_plan
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update biz_school_plan
+        <set >
+            <if test="record.id != null" >
+                ID = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.teacherId != null" >
+                TEACHER_ID = #{record.teacherId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.teacherName != null" >
+                TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.departmentId != null" >
+                DEPARTMENT_ID = #{record.departmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.title != null" >
+                TITLE = #{record.title,jdbcType=VARCHAR},
+            </if>
+            <if test="record.attachment != null" >
+                ATTACHMENT = #{record.attachment,jdbcType=VARCHAR},
+            </if>
+            <if test="record.date != null" >
+                DATE = #{record.date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.createTime != null" >
+                CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null" >
+                UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.status != null" >
+                STATUS = #{record.status,jdbcType=VARCHAR},
+            </if>
+            <if test="record.content != null" >
+                CONTENT = #{record.content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map" >
+        update biz_school_plan
+        set ID = #{record.id,jdbcType=VARCHAR},
+        TEACHER_ID = #{record.teacherId,jdbcType=VARCHAR},
+        TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+        DEPARTMENT_ID = #{record.departmentId,jdbcType=VARCHAR},
+        TITLE = #{record.title,jdbcType=VARCHAR},
+        ATTACHMENT = #{record.attachment,jdbcType=VARCHAR},
+        DATE = #{record.date,jdbcType=TIMESTAMP},
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+        STATUS = #{record.status,jdbcType=VARCHAR},
+        CONTENT = #{record.content,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update biz_school_plan
+        set ID = #{record.id,jdbcType=VARCHAR},
+        TEACHER_ID = #{record.teacherId,jdbcType=VARCHAR},
+        TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+        DEPARTMENT_ID = #{record.departmentId,jdbcType=VARCHAR},
+        TITLE = #{record.title,jdbcType=VARCHAR},
+        ATTACHMENT = #{record.attachment,jdbcType=VARCHAR},
+        DATE = #{record.date,jdbcType=TIMESTAMP},
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+        STATUS = #{record.status,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.BizSchoolPlan" >
+        update biz_school_plan
+        <set >
+            <if test="teacherId != null" >
+                TEACHER_ID = #{teacherId,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherName != null" >
+                TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null" >
+                DEPARTMENT_ID = #{departmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null" >
+                TITLE = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="attachment != null" >
+                ATTACHMENT = #{attachment,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null" >
+                DATE = #{date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null" >
+                STATUS = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                CONTENT = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xrj.bean.BizSchoolPlan" >
+        update biz_school_plan
+        set TEACHER_ID = #{teacherId,jdbcType=VARCHAR},
+        TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+        DEPARTMENT_ID = #{departmentId,jdbcType=VARCHAR},
+        TITLE = #{title,jdbcType=VARCHAR},
+        ATTACHMENT = #{attachment,jdbcType=VARCHAR},
+        DATE = #{date,jdbcType=TIMESTAMP},
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+        STATUS = #{status,jdbcType=VARCHAR},
+        CONTENT = #{content,jdbcType=LONGVARCHAR}
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xrj.bean.BizSchoolPlan" >
+    update biz_school_plan
+    set TEACHER_ID = #{teacherId,jdbcType=VARCHAR},
+      TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+      DEPARTMENT_ID = #{departmentId,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      ATTACHMENT = #{attachment,jdbcType=VARCHAR},
+      DATE = #{date,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:resource/*.properties" />
+    <!--springMVC使用默认配置过滤静态资源 必须配合mvc:annotation-driven  否则失效 -->
+    <mvc:default-servlet-handler />
+    <mvc:annotation-driven >
+    	<mvc:message-converters>
+    		<!-- 过滤NULL字段 -->
+     		<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"/>
+    	</mvc:message-converters>
+    </mvc:annotation-driven>
+    
+    
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+    <context:component-scan base-package="com.xrj.controller,com.xrj.manager.controller,com.xrj.resource.controller,com.xrj.student.controller" />
+	
+
+
+
+    <mvc:interceptors>
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/admin/**" />-->
+            <!--<bean id="managerLoginInterceptor" class="com.xrj.manager.interceptor.ManagerLoginInterceptor">-->
+                <!--<property name="exceptUrls">-->
+                    <!--<list>-->
+                        <!--<value>/admin/user/login</value>-->
+                        <!--<value>/admin/user/callback</value>-->
+                        <!--<value>/admin/user/check</value>-->
+                    <!--</list>-->
+                <!--</property>-->
+                <!--<property name="url" value="${callback_url}" />-->
+            <!--</bean>-->
+        <!--</mvc:interceptor>-->
+<!--         <mvc:interceptor> -->
+<!--             <mvc:mapping path="/student/**" /> -->
+<!--             <bean id="studentLoginInterceptor" class="com.xrj.student.interceptor.StudentLoginInterceptor"> -->
+<!--                 <property name="exceptUrls"> -->
+<!--                     <list> -->
+<!--                         <value>/student/user/login</value> -->
+<!--                         <value>/student/user/callback</value> -->
+<!--                         <value>/student/user/check</value> -->
+<!--                     </list> -->
+<!--                 </property> -->
+<!--                   <property name="url" value="${callback_url}" /> --> 
+<!--             </bean> -->
+<!--         </mvc:interceptor> -->
+         <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <bean id="crossFilter" class="com.xrj.interceptor.CrossFilter"> </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    
+    
+    
+
+    <!-- 配置资源映射 -->
+    <!--<mvc:resources location="/css/" mapping="/css/**"/>-->
+    <!--<mvc:resources location="/js/" mapping="/js/**"/>-->
+    <!-- 配置文件上传解析器 -->
+    <bean class="com.xrj.exception.DefaultExceptionHandler"></bean>
+
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设定默认编码 -->
+        <property name="defaultEncoding" value="UTF-8"></property>
+        <!-- 设定文件上传的最大值100MB，100*1024*1024 -->
+        <property name="maxUploadSize" value="104857600"></property>
+    </bean>
+
+</beans>

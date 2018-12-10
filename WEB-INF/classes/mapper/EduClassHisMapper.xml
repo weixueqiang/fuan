@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xrj.mapper.EduClassHisMapper">
+  <resultMap id="BaseResultMap" type="com.xrj.bean.EduClassHis">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="class_id" jdbcType="VARCHAR" property="classId" />
+    <result column="school_id" jdbcType="VARCHAR" property="schoolId" />
+    <result column="grade_id" jdbcType="VARCHAR" property="gradeId" />
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="year_id" jdbcType="VARCHAR" property="yearId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="year" jdbcType="VARCHAR" property="year" />
+    <result column="year_name" jdbcType="VARCHAR" property="yearName" />
+    <result column="year_begin_time" jdbcType="TIMESTAMP" property="yearBeginTime" />
+    <result column="year_end_time" jdbcType="TIMESTAMP" property="yearEndTime" />
+    <result column="last_term_id" jdbcType="VARCHAR" property="lastTermId" />
+    <result column="next_term_id" jdbcType="VARCHAR" property="nextTermId" />
+    <result column="grade_seq" jdbcType="VARCHAR" property="gradeSeq" />
+    <result column="head_teacher" jdbcType="VARCHAR" property="headTeacher" />
+    <result column="v_head_teacher" jdbcType="VARCHAR" property="vHeadTeacher" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, class_id, school_id, grade_id, grade, title, year_id, create_time, update_time, 
+    type, remark, year, year_name, year_begin_time, year_end_time, last_term_id, next_term_id, 
+    grade_seq, head_teacher, v_head_teacher
+  </sql>
+  <select id="selectByExample" parameterType="com.xrj.bean.EduClassHisExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from edu_class_his
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from edu_class_his
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from edu_class_his
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xrj.bean.EduClassHisExample">
+    delete from edu_class_his
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xrj.bean.EduClassHis">
+    insert into edu_class_his (id, class_id, school_id, 
+      grade_id, grade, title, 
+      year_id, create_time, update_time, 
+      type, remark, year, 
+      year_name, year_begin_time, year_end_time, 
+      last_term_id, next_term_id, grade_seq, 
+      head_teacher, v_head_teacher)
+    values (#{id,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, #{schoolId,jdbcType=VARCHAR}, 
+      #{gradeId,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{yearId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, 
+      #{yearName,jdbcType=VARCHAR}, #{yearBeginTime,jdbcType=TIMESTAMP}, #{yearEndTime,jdbcType=TIMESTAMP}, 
+      #{lastTermId,jdbcType=VARCHAR}, #{nextTermId,jdbcType=VARCHAR}, #{gradeSeq,jdbcType=VARCHAR}, 
+      #{headTeacher,jdbcType=VARCHAR}, #{vHeadTeacher,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xrj.bean.EduClassHis">
+    insert into edu_class_his
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="classId != null">
+        class_id,
+      </if>
+      <if test="schoolId != null">
+        school_id,
+      </if>
+      <if test="gradeId != null">
+        grade_id,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="yearId != null">
+        year_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="yearName != null">
+        year_name,
+      </if>
+      <if test="yearBeginTime != null">
+        year_begin_time,
+      </if>
+      <if test="yearEndTime != null">
+        year_end_time,
+      </if>
+      <if test="lastTermId != null">
+        last_term_id,
+      </if>
+      <if test="nextTermId != null">
+        next_term_id,
+      </if>
+      <if test="gradeSeq != null">
+        grade_seq,
+      </if>
+      <if test="headTeacher != null">
+        head_teacher,
+      </if>
+      <if test="vHeadTeacher != null">
+        v_head_teacher,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null">
+        #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeId != null">
+        #{gradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="yearId != null">
+        #{yearId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="yearName != null">
+        #{yearName,jdbcType=VARCHAR},
+      </if>
+      <if test="yearBeginTime != null">
+        #{yearBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yearEndTime != null">
+        #{yearEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastTermId != null">
+        #{lastTermId,jdbcType=VARCHAR},
+      </if>
+      <if test="nextTermId != null">
+        #{nextTermId,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeSeq != null">
+        #{gradeSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="headTeacher != null">
+        #{headTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="vHeadTeacher != null">
+        #{vHeadTeacher,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xrj.bean.EduClassHisExample" resultType="java.lang.Long">
+    select count(*) from edu_class_his
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update edu_class_his
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classId != null">
+        class_id = #{record.classId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolId != null">
+        school_id = #{record.schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gradeId != null">
+        grade_id = #{record.gradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grade != null">
+        grade = #{record.grade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yearId != null">
+        year_id = #{record.yearId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yearName != null">
+        year_name = #{record.yearName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yearBeginTime != null">
+        year_begin_time = #{record.yearBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.yearEndTime != null">
+        year_end_time = #{record.yearEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastTermId != null">
+        last_term_id = #{record.lastTermId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nextTermId != null">
+        next_term_id = #{record.nextTermId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gradeSeq != null">
+        grade_seq = #{record.gradeSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headTeacher != null">
+        head_teacher = #{record.headTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vHeadTeacher != null">
+        v_head_teacher = #{record.vHeadTeacher,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update edu_class_his
+    set id = #{record.id,jdbcType=VARCHAR},
+      class_id = #{record.classId,jdbcType=VARCHAR},
+      school_id = #{record.schoolId,jdbcType=VARCHAR},
+      grade_id = #{record.gradeId,jdbcType=VARCHAR},
+      grade = #{record.grade,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      year_id = #{record.yearId,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      type = #{record.type,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      year = #{record.year,jdbcType=VARCHAR},
+      year_name = #{record.yearName,jdbcType=VARCHAR},
+      year_begin_time = #{record.yearBeginTime,jdbcType=TIMESTAMP},
+      year_end_time = #{record.yearEndTime,jdbcType=TIMESTAMP},
+      last_term_id = #{record.lastTermId,jdbcType=VARCHAR},
+      next_term_id = #{record.nextTermId,jdbcType=VARCHAR},
+      grade_seq = #{record.gradeSeq,jdbcType=VARCHAR},
+      head_teacher = #{record.headTeacher,jdbcType=VARCHAR},
+      v_head_teacher = #{record.vHeadTeacher,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.EduClassHis">
+    update edu_class_his
+    <set>
+      <if test="classId != null">
+        class_id = #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null">
+        school_id = #{schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeId != null">
+        grade_id = #{gradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="yearId != null">
+        year_id = #{yearId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="yearName != null">
+        year_name = #{yearName,jdbcType=VARCHAR},
+      </if>
+      <if test="yearBeginTime != null">
+        year_begin_time = #{yearBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yearEndTime != null">
+        year_end_time = #{yearEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastTermId != null">
+        last_term_id = #{lastTermId,jdbcType=VARCHAR},
+      </if>
+      <if test="nextTermId != null">
+        next_term_id = #{nextTermId,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeSeq != null">
+        grade_seq = #{gradeSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="headTeacher != null">
+        head_teacher = #{headTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="vHeadTeacher != null">
+        v_head_teacher = #{vHeadTeacher,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xrj.bean.EduClassHis">
+    update edu_class_his
+    set class_id = #{classId,jdbcType=VARCHAR},
+      school_id = #{schoolId,jdbcType=VARCHAR},
+      grade_id = #{gradeId,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      year_id = #{yearId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      year = #{year,jdbcType=VARCHAR},
+      year_name = #{yearName,jdbcType=VARCHAR},
+      year_begin_time = #{yearBeginTime,jdbcType=TIMESTAMP},
+      year_end_time = #{yearEndTime,jdbcType=TIMESTAMP},
+      last_term_id = #{lastTermId,jdbcType=VARCHAR},
+      next_term_id = #{nextTermId,jdbcType=VARCHAR},
+      grade_seq = #{gradeSeq,jdbcType=VARCHAR},
+      head_teacher = #{headTeacher,jdbcType=VARCHAR},
+      v_head_teacher = #{vHeadTeacher,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

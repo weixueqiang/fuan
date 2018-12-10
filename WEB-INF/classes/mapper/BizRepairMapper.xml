@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.BizRepairMapper" >
+  <resultMap id="BaseResultMap" type="com.xrj.bean.BizRepair" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="IMAGES" property="images" jdbcType="VARCHAR" />
+    <result column="TEACHER_ID" property="teacherId" jdbcType="VARCHAR" />
+    <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="AUDITOR_ID" property="auditorId" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="AUDITOR_TIME" property="auditorTime" jdbcType="TIMESTAMP" />
+    <result column="IS_NEED_APPLY" property="isNeedApply" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.xrj.bean.BizRepair" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, TITLE, TYPE, IMAGES, TEACHER_ID, TEACHER_NAME, STATUS, AUDITOR_ID, REMARK, CREATE_TIME, 
+    UPDATE_TIME, AUDITOR_TIME, IS_NEED_APPLY
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.xrj.bean.BizRepairExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from biz_repair
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xrj.bean.BizRepairExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from biz_repair
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from biz_repair
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from biz_repair
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xrj.bean.BizRepairExample" >
+    delete from biz_repair
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xrj.bean.BizRepair" >
+    insert into biz_repair (ID, TITLE, TYPE, 
+      IMAGES, TEACHER_ID, TEACHER_NAME, 
+      STATUS, AUDITOR_ID, REMARK, 
+      CREATE_TIME, UPDATE_TIME, AUDITOR_TIME, 
+      IS_NEED_APPLY, CONTENT)
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{images,jdbcType=VARCHAR}, #{teacherId,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{auditorId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{auditorTime,jdbcType=TIMESTAMP}, 
+      #{isNeedApply,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xrj.bean.BizRepair" >
+    insert into biz_repair
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="images != null" >
+        IMAGES,
+      </if>
+      <if test="teacherId != null" >
+        TEACHER_ID,
+      </if>
+      <if test="teacherName != null" >
+        TEACHER_NAME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="auditorId != null" >
+        AUDITOR_ID,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="auditorTime != null" >
+        AUDITOR_TIME,
+      </if>
+      <if test="isNeedApply != null" >
+        IS_NEED_APPLY,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null" >
+        #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null" >
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorId != null" >
+        #{auditorId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditorTime != null" >
+        #{auditorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isNeedApply != null" >
+        #{isNeedApply,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xrj.bean.BizRepairExample" resultType="java.lang.Integer" >
+    select count(*) from biz_repair
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update biz_repair
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        TITLE = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.images != null" >
+        IMAGES = #{record.images,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherId != null" >
+        TEACHER_ID = #{record.teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherName != null" >
+        TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditorId != null" >
+        AUDITOR_ID = #{record.auditorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.auditorTime != null" >
+        AUDITOR_TIME = #{record.auditorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isNeedApply != null" >
+        IS_NEED_APPLY = #{record.isNeedApply,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update biz_repair
+    set ID = #{record.id,jdbcType=VARCHAR},
+      TITLE = #{record.title,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=VARCHAR},
+      IMAGES = #{record.images,jdbcType=VARCHAR},
+      TEACHER_ID = #{record.teacherId,jdbcType=VARCHAR},
+      TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      AUDITOR_ID = #{record.auditorId,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      AUDITOR_TIME = #{record.auditorTime,jdbcType=TIMESTAMP},
+      IS_NEED_APPLY = #{record.isNeedApply,jdbcType=VARCHAR},
+      CONTENT = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update biz_repair
+    set ID = #{record.id,jdbcType=VARCHAR},
+      TITLE = #{record.title,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=VARCHAR},
+      IMAGES = #{record.images,jdbcType=VARCHAR},
+      TEACHER_ID = #{record.teacherId,jdbcType=VARCHAR},
+      TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      AUDITOR_ID = #{record.auditorId,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      AUDITOR_TIME = #{record.auditorTime,jdbcType=TIMESTAMP},
+      IS_NEED_APPLY = #{record.isNeedApply,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.BizRepair" >
+    update biz_repair
+    <set >
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null" >
+        IMAGES = #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null" >
+        TEACHER_ID = #{teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null" >
+        TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorId != null" >
+        AUDITOR_ID = #{auditorId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditorTime != null" >
+        AUDITOR_TIME = #{auditorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isNeedApply != null" >
+        IS_NEED_APPLY = #{isNeedApply,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xrj.bean.BizRepair" >
+    update biz_repair
+    set TITLE = #{title,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      IMAGES = #{images,jdbcType=VARCHAR},
+      TEACHER_ID = #{teacherId,jdbcType=VARCHAR},
+      TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      AUDITOR_ID = #{auditorId,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      AUDITOR_TIME = #{auditorTime,jdbcType=TIMESTAMP},
+      IS_NEED_APPLY = #{isNeedApply,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xrj.bean.BizRepair" >
+    update biz_repair
+    set TITLE = #{title,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      IMAGES = #{images,jdbcType=VARCHAR},
+      TEACHER_ID = #{teacherId,jdbcType=VARCHAR},
+      TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      AUDITOR_ID = #{auditorId,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      AUDITOR_TIME = #{auditorTime,jdbcType=TIMESTAMP},
+      IS_NEED_APPLY = #{isNeedApply,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 自定义 -->
+  <resultMap type="BizRepair" id="pageList" extends="BaseResultMap">
+  	<result column="editable" property="editable" jdbcType="BOOLEAN" />
+  </resultMap>
+  <select id="setPageList" resultMap="pageList">
+   SELECT br.*,COUNT(ba.id)=0 editable 
+   		from biz_repair br
+		left JOIN business_audit ba on ba.ORDER_ID=br.id and ba.STATE='ACCEPTED'
+	where 	1=1
+		<if test="teacherId !=null and teacherId!=''">
+ 			and br.TEACHER_ID=#{teacherId}
+		</if>
+	<if test="status !=null and status !=''">
+ 			and br.status=#{status}
+		</if>
+	<if test="title !=null and title !=''">
+ 			and br.title like #{title}
+		</if>
+	GROUP BY br.id
+	order by  br.CREATE_TIME desc
+  </select>
+</mapper>

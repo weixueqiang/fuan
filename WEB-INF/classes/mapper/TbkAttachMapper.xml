@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xrj.mapper.TbkAttachMapper">
+	<sql id="_list">
+		${alias}.id,${alias}.name,${alias}.`key`,${alias}.url,${alias}.create_time,${alias}.update_time,
+		${alias}.type,${alias}.status,${alias}.count,${alias}.resource_id
+	</sql>
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		insert
+		into
+		tbk_attach(id,name,`key`,url,create_time,update_time,type,status,count,resource_id)
+		values(
+		#{id},
+		#{name},
+		#{key},
+		#{url},
+		#{createTime},
+		#{updateTime},
+		#{type},
+		#{status},
+		#{count},
+		#{resourceId}
+		)
+	</insert>
+
+	<delete id="delete">
+		delete from tbk_attach where id =
+		#{id}
+	</delete>
+	
+	<delete id="deleteByResourceId">
+		delete from tbk_attach where resource_id =
+		#{resourceId}
+	</delete>
+
+	<update id="batchDelete">
+		delete from tbk_attach
+		where id in
+		<foreach item="item" collection="ids" open="(" separator=","
+			close=")">
+			#{item}
+		</foreach>
+	</update>
+
+	<update id="update">
+		update tbk_attach a
+		<set>
+			<if test="name != null">a.name = #{name},</if>
+			<if test="key != null">a.key = #{key},</if>
+			<if test="url != null">a.url = #{url},</if>
+			<if test="updateTime != null">a.update_time = #{updateTime},</if>
+			<if test="type != null">a.type = #{type},</if>
+			<if test="status != null">a.status = #{status},</if>
+			<if test="count != null">a.count = #{count},</if>
+		</set>
+		where a.id = #{id}
+	</update>
+
+	<select id="list" resultType="TbkAttach">
+		select
+		<include refid="_list">
+			<property name="alias" value="ta" />
+		</include>
+		from tbk_attach ta
+		<where>
+			<if test="name != null and name != ''">
+				and ta.name like CONCAT('%',#{name},'%')
+			</if>
+			<if test="type != null">
+				and ta.type = #{type}
+			</if>
+			<if test="status != null">
+				and ta.status = #{status}
+			</if>
+		</where>
+		order by ta.update_time desc
+	</select>
+	
+	<select id="listByResourceId" resultType="TbkAttach">
+		select
+		<include refid="_list">
+			<property name="alias" value="ta" />
+		</include>
+		from tbk_attach ta where ta.resource_id = #{resourceId}
+		order by ta.update_time desc
+	</select>
+	
+	<select id="get" resultType="TbkAttach">
+		select
+		<include refid="_list">
+			<property name="alias" value="ta" />
+		</include>
+		from tbk_attach ta where ta.id = #{id}
+	</select>
+
+</mapper>

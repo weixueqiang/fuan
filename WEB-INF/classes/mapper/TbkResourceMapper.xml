@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xrj.mapper.TbkResourceMapper">
+	<sql id="_list">
+		${alias}.id,${alias}.name,${alias}.create_time,${alias}.update_time
+		,${alias}.creator,${alias}.creator_name,${alias}.audit_status,${alias}.auditor,${alias}.auditor_name,${alias}.department_id
+		,${alias}.status,${alias}.share_status,${alias}.remark
+	</sql>
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		insert
+		into
+		tbk_resource(id,name,create_time,update_time,creator,creator_name,audit_status,
+		auditor,auditor_name,department_id,status,share_status,remark)
+		values(
+		#{id},
+		#{name},
+		#{createTime},
+		#{updateTime},
+		#{creator},
+		#{creatorName},
+		#{auditStatus},
+		#{auditor},
+		#{auditorName},
+		#{departmentId},
+		#{status},
+		#{shareStatus},
+		#{remark}
+		)
+	</insert>
+
+	<delete id="delete">
+		update tbk_resource set status = 'DELETE' where id =
+		#{id}
+	</delete>
+
+	<update id="batchDelete">
+		update tbk_resource
+		set status = 'DELETE'
+		where id in
+		<foreach item="item" collection="ids" open="(" separator=","
+			close=")">
+			#{item}
+		</foreach>
+	</update>
+
+	<update id="update">
+		update tbk_resource a
+		<set>
+			<if test="name != null">a.name = #{name},</if>
+			<if test="updateTime != null">a.update_time = #{updateTime},</if>
+			<if test="creator != null">a.creator = #{creator},</if>
+			<if test="creatorName != null">a.creator_name = #{creatorName},</if>
+			<if test="auditStatus != null">a.audit_status = #{auditStatus},</if>
+			<if test="auditStatus == null">a.audit_status = null,</if>
+			<if test="auditor != null">a.auditor = #{auditor},</if>
+			<if test="auditorName != null">a.auditor_name = #{auditorName},</if>
+			<if test="departmentId != null">a.department_id = #{departmentId},</if>
+			<if test="status != null">a.status = #{status},</if>
+			<if test="shareStatus != null">a.share_status = #{shareStatus},</if>
+			<if test="remark != null">a.remark = #{remark},</if>
+		</set>
+		where a.id = #{id}
+	</update>
+
+	<update id="batchAudit">
+		update tbk_resource t
+		set t.audit_status = #{status}, t.auditor =
+		#{auditor}, t.auditor_name = #{auditorName}
+		where id in
+		<foreach item="item" collection="ids" open="(" separator=","
+			close=")">
+			#{item}
+		</foreach>
+	</update>
+	<select id="get" resultType="TbkResource">
+		select
+		<include refid="_list">
+			<property name="alias" value="tr" />
+		</include>
+		, pr.res_name departmentName
+		from tbk_resource tr
+		left join
+		pro_resource pr on tr.department_id = pr.id
+		where tr.id = #{id}
+	</select>
+
+	<select id="list" resultType="TbkResource">
+		select
+		<include refid="_list">
+			<property name="alias" value="tr" />
+		</include>
+		, pr.res_name departmentName
+		from tbk_resource tr
+		inner join
+		pro_resource pr on tr.department_id = pr.id
+		<where>
+			<if test="name != null and name != ''">
+				and tr.name like CONCAT('%',#{name},'%')
+			</if>
+			<if test="creator != null">
+				and tr.creator = #{creator}
+			</if>
+			<if test="auditStatus != null">
+				and tr.audit_status = #{auditStatus}
+			</if>
+			<if test="auditor != null">
+				and tr.auditor = #{auditor}
+			</if>
+			<if test="departmentId != null">
+				and tr.department_id = #{departmentId}
+			</if>
+			<if test="status != null">
+				and tr.status = #{status}
+			</if>
+			<if test="shareStatus != null">
+				and tr.share_status = #{shareStatus}
+			</if>
+		</where>
+
+		order by tr.update_time desc
+
+	</select>
+
+	<select id="openList" resultType="TbkResource">
+		select
+		<include refid="_list">
+			<property name="alias" value="tr" />
+		</include>
+		, pr.res_name departmentName
+		from tbk_resource tr
+		left join
+		pro_resource pr on tr.department_id = pr.id
+		<where>
+			<if test="name != null and name != ''">
+				and tr.name like CONCAT('%',#{name},'%')
+			</if>
+			<if test="auditStatus != null">
+				and tr.audit_status = #{auditStatus}
+			</if>
+			<if test="auditor != null">
+				and tr.auditor = #{auditor}
+			</if>
+			<if test="creator != null and creator != ''">
+				and tr.creator = #{creator}
+			</if>
+			<if test="status != null">
+				and tr.status = #{status}
+			</if>
+			<if test="departmentId != null">
+				and tr.department_id = #{departmentId}
+			</if>
+
+			<if test="createTime != null">
+				<![CDATA[
+				and tr.create_time >= #{createTime}
+				]]>
+			</if>
+			<if test="shares != null and shares.size > 0">
+				and
+				<foreach item="item" collection="shares" open="("
+					separator="or" close=")">
+					<choose>
+						<when test="item.name == 'department' and deps != null and deps.size > 0">
+							(tr.department_id in
+							<foreach item="item_" collection="deps" open="("
+								separator="," close=")">
+								#{item_.resId}
+							</foreach>
+							and
+							 tr.share_status = #{item.name}
+							)
+						</when>
+						<when test="item.name == 'school'">
+							tr.share_status = #{item.name}
+						</when>
+						<otherwise>
+							tr.id in (select resource_id from tbk_deploy_resource where user_id =
+							#{userId})
+						</otherwise>
+					</choose>
+				</foreach>
+			</if>
+			and tr.audit_status is not null
+		</where>
+		order by tr.update_time desc
+	</select>
+
+	<select id="auditList" resultType="TbkResource">
+		select
+		<include refid="_list">
+			<property name="alias" value="tr" />
+		</include>
+		, pr.res_name departmentName
+		from tbk_resource tr
+		inner join
+		pro_resource pr on tr.department_id = pr.id
+		<where>
+			<if test="name != null and name != ''">
+				and tr.name like CONCAT('%',#{name},'%')
+			</if>
+			<if test="auditStatus != null">
+				and tr.audit_status = #{auditStatus}
+			</if>
+			<if test="auditor != null">
+				and tr.auditor = #{auditor}
+			</if>
+			<if test="creator != null and creator != ''">
+				and tr.creator = #{creator}
+			</if>
+			<if test="status != null">
+				and tr.status = #{status}
+			</if>
+			<if test="departmentId != null">
+				and tr.department_id = #{departmentId}
+			</if>
+			<if test="shareStatus != null">
+				and tr.share_status = #{shareStatus}
+			</if>
+			and tr.audit_status is not null
+			<![CDATA[
+			and tr.share_status <> 'noshare'
+			]]>
+		</where>
+		order by tr.update_time desc
+	</select>
+	
+	
+	
+	<select id="officeAndTeachResourceList" resultType="map">
+		select
+		tr.id,tr.name,tr.audit_status,tr.creator,tr.creator_name,tr.auditor,tr.auditor_name,tr.department_id,tr.remark,tr.share_status
+		, pr.res_name departmentName
+		from tbk_resource tr
+		inner join
+		pro_resource pr on tr.department_id = pr.id
+		<where>
+			and tr.audit_status = 'PASS'
+			
+			and tr.status='NORMAL'
+			<if test="auditor != null">
+				and tr.auditor = #{auditor}
+			</if>
+			<if test="creator != null and creator != ''">
+				and tr.creator = #{creator}
+			</if>
+			<if test="departmentIds !=null and !departmentIds.empty">
+			and tr.department_id in
+			<foreach collection="departmentIds" open="(" close=")" separator=","
+				item="var">
+				#{var}
+			</foreach>
+		</if>
+			
+		</where>
+		order by tr.update_time desc
+	</select>
+</mapper>

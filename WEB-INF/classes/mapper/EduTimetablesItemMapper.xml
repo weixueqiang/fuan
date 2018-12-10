@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.EduTimetablesItemMapper">
+    <resultMap id="BaseResultMap" type="com.xrj.bean.EduTimetablesItem">
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="SCHOOL_ID" property="schoolId" jdbcType="VARCHAR" />
+        <result column="TIMETABLES_ID" property="timetablesId" jdbcType="VARCHAR" />
+        <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR" />
+        <result column="ITEM_ID" property="itemId" jdbcType="VARCHAR" />
+        <result column="BEGIN_TIME" property="beginTime" jdbcType="TIME" />
+        <result column="END_TIME" property="endTime" jdbcType="TIME" />
+        <result column="WEEKDAY" property="weekday" jdbcType="VARCHAR" />
+        <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                        close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                        close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        <if test="fields == null">
+            ID, SCHOOL_ID, TIMETABLES_ID, ITEM_NAME, ITEM_ID, BEGIN_TIME, END_TIME, WEEKDAY,
+            TYPE
+        </if>
+        <if test="fields != null">
+            ${fields}
+        </if>
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+        parameterType="com.xrj.bean.EduTimetablesItemExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from edu_timetables_item
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startRow != null">
+            limit #{startRow} , #{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    ID,SCHOOL_ID,TIMETABLES_ID,ITEM_NAME,ITEM_ID,BEGIN_TIME,END_TIME,WEEKDAY,TYPE
+    from edu_timetables_item
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from edu_timetables_item
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.xrj.bean.EduTimetablesItemExample">
+        delete from edu_timetables_item
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.xrj.bean.EduTimetablesItem">
+    insert into edu_timetables_item (ID, SCHOOL_ID, TIMETABLES_ID, 
+      ITEM_NAME, ITEM_ID, BEGIN_TIME, 
+      END_TIME, WEEKDAY, TYPE
+      )
+    values (#{id,jdbcType=VARCHAR}, #{schoolId,jdbcType=VARCHAR}, #{timetablesId,jdbcType=VARCHAR}, 
+      #{itemName,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIME}, 
+      #{endTime,jdbcType=TIME}, #{weekday,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.xrj.bean.EduTimetablesItem">
+        insert into edu_timetables_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="schoolId != null">
+                SCHOOL_ID,
+            </if>
+            <if test="timetablesId != null">
+                TIMETABLES_ID,
+            </if>
+            <if test="itemName != null">
+                ITEM_NAME,
+            </if>
+            <if test="itemId != null">
+                ITEM_ID,
+            </if>
+            <if test="beginTime != null">
+                BEGIN_TIME,
+            </if>
+            <if test="endTime != null">
+                END_TIME,
+            </if>
+            <if test="weekday != null">
+                WEEKDAY,
+            </if>
+            <if test="type != null">
+                TYPE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="schoolId != null">
+                #{schoolId,jdbcType=VARCHAR},
+            </if>
+            <if test="timetablesId != null">
+                #{timetablesId,jdbcType=VARCHAR},
+            </if>
+            <if test="itemName != null">
+                #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="itemId != null">
+                #{itemId,jdbcType=VARCHAR},
+            </if>
+            <if test="beginTime != null">
+                #{beginTime,jdbcType=TIME},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIME},
+            </if>
+            <if test="weekday != null">
+                #{weekday,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.xrj.bean.EduTimetablesItemExample"
+        resultType="java.lang.Integer">
+        select count(*) from edu_timetables_item
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <select id="listInOutSchool" resultType="map">
+        SELECT
+        eti.ID timeTableItemId,
+        eti.SCHOOL_ID schoolId,
+        eti.TIMETABLES_ID timeTablesId,
+        eli.ITEM_NAME itemName,
+        eti.ITEM_ID itemId,
+        eti.BEGIN_TIME beginTime,
+        eti.END_TIME endTime,
+        eti.WEEKDAY weekday,
+        eti.TYPE type,
+        eli.section
+        FROM
+        edu_timetables_item eti
+        INNER JOIN edu_lesson_item eli ON eli.id = eti.ITEM_ID
+        <where>
+            <if test="timeTablesId != null">
+                and eti.TIMETABLES_ID = #{timeTablesId}
+            </if>
+            <if test="time != null">
+                <bind name="vTime" value="'%' + time + '%'"></bind>
+                AND eti.TYPE LIKE #{vTime}
+            </if>
+        </where>
+        ORDER BY
+        eti.BEGIN_TIME
+    </select>
+    <select id="findTimeTableByWeekDay" resultType="map">
+        SELECT
+            eli.id itemId,
+            eli.school_id schoolId,
+            eli.item_name itemName,
+            eli.item_order itemOrder,
+            eli.section section,
+            eli.item_type itemType,
+            eli.create_time createTime,
+            eli.update_time updateTime,
+            eti.ID timeTableItemId,
+            eti.TIMETABLES_ID timeTablesId,
+            eti.BEGIN_TIME beginTime,
+            eti.END_TIME endTime,
+            eti.WEEKDAY weekday,
+            eti.TYPE type
+        FROM
+            edu_timetables_item eti
+        INNER JOIN edu_lesson_item eli ON eti.ITEM_ID = eli.id
+        AND (eti.WEEKDAY = #{weekday})
+        AND eti.TIMETABLES_ID = #{timeTableId}
+        AND eli.active = '1'
+        ORDER BY
+            eti.BEGIN_TIME,
+            eli.item_order
+    </select>
+    <select id="getConfigWeekdayList" resultType="_int">
+        SELECT DISTINCT
+            eti.WEEKDAY
+        FROM
+            `edu_timetables_item` eti
+        WHERE
+            eti.TIMETABLES_ID = #{timeTablesId}
+        ORDER BY
+            eti.WEEKDAY
+    </select>
+    <select id="listItemName" resultType="com.xrj.bean.EduTimetablesItem">
+        SELECT
+        a.*
+        FROM
+        edu_timetables_item a
+        LEFT JOIN edu_lesson_item e ON e.id = a.ITEM_ID
+        WHERE
+        a.TIMETABLES_ID IN (
+        SELECT
+        b.id
+        FROM
+        edu_timetables b
+        )
+        AND e.item_type = '1'
+        <if test="timeTablesId != null ">
+            AND a.TIMETABLES_ID =#{timeTablesId}
+        </if>
+        <if test="weekday != null">
+            AND a.WEEKDAY =#{weekday}
+        </if>
+        <if test="section != null">
+            AND e.section =#{section}
+        </if>
+        ORDER BY
+        a.TIMETABLES_ID,
+        a.BEGIN_TIME
+    </select>
+    <select id="listByItemId" resultType="map">
+        SELECT
+            *
+        FROM
+            edu_timetables_item eti
+        WHERE
+        eti.TIMETABLES_ID = #{timetablesId}
+        AND eti.ITEM_ID = #{itemId}
+        AND eti.WEEKDAY = #{weekday}
+    </select>
+    <select id="findTimeTableItemListObject" resultType="com.xrj.bean.EduTimetablesItem"
+        parameterType="com.xrj.bean.EduTimetablesItem">
+        select * from edu_timetables_item a
+        where a.TIMETABLES_ID in (select b.ID from edu_timetables b)
+        <if test="id != null">
+            and a.ID = #{id}
+        </if>
+        <if test="timetablesId != null ">
+            and a.TIMETABLES_ID = #{timetablesId}
+        </if>
+        <if test="weekday != null ">
+            and a.WEEKDAY = #{weekday}
+        </if>
+        <if test="itemName != null">
+            <bind name="vItemName" value="'%' + itemName + '%'"></bind>
+            and a.ITEM_NAME like #{vItemName}
+        </if>
+        <if test="itemId != null">
+            and a.ITEM_ID = #{itemId}
+        </if>
+        <if test="type != null">
+            and a.TYPE = #{type}
+        </if>
+        order by a.TIMETABLES_ID, a.BEGIN_TIME
+    </select>
+    <select id="findInOutSchoolTime" resultType="map">
+        SELECT
+            eti.ID timeTableItemId,
+            eti.SCHOOL_ID schoolId,
+            eti.TIMETABLES_ID timeTablesId,
+            eli.ITEM_NAME itemName,
+            eti.ITEM_ID itemId,
+            eti.BEGIN_TIME beginTime,
+            eti.END_TIME endTime,
+            eti.WEEKDAY weekday,
+            eti.TYPE type,
+            eli.section,
+            eli.item_type itemType
+        FROM
+          edu_timetables_item eti
+        INNER JOIN edu_lesson_item eli ON eli.id = eti.ITEM_ID
+        WHERE
+          eti.TIMETABLES_ID = : timeTableId
+          AND eti.TYPE <![CDATA[<>]]> : type
+        ORDER BY
+          eti.BEGIN_TIME
+    </select>
+    <select id="findInOutSchoolTimes" resultType="map">
+        SELECT
+        eti.*
+        FROM
+        edu_timetables_item eti
+        INNER JOIN edu_lesson_item eli ON eli.id = eti.ITEM_ID
+        WHERE
+        eti.TIMETABLES_ID = #{timeTableId}
+        <choose>
+            <when test="type != null">
+                AND eti.type = #{type}
+            </when>
+            <otherwise>
+                AND eti.TYPE <![CDATA[<>]]> 'COURSE'
+            </otherwise>
+        </choose>
+        ORDER BY
+        eti.BEGIN_TIME
+    </select>
+    <select id="showTimeTable" resultType="map">
+        SELECT
+            tt.time,
+            MAX(num) maxNum
+        FROM
+            (
+                SELECT
+                    eti.WEEKDAY,
+                    (
+                    CASE
+                    WHEN eti.BEGIN_TIME <![CDATA[<]]>#{amOutTime} THEN
+                    'MORNING'
+                    WHEN (
+                        eti.BEGIN_TIME <![CDATA[>]]> #{amOutTime}
+                        AND eti.BEGIN_TIME <![CDATA[<]]> #{pmOutTime}
+                    ) THEN
+                      'AFTERNOON'
+                    ELSE
+                      'NIGHT'
+                    END
+                ) time,
+                  COUNT(*) num
+                FROM
+                  `edu_timetables_item` eti
+                INNER JOIN `edu_lesson_item` eli ON eli.id = eti.ITEM_ID
+                WHERE
+                  eti.TIMETABLES_ID =#{itemId}
+                AND eli.ITEM_TYPE = '1'
+                AND eti.WEEKDAY != '9'
+                AND eli.active = '1'
+                GROUP BY
+                    eti.WEEKDAY,
+                    eti.BEGIN_TIME >= #{amOutTime}
+            ) tt
+        GROUP BY
+          tt.time
+        ORDER BY
+          tt.time DESC
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update edu_timetables_item
+        <set>
+            <if test="record.id != null">
+                ID = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.schoolId != null">
+                SCHOOL_ID = #{record.schoolId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.timetablesId != null">
+                TIMETABLES_ID = #{record.timetablesId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.itemName != null">
+                ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.itemId != null">
+                ITEM_ID = #{record.itemId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.beginTime != null">
+                BEGIN_TIME = #{record.beginTime,jdbcType=TIME},
+            </if>
+            <if test="record.endTime != null">
+                END_TIME = #{record.endTime,jdbcType=TIME},
+            </if>
+            <if test="record.weekday != null">
+                WEEKDAY = #{record.weekday,jdbcType=VARCHAR},
+            </if>
+            <if test="record.type != null">
+                TYPE = #{record.type,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update edu_timetables_item
+        set ID = #{record.id,jdbcType=VARCHAR},
+        SCHOOL_ID = #{record.schoolId,jdbcType=VARCHAR},
+        TIMETABLES_ID = #{record.timetablesId,jdbcType=VARCHAR},
+        ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
+        ITEM_ID = #{record.itemId,jdbcType=VARCHAR},
+        BEGIN_TIME = #{record.beginTime,jdbcType=TIME},
+        END_TIME = #{record.endTime,jdbcType=TIME},
+        WEEKDAY = #{record.weekday,jdbcType=VARCHAR},
+        TYPE = #{record.type,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.EduTimetablesItem">
+        update edu_timetables_item
+        <set>
+            <if test="schoolId != null">
+                SCHOOL_ID = #{schoolId,jdbcType=VARCHAR},
+            </if>
+            <if test="timetablesId != null">
+                TIMETABLES_ID = #{timetablesId,jdbcType=VARCHAR},
+            </if>
+            <if test="itemName != null">
+                ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="itemId != null">
+                ITEM_ID = #{itemId,jdbcType=VARCHAR},
+            </if>
+            <if test="beginTime != null">
+                BEGIN_TIME = #{beginTime,jdbcType=TIME},
+            </if>
+            <if test="endTime != null">
+                END_TIME = #{endTime,jdbcType=TIME},
+            </if>
+            <if test="weekday != null">
+                WEEKDAY = #{weekday,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                TYPE = #{type,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xrj.bean.EduTimetablesItem">
+    update edu_timetables_item
+    set SCHOOL_ID = #{schoolId,jdbcType=VARCHAR},
+      TIMETABLES_ID = #{timetablesId,jdbcType=VARCHAR},
+      ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      ITEM_ID = #{itemId,jdbcType=VARCHAR},
+      BEGIN_TIME = #{beginTime,jdbcType=TIME},
+      END_TIME = #{endTime,jdbcType=TIME},
+      WEEKDAY = #{weekday,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+    <!-- 自定义 -->
+    <!--<select id="list" resultType="com.xrj.bean.EduTimetablesItem">-->
+    <!--select * from edu_timetables_item eti-->
+    <!--<where>-->
+    <!--<if test="eduTimetablesItem.itemName != null">-->
+    <!--<bind name="vItemName" value="'%' + eduTimetablesItem.itemName + '%'"></bind>-->
+    <!--eti.ITEM_NAME like #{vItemName}-->
+    <!--</if>-->
+    <!--<if test="eduTimetablesItem.itemId != null">-->
+    <!--and eti.ITEM_ID = #{eduTimetablesItem.itemId}-->
+    <!--</if>-->
+    <!--<if test="eduTimetablesItem.timetablesId != null">-->
+    <!--and eti.TIMETABLES_ID = #{eduTimetablesItem.timetablesId}-->
+    <!--</if>-->
+    <!--<if test="eduTimetablesItem.weekday != null">-->
+    <!--and eti.WEEKDAY = #{eduTimetablesItem.weekday}-->
+    <!--</if>-->
+    <!--<choose>-->
+    <!--<when test="eduTimetablesItem.type != null">-->
+    <!--and eti.TYPE = #{eduTimetablesItem.type}-->
+    <!--</when>-->
+    <!--<when test="itemTypes != null">-->
+    <!--<foreach collection="itemTypes" item="type" open=" and eti.type in (" close=")"-->
+    <!--separator=",">-->
+    <!--#{type}-->
+    <!--</foreach>-->
+    <!--</when>-->
+    <!--<otherwise></otherwise>-->
+    <!--</choose>-->
+    <!--</where>-->
+    <!--</select>-->
+
+</mapper>

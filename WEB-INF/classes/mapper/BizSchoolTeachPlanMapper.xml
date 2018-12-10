@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.BizSchoolTeachPlanMapper" >
+  <resultMap id="BaseResultMap" type="com.xrj.bean.BizSchoolTeachPlan" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="YEAR_ID" property="yearId" jdbcType="VARCHAR" />
+    <result column="TERM_ID" property="termId" jdbcType="VARCHAR" />
+    <result column="SCHOOL_ID" property="schoolId" jdbcType="VARCHAR" />
+    <result column="TEACHER_ID" property="teacherId" jdbcType="VARCHAR" />
+    <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR" />
+    <result column="CLASS_ID" property="classId" jdbcType="VARCHAR" />
+    <result column="SUBJECT_ID" property="subjectId" jdbcType="VARCHAR" />
+    <result column="GRADE" property="grade" jdbcType="VARCHAR" />
+    <result column="IS_END_OF_TERM" property="isEndOfTerm" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.xrj.bean.BizSchoolTeachPlanWithBLOBs" extends="BaseResultMap" >
+    <result column="SITUATION" property="situation" jdbcType="LONGVARCHAR" />
+    <result column="TARGET" property="target" jdbcType="LONGVARCHAR" />
+    <result column="ACTION" property="action" jdbcType="LONGVARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      ID, UPDATE_TIME, CREATE_TIME, STATUS, YEAR_ID, TERM_ID, SCHOOL_ID, TEACHER_ID, TEACHER_NAME, 
+      CLASS_ID, SUBJECT_ID, GRADE, IS_END_OF_TERM
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <sql id="Blob_Column_List" >
+    SITUATION, TARGET, ACTION, CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.xrj.bean.BizSchoolTeachPlanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from biz_school_teach_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xrj.bean.BizSchoolTeachPlanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from biz_school_teach_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    ID,UPDATE_TIME,CREATE_TIME,STATUS,YEAR_ID,TERM_ID,SCHOOL_ID,TEACHER_ID,TEACHER_NAME,CLASS_ID,SUBJECT_ID,GRADE,IS_END_OF_TERM,SITUATION,TARGET,ACTION,CONTENT
+    ,
+    <include refid="Blob_Column_List" />
+    from biz_school_teach_plan
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from biz_school_teach_plan
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xrj.bean.BizSchoolTeachPlanExample" >
+    delete from biz_school_teach_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xrj.bean.BizSchoolTeachPlanWithBLOBs" >
+    insert into biz_school_teach_plan (ID, UPDATE_TIME, CREATE_TIME, 
+      STATUS, YEAR_ID, TERM_ID, 
+      SCHOOL_ID, TEACHER_ID, TEACHER_NAME, 
+      CLASS_ID, SUBJECT_ID, GRADE, 
+      IS_END_OF_TERM, SITUATION, TARGET, 
+      ACTION, CONTENT)
+    values (#{id,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{yearId,jdbcType=VARCHAR}, #{termId,jdbcType=VARCHAR}, 
+      #{schoolId,jdbcType=VARCHAR}, #{teacherId,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR}, 
+      #{classId,jdbcType=VARCHAR}, #{subjectId,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, 
+      #{isEndOfTerm,jdbcType=BIT}, #{situation,jdbcType=LONGVARCHAR}, #{target,jdbcType=LONGVARCHAR}, 
+      #{action,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xrj.bean.BizSchoolTeachPlanWithBLOBs" >
+    insert into biz_school_teach_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="yearId != null" >
+        YEAR_ID,
+      </if>
+      <if test="termId != null" >
+        TERM_ID,
+      </if>
+      <if test="schoolId != null" >
+        SCHOOL_ID,
+      </if>
+      <if test="teacherId != null" >
+        TEACHER_ID,
+      </if>
+      <if test="teacherName != null" >
+        TEACHER_NAME,
+      </if>
+      <if test="classId != null" >
+        CLASS_ID,
+      </if>
+      <if test="subjectId != null" >
+        SUBJECT_ID,
+      </if>
+      <if test="grade != null" >
+        GRADE,
+      </if>
+      <if test="isEndOfTerm != null" >
+        IS_END_OF_TERM,
+      </if>
+      <if test="situation != null" >
+        SITUATION,
+      </if>
+      <if test="target != null" >
+        TARGET,
+      </if>
+      <if test="action != null" >
+        ACTION,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="yearId != null" >
+        #{yearId,jdbcType=VARCHAR},
+      </if>
+      <if test="termId != null" >
+        #{termId,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null" >
+        #{schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null" >
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null" >
+        #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="isEndOfTerm != null" >
+        #{isEndOfTerm,jdbcType=BIT},
+      </if>
+      <if test="situation != null" >
+        #{situation,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="target != null" >
+        #{target,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="action != null" >
+        #{action,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xrj.bean.BizSchoolTeachPlanExample" resultType="java.lang.Integer" >
+    select count(*) from biz_school_teach_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update biz_school_teach_plan
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yearId != null" >
+        YEAR_ID = #{record.yearId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.termId != null" >
+        TERM_ID = #{record.termId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolId != null" >
+        SCHOOL_ID = #{record.schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherId != null" >
+        TEACHER_ID = #{record.teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherName != null" >
+        TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classId != null" >
+        CLASS_ID = #{record.classId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectId != null" >
+        SUBJECT_ID = #{record.subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grade != null" >
+        GRADE = #{record.grade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isEndOfTerm != null" >
+        IS_END_OF_TERM = #{record.isEndOfTerm,jdbcType=BIT},
+      </if>
+      <if test="record.situation != null" >
+        SITUATION = #{record.situation,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.target != null" >
+        TARGET = #{record.target,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.action != null" >
+        ACTION = #{record.action,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update biz_school_teach_plan
+    set ID = #{record.id,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      YEAR_ID = #{record.yearId,jdbcType=VARCHAR},
+      TERM_ID = #{record.termId,jdbcType=VARCHAR},
+      SCHOOL_ID = #{record.schoolId,jdbcType=VARCHAR},
+      TEACHER_ID = #{record.teacherId,jdbcType=VARCHAR},
+      TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+      CLASS_ID = #{record.classId,jdbcType=VARCHAR},
+      SUBJECT_ID = #{record.subjectId,jdbcType=VARCHAR},
+      GRADE = #{record.grade,jdbcType=VARCHAR},
+      IS_END_OF_TERM = #{record.isEndOfTerm,jdbcType=BIT},
+      SITUATION = #{record.situation,jdbcType=LONGVARCHAR},
+      TARGET = #{record.target,jdbcType=LONGVARCHAR},
+      ACTION = #{record.action,jdbcType=LONGVARCHAR},
+      CONTENT = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update biz_school_teach_plan
+    set ID = #{record.id,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      YEAR_ID = #{record.yearId,jdbcType=VARCHAR},
+      TERM_ID = #{record.termId,jdbcType=VARCHAR},
+      SCHOOL_ID = #{record.schoolId,jdbcType=VARCHAR},
+      TEACHER_ID = #{record.teacherId,jdbcType=VARCHAR},
+      TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+      CLASS_ID = #{record.classId,jdbcType=VARCHAR},
+      SUBJECT_ID = #{record.subjectId,jdbcType=VARCHAR},
+      GRADE = #{record.grade,jdbcType=VARCHAR},
+      IS_END_OF_TERM = #{record.isEndOfTerm,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.BizSchoolTeachPlanWithBLOBs" >
+    update biz_school_teach_plan
+    <set >
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="yearId != null" >
+        YEAR_ID = #{yearId,jdbcType=VARCHAR},
+      </if>
+      <if test="termId != null" >
+        TERM_ID = #{termId,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null" >
+        SCHOOL_ID = #{schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null" >
+        TEACHER_ID = #{teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null" >
+        TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        CLASS_ID = #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null" >
+        SUBJECT_ID = #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        GRADE = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="isEndOfTerm != null" >
+        IS_END_OF_TERM = #{isEndOfTerm,jdbcType=BIT},
+      </if>
+      <if test="situation != null" >
+        SITUATION = #{situation},
+      </if>
+      <if test="target != null" >
+        TARGET = #{target},
+      </if>
+      <if test="action != null" >
+        ACTION = #{action},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xrj.bean.BizSchoolTeachPlanWithBLOBs" >
+    update biz_school_teach_plan
+    set UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=VARCHAR},
+      YEAR_ID = #{yearId,jdbcType=VARCHAR},
+      TERM_ID = #{termId,jdbcType=VARCHAR},
+      SCHOOL_ID = #{schoolId,jdbcType=VARCHAR},
+      TEACHER_ID = #{teacherId,jdbcType=VARCHAR},
+      TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+      CLASS_ID = #{classId,jdbcType=VARCHAR},
+      SUBJECT_ID = #{subjectId,jdbcType=VARCHAR},
+      GRADE = #{grade,jdbcType=VARCHAR},
+      IS_END_OF_TERM = #{isEndOfTerm,jdbcType=BIT},
+      SITUATION = #{situation,jdbcType=LONGVARCHAR},
+      TARGET = #{target,jdbcType=LONGVARCHAR},
+      ACTION = #{action,jdbcType=LONGVARCHAR},
+      CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xrj.bean.BizSchoolTeachPlan" >
+    update biz_school_teach_plan
+    set UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=VARCHAR},
+      YEAR_ID = #{yearId,jdbcType=VARCHAR},
+      TERM_ID = #{termId,jdbcType=VARCHAR},
+      SCHOOL_ID = #{schoolId,jdbcType=VARCHAR},
+      TEACHER_ID = #{teacherId,jdbcType=VARCHAR},
+      TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+      CLASS_ID = #{classId,jdbcType=VARCHAR},
+      SUBJECT_ID = #{subjectId,jdbcType=VARCHAR},
+      GRADE = #{grade,jdbcType=VARCHAR},
+      IS_END_OF_TERM = #{isEndOfTerm,jdbcType=BIT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <!--自定义-->
+
+    <select id="list" resultType="com.xrj.bean.BizSchoolTeachPlanWithBLOBs"
+        parameterType="com.xrj.bean.BizSchoolTeachPlanWithBLOBs">
+        SELECT
+        *
+        FROM
+        biz_school_teach_plan bstp
+        <where>
+            <if test="yearId != null ">
+                AND bstp.YEAR_ID = #{yearId}
+            </if>
+            <if test="termId != null ">
+                AND bstp.TERM_ID = #{termId}
+            </if>
+            <if test="schoolId != null ">
+                AND bstp.SCHOOL_ID = #{schoolId}
+            </if>
+            <if test="teacherId != null ">
+                AND bstp.TEACHER_ID = #{teacherId}
+            </if>
+            <if test="teacherName != null ">
+                <bind name="vTeacherName" value="'%' + teacherName + '%'"></bind>
+                AND bstp.TEACHER_NAME LIKE #{vTeacherName}
+            </if>
+            <if test="classId != null ">
+                AND bstp.CLASS_ID = #{classId}
+            </if>
+            <if test="subjectId != null ">
+                AND bstp.SUBJECT_ID = #{subjectId}
+            </if>
+            <if test="situation != null ">
+                <bind name="vSituation" value="'%' + situation + '%'"></bind>
+                AND bstp.SITUATION LIKE #{vSituation}
+            </if>
+            <if test="target != null ">
+                <bind name="vtarget" value="'%' + target + '%'"></bind>
+                AND bstp.TARGET LIKE #{vtarget}
+            </if>
+            <if test="action != null ">
+                <bind name="vaction" value="'%' + action + '%'"></bind>
+                AND bstp.ACTION LIKE #{vaction}
+            </if>
+            <if test="isEndOfTerm != null ">
+                AND bstp.IS_END_OF_TERM = #{isEndOfTerm}
+            </if>
+            <if test="status != null ">
+                AND bstp.STATUS LIKE #{status}
+            </if>
+        </where>
+        ORDER BY bstp.CREATE_TIME DESC
+    </select>
+
+</mapper>

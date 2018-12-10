@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.BusinessAuditMapper">
+    <resultMap id="BaseResultMap" type="com.xrj.bean.BusinessAudit">
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="AUDITOR_ID" property="auditorId" jdbcType="VARCHAR" />
+        <result column="AUDITOR" property="auditor" jdbcType="VARCHAR" />
+        <result column="STATE" property="state" jdbcType="VARCHAR" />
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+        <result column="AUDITOR_DATE" property="auditorDate" jdbcType="TIMESTAMP" />
+        <result column="SERVICE_NAME" property="serviceName" jdbcType="VARCHAR" />
+        <result column="BUSINESS_NAME" property="businessName" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                        close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                        close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    ID, USER_ID, USER_NAME, ORDER_ID, CREATE_DATE, AUDITOR_ID, AUDITOR, STATE, REMARKS, 
+    AUDITOR_DATE, SERVICE_NAME, BUSINESS_NAME
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+        parameterType="com.xrj.bean.BusinessAuditExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from business_audit
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from business_audit
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from business_audit
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.xrj.bean.BusinessAuditExample">
+        delete from business_audit
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.xrj.bean.BusinessAudit">
+    insert into business_audit (ID, USER_ID, USER_NAME, 
+      ORDER_ID, CREATE_DATE, AUDITOR_ID, 
+      AUDITOR, STATE, REMARKS, 
+      AUDITOR_DATE, SERVICE_NAME, BUSINESS_NAME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{orderId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{auditorId,jdbcType=VARCHAR}, 
+      #{auditor,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{auditorDate,jdbcType=TIMESTAMP}, #{serviceName,jdbcType=VARCHAR}, #{businessName,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.xrj.bean.BusinessAudit">
+        insert into business_audit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="userName != null">
+                USER_NAME,
+            </if>
+            <if test="orderId != null">
+                ORDER_ID,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="auditorId != null">
+                AUDITOR_ID,
+            </if>
+            <if test="auditor != null">
+                AUDITOR,
+            </if>
+            <if test="state != null">
+                STATE,
+            </if>
+            <if test="remarks != null">
+                REMARKS,
+            </if>
+            <if test="auditorDate != null">
+                AUDITOR_DATE,
+            </if>
+            <if test="serviceName != null">
+                SERVICE_NAME,
+            </if>
+            <if test="businessName != null">
+                BUSINESS_NAME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="auditorId != null">
+                #{auditorId,jdbcType=VARCHAR},
+            </if>
+            <if test="auditor != null">
+                #{auditor,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="auditorDate != null">
+                #{auditorDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="serviceName != null">
+                #{serviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="businessName != null">
+                #{businessName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.xrj.bean.BusinessAuditExample"
+        resultType="java.lang.Long">
+        select count(*) from business_audit
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update business_audit
+        <set>
+            <if test="record.id != null">
+                ID = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userId != null">
+                USER_ID = #{record.userId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userName != null">
+                USER_NAME = #{record.userName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.orderId != null">
+                ORDER_ID = #{record.orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createDate != null">
+                CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.auditorId != null">
+                AUDITOR_ID = #{record.auditorId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.auditor != null">
+                AUDITOR = #{record.auditor,jdbcType=VARCHAR},
+            </if>
+            <if test="record.state != null">
+                STATE = #{record.state,jdbcType=VARCHAR},
+            </if>
+            <if test="record.remarks != null">
+                REMARKS = #{record.remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="record.auditorDate != null">
+                AUDITOR_DATE = #{record.auditorDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.serviceName != null">
+                SERVICE_NAME = #{record.serviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.businessName != null">
+                BUSINESS_NAME = #{record.businessName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update business_audit
+        set ID = #{record.id,jdbcType=VARCHAR},
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+        ORDER_ID = #{record.orderId,jdbcType=VARCHAR},
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+        AUDITOR_ID = #{record.auditorId,jdbcType=VARCHAR},
+        AUDITOR = #{record.auditor,jdbcType=VARCHAR},
+        STATE = #{record.state,jdbcType=VARCHAR},
+        REMARKS = #{record.remarks,jdbcType=VARCHAR},
+        AUDITOR_DATE = #{record.auditorDate,jdbcType=TIMESTAMP},
+        SERVICE_NAME = #{record.serviceName,jdbcType=VARCHAR},
+        BUSINESS_NAME = #{record.businessName,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.BusinessAudit">
+        update business_audit
+        <set>
+            <if test="userId != null">
+                USER_ID = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                USER_NAME = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="orderId != null">
+                ORDER_ID = #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="auditorId != null">
+                AUDITOR_ID = #{auditorId,jdbcType=VARCHAR},
+            </if>
+            <if test="auditor != null">
+                AUDITOR = #{auditor,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                STATE = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="auditorDate != null">
+                AUDITOR_DATE = #{auditorDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="serviceName != null">
+                SERVICE_NAME = #{serviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="businessName != null">
+                BUSINESS_NAME = #{businessName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xrj.bean.BusinessAudit">
+    update business_audit
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      AUDITOR_ID = #{auditorId,jdbcType=VARCHAR},
+      AUDITOR = #{auditor,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      AUDITOR_DATE = #{auditorDate,jdbcType=TIMESTAMP},
+      SERVICE_NAME = #{serviceName,jdbcType=VARCHAR},
+      BUSINESS_NAME = #{businessName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+    <!-- 自定义代码 -->
+    <select id="listAudit" resultType="com.xrj.bean.BusinessAudit">
+        SELECT * FROM business_audit ba
+        <where>
+            <if test="id != null">
+                AND ba.ORDER_ID = #{id}
+            </if>
+            <if test="approvals != null and approvals.size > 0">
+                <foreach collection="approvals" item="approval" open=" AND ba.STATE in ( "
+                    separator="," close=") ">
+                    #{approval}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="list" resultType="com.xrj.bean.BusinessAudit"
+        parameterType="com.xrj.bean.BusinessAudit">
+        SELECT
+            *
+        FROM
+            `business_audit` ba
+            <where>
+                <if test="orderId != null ">
+                    AND ba.ORDER_ID = #{orderId}
+                </if>
+                <if test="state != null ">
+                    AND ba.STATE = #{state}
+                </if>
+            </where>
+    </select>
+
+</mapper>

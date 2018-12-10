@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xrj.mapper.BizInspectionMapper">
+
+	<sql id="_list">
+		${alias}.id,${alias}.create_time,${alias}.update_time,
+		${alias}.teacher_id,${alias}.class_id,${alias}.date,${alias}.quarter,
+		${alias}.note,${alias}.images,${alias}.audios,${alias}.teacher_name
+	</sql>
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		insert
+		into
+		biz_inspection(id,
+		update_time,
+		create_time,
+		teacher_id,
+		class_id,
+		date,
+		quarter,
+		note,
+		images,
+		audios,
+		teacher_name)
+		values(
+		#{id},
+		#{updateTime},
+		#{createTime},
+		#{teacherId},
+		#{classId},
+		#{date},
+		#{quarter},
+		#{note},
+		#{images},
+		#{audios},
+		#{teacherName}
+		)
+	</insert>
+
+	<update id="update">
+		update biz_inspection a
+		<set>
+			<if test="createTime != null">a.create_time = #{createTime},</if>
+			<if test="updateTime != null">a.update_time = #{updateTime},</if>
+			<if test="teacherId != null">a.teacher_id = #{teacherId},</if>
+			<if test="date != null">a.date = #{date},</if>
+			<if test="classId != null">a.class_id = #{classId},</if>
+			<if test="quarter != null">a.quarter = #{quarter},</if>
+			<if test="note != null">a.note = #{note},</if>
+			<if test="images != null">a.images = #{images},</if>
+			<if test="audios != null">a.audios = #{audios},</if>
+			<if test="teacherName != null">a.teacher_name = #{teacherName},</if>
+		</set>
+		where a.id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from biz_inspection where id =
+		#{id}
+	</delete>
+
+	<select id="get" resultType="BizInspection">
+		select
+		<include refid="_list">
+			<property name="alias" value="bi" />
+		</include>
+		from biz_inspection bi
+		where bi.id = #{id}
+	</select>
+
+	<select id="list" resultType="BizInspection">
+		select 
+		<include refid="_list">
+			<property name="alias" value="bi" />
+		</include>, d.name itemName, ds.name className
+		 from biz_inspection bi 
+		 inner join dictionaries d on bi.quarter = d.id 
+		 inner join dictionaries ds on bi.class_id = ds.id 
+		<where>
+			<if test="id != null and id != ''">
+				and bi.id = #{id}
+			</if>
+			
+			<if test="teacherId != null and teacherId != ''">
+				and bi.teacher_id = #{teacherId}
+			</if>
+			<if test="beginTime != null and endTime != null">
+				 and bi.date >= concat(#{beginTime}," 00:00:00")
+				 <![CDATA[ and bi.date <= concat(#{endTime}," 23:59:59") ]]>
+			</if>
+			
+		</where>
+		order by bi.create_time desc
+	</select>
+</mapper>

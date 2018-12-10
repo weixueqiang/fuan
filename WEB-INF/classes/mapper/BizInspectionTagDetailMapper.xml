@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xrj.mapper.BizInspectionTagDetailMapper">
+	<sql id="_list">
+		${alias}.id,${alias}.create_time,${alias}.update_time,
+		${alias}.inspection_id,${alias}.tag_id,${alias}.type,${alias}.tag_title
+	</sql>
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		insert
+		into
+		biz_inspection_tag_detail(id,create_time,update_time,inspection_id,tag_id,type,tag_title)
+		values(
+		#{id},
+		#{createTime},
+		#{updateTime},
+		#{inspectionId},
+		#{tagId},
+		#{type},
+		#{tagTitle}
+		)
+	</insert>
+
+	<update id="update">
+		update biz_inspection_tag_detail a
+		<set>
+			<if test="createTime != null">a.create_time = #{createTime},</if>
+			<if test="updateTime != null">a.update_time = #{updateTime},</if>
+			<if test="inspectionId != null">a.inspection_id = #{inspectionId},</if>
+			<if test="tagId != null">a.tag_id = #{tagId},</if>
+			<if test="type != null">a.type = #{type},</if>
+			<if test="tagTitle != null">a.tag_title = #{tagTitle},</if>
+		</set>
+		where a.id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from biz_inspection_tag_detail where id =
+		#{id}
+	</delete>
+
+	<select id="get" resultType="BizInspectionTagDetail">
+		select
+		<include refid="_list">
+			<property name="alias" value="bit" />
+		</include>
+		from biz_inspection_tag_detail bit
+		where bit.id = #{id}
+	</select>
+
+	<select id="listByInspectionId" resultType="BizInspectionTagDetail">
+		select
+		<include refid="_list">
+			<property name="alias" value="bit" />
+		</include>
+		from biz_inspection_tag_detail bit where bit.inspection_id = #{id}
+	</select>
+
+	<delete id="deleteByInspectionId">
+		delete from biz_inspection_tag_detail where inspection_id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.LaboratoryLossMapper" >
+  <resultMap id="BaseResultMap" type="com.xrj.bean.LaboratoryLoss" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+    <result column="BRAND" property="brand" jdbcType="VARCHAR" />
+    <result column="SPECIFICATIONS" property="specifications" jdbcType="VARCHAR" />
+    <result column="LOSSES_NUMBER" property="lossesNumber" jdbcType="VARCHAR" />
+    <result column="LOSSES_PAPER" property="lossesPaper" jdbcType="VARCHAR" />
+    <result column="LOSS_TIME" property="lossTime" jdbcType="TIMESTAMP" />
+    <result column="LOSS_CAUSE" property="lossCause" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, PRODUCT_NAME, BRAND, SPECIFICATIONS, LOSSES_NUMBER, LOSSES_PAPER, LOSS_TIME, 
+    LOSS_CAUSE, CREATE_TIME, USER_ID,STATUS
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xrj.bean.LaboratoryLossExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from laboratory__loss
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from laboratory__loss
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from laboratory__loss
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xrj.bean.LaboratoryLossExample" >
+    delete from laboratory__loss
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xrj.bean.LaboratoryLoss" >
+    insert into laboratory__loss (ID, PRODUCT_NAME, BRAND, 
+      SPECIFICATIONS, LOSSES_NUMBER, LOSSES_PAPER, 
+      LOSS_TIME, LOSS_CAUSE, CREATE_TIME, 
+      USER_ID,STATUS)
+    values (#{id,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, 
+      #{specifications,jdbcType=VARCHAR}, #{lossesNumber,jdbcType=VARCHAR}, #{lossesPaper,jdbcType=VARCHAR}, 
+      #{lossTime,jdbcType=TIMESTAMP}, #{lossCause,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xrj.bean.LaboratoryLoss" >
+    insert into laboratory__loss
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="productName != null" >
+        PRODUCT_NAME,
+      </if>
+      <if test="brand != null" >
+        BRAND,
+      </if>
+      <if test="specifications != null" >
+        SPECIFICATIONS,
+      </if>
+      <if test="lossesNumber != null" >
+        LOSSES_NUMBER,
+      </if>
+      <if test="lossesPaper != null" >
+        LOSSES_PAPER,
+      </if>
+      <if test="lossTime != null" >
+        LOSS_TIME,
+      </if>
+      <if test="lossCause != null" >
+        LOSS_CAUSE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="specifications != null" >
+        #{specifications,jdbcType=VARCHAR},
+      </if>
+      <if test="lossesNumber != null" >
+        #{lossesNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="lossesPaper != null" >
+        #{lossesPaper,jdbcType=VARCHAR},
+      </if>
+      <if test="lossTime != null" >
+        #{lossTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lossCause != null" >
+        #{lossCause,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xrj.bean.LaboratoryLossExample" resultType="java.lang.Integer" >
+    select count(*) from laboratory__loss
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update laboratory__loss
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productName != null" >
+        PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brand != null" >
+        BRAND = #{record.brand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specifications != null" >
+        SPECIFICATIONS = #{record.specifications,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lossesNumber != null" >
+        LOSSES_NUMBER = #{record.lossesNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lossesPaper != null" >
+        LOSSES_PAPER = #{record.lossesPaper,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lossTime != null" >
+        LOSS_TIME = #{record.lossTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lossCause != null" >
+        LOSS_CAUSE = #{record.lossCause,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update laboratory__loss
+    set ID = #{record.id,jdbcType=VARCHAR},
+      PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      BRAND = #{record.brand,jdbcType=VARCHAR},
+      SPECIFICATIONS = #{record.specifications,jdbcType=VARCHAR},
+      LOSSES_NUMBER = #{record.lossesNumber,jdbcType=VARCHAR},
+      LOSSES_PAPER = #{record.lossesPaper,jdbcType=VARCHAR},
+      LOSS_TIME = #{record.lossTime,jdbcType=TIMESTAMP},
+      LOSS_CAUSE = #{record.lossCause,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      USER_ID = #{record.userId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.LaboratoryLoss" >
+    update laboratory__loss
+    <set >
+      <if test="productName != null" >
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        BRAND = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="specifications != null" >
+        SPECIFICATIONS = #{specifications,jdbcType=VARCHAR},
+      </if>
+      <if test="lossesNumber != null" >
+        LOSSES_NUMBER = #{lossesNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="lossesPaper != null" >
+        LOSSES_PAPER = #{lossesPaper,jdbcType=VARCHAR},
+      </if>
+      <if test="lossTime != null" >
+        LOSS_TIME = #{lossTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lossCause != null" >
+        LOSS_CAUSE = #{lossCause,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xrj.bean.LaboratoryLoss" >
+    update laboratory__loss
+    set PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      BRAND = #{brand,jdbcType=VARCHAR},
+      SPECIFICATIONS = #{specifications,jdbcType=VARCHAR},
+      LOSSES_NUMBER = #{lossesNumber,jdbcType=VARCHAR},
+      LOSSES_PAPER = #{lossesPaper,jdbcType=VARCHAR},
+      LOSS_TIME = #{lossTime,jdbcType=TIMESTAMP},
+      LOSS_CAUSE = #{lossCause,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      USER_ID = #{userId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

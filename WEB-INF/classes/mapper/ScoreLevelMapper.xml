@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.ScoreLevelMapper" >
+  <resultMap id="BaseResultMap" type="com.xrj.bean.ScoreLevel" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SCORE_CONFIG_ID" property="scoreConfigId" jdbcType="VARCHAR" />
+    <result column="LEVEL_NAME" property="levelName" jdbcType="VARCHAR" />
+    <result column="SCORE_RANGE_MIN" property="scoreRangeMin" jdbcType="DECIMAL" />
+    <result column="SCORE_RANGE_MAX" property="scoreRangeMax" jdbcType="DECIMAL" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="LEVEL" property="level" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, SCORE_CONFIG_ID, LEVEL_NAME, SCORE_RANGE_MIN, SCORE_RANGE_MAX, TYPE, LEVEL
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xrj.bean.ScoreLevelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from score_level
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from score_level
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from score_level
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xrj.bean.ScoreLevelExample" >
+    delete from score_level
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xrj.bean.ScoreLevel" >
+    insert into score_level (ID, SCORE_CONFIG_ID, LEVEL_NAME, 
+      SCORE_RANGE_MIN, SCORE_RANGE_MAX, TYPE, 
+      LEVEL)
+    values (#{id,jdbcType=VARCHAR}, #{scoreConfigId,jdbcType=VARCHAR}, #{levelName,jdbcType=VARCHAR}, 
+      #{scoreRangeMin,jdbcType=DECIMAL}, #{scoreRangeMax,jdbcType=DECIMAL}, #{type,jdbcType=VARCHAR}, 
+      #{level,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xrj.bean.ScoreLevel" >
+    insert into score_level
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="scoreConfigId != null" >
+        SCORE_CONFIG_ID,
+      </if>
+      <if test="levelName != null" >
+        LEVEL_NAME,
+      </if>
+      <if test="scoreRangeMin != null" >
+        SCORE_RANGE_MIN,
+      </if>
+      <if test="scoreRangeMax != null" >
+        SCORE_RANGE_MAX,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="level != null" >
+        LEVEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreConfigId != null" >
+        #{scoreConfigId,jdbcType=VARCHAR},
+      </if>
+      <if test="levelName != null" >
+        #{levelName,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreRangeMin != null" >
+        #{scoreRangeMin,jdbcType=DECIMAL},
+      </if>
+      <if test="scoreRangeMax != null" >
+        #{scoreRangeMax,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xrj.bean.ScoreLevelExample" resultType="java.lang.Integer" >
+    select count(*) from score_level
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update score_level
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoreConfigId != null" >
+        SCORE_CONFIG_ID = #{record.scoreConfigId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.levelName != null" >
+        LEVEL_NAME = #{record.levelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoreRangeMin != null" >
+        SCORE_RANGE_MIN = #{record.scoreRangeMin,jdbcType=DECIMAL},
+      </if>
+      <if test="record.scoreRangeMax != null" >
+        SCORE_RANGE_MAX = #{record.scoreRangeMax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null" >
+        LEVEL = #{record.level,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update score_level
+    set ID = #{record.id,jdbcType=VARCHAR},
+      SCORE_CONFIG_ID = #{record.scoreConfigId,jdbcType=VARCHAR},
+      LEVEL_NAME = #{record.levelName,jdbcType=VARCHAR},
+      SCORE_RANGE_MIN = #{record.scoreRangeMin,jdbcType=DECIMAL},
+      SCORE_RANGE_MAX = #{record.scoreRangeMax,jdbcType=DECIMAL},
+      TYPE = #{record.type,jdbcType=VARCHAR},
+      LEVEL = #{record.level,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.ScoreLevel" >
+    update score_level
+    <set >
+      <if test="scoreConfigId != null" >
+        SCORE_CONFIG_ID = #{scoreConfigId,jdbcType=VARCHAR},
+      </if>
+      <if test="levelName != null" >
+        LEVEL_NAME = #{levelName,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreRangeMin != null" >
+        SCORE_RANGE_MIN = #{scoreRangeMin,jdbcType=DECIMAL},
+      </if>
+      <if test="scoreRangeMax != null" >
+        SCORE_RANGE_MAX = #{scoreRangeMax,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        LEVEL = #{level,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xrj.bean.ScoreLevel" >
+    update score_level
+    set SCORE_CONFIG_ID = #{scoreConfigId,jdbcType=VARCHAR},
+      LEVEL_NAME = #{levelName,jdbcType=VARCHAR},
+      SCORE_RANGE_MIN = #{scoreRangeMin,jdbcType=DECIMAL},
+      SCORE_RANGE_MAX = #{scoreRangeMax,jdbcType=DECIMAL},
+      TYPE = #{type,jdbcType=VARCHAR},
+      LEVEL = #{level,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 自定义 -->
+  <insert id="batchCreate">
+  	INSERT INTO `score_level` 
+  		(`ID`, `SCORE_CONFIG_ID`, `LEVEL_NAME`, `SCORE_RANGE_MIN`, `SCORE_RANGE_MAX`, `TYPE`, `LEVEL`) 
+  	VALUES 
+  		<foreach collection="scoreLevels" separator="," item="var">
+  			(UUID_SHORT(), #{scoreConfigId}, #{var.levelName}, #{var.scoreRangeMin}, #{var.scoreRangeMax},#{var.type},#{var.level})
+  		</foreach>
+  </insert>
+  <select id="listlevelByIds" resultMap="BaseResultMap">
+  	SELECT SCORE_CONFIG_ID,LEVEL_NAME,SCORE_RANGE_MIN,SCORE_RANGE_MAX 
+  		from score_level 
+  	WHERE TYPE='LEVEL' AND SCORE_CONFIG_ID in 
+  		<foreach collection="coll" item="var" separator="," open="(" close=")">
+  			#{var}
+  		</foreach>
+  </select>
+  
+</mapper>

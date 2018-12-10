@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xrj.mapper.BizAdministrationDutyMapper">
+  <resultMap id="BaseResultMap" type="com.xrj.bean.BizAdministrationDuty">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DUTY_DATE_STR" jdbcType="VARCHAR" property="dutyDateStr" />
+    <result column="TEACHER_ID" jdbcType="VARCHAR" property="teacherId" />
+    <result column="TEACHER_NAME" jdbcType="VARCHAR" property="teacherName" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="SEQ" jdbcType="INTEGER" property="seq" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATOR" jdbcType="VARCHAR" property="creator" />
+    <result column="EDIT_TIME" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="EDITOR" jdbcType="VARCHAR" property="editor" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, DUTY_DATE_STR, TEACHER_ID, TEACHER_NAME, STATUS, SEQ, CREATE_TIME, CREATOR, EDIT_TIME, 
+    EDITOR, REMARK
+  </sql>
+  <select id="selectByExample" parameterType="com.xrj.bean.BizAdministrationDutyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from biz_administration_duty
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from biz_administration_duty
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from biz_administration_duty
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <update id="deleteByExample" parameterType="com.xrj.bean.BizAdministrationDutyExample">
+    update biz_administration_duty set status = 'DELETE', edit_time = CURRENT_TIMESTAMP
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <insert id="insert" parameterType="com.xrj.bean.BizAdministrationDuty">
+    insert into biz_administration_duty (ID, DUTY_DATE_STR, TEACHER_ID, 
+      TEACHER_NAME, STATUS, SEQ, 
+      CREATE_TIME, CREATOR, EDIT_TIME, 
+      EDITOR, REMARK)
+    values (#{id,jdbcType=VARCHAR}, #{dutyDateStr,jdbcType=VARCHAR}, #{teacherId,jdbcType=VARCHAR}, 
+      #{teacherName,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{editTime,jdbcType=TIMESTAMP}, 
+      #{editor,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xrj.bean.BizAdministrationDuty">
+    insert into biz_administration_duty
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="dutyDateStr != null">
+        DUTY_DATE_STR,
+      </if>
+      <if test="teacherId != null">
+        TEACHER_ID,
+      </if>
+      <if test="teacherName != null">
+        TEACHER_NAME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="seq != null">
+        SEQ,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="creator != null">
+        CREATOR,
+      </if>
+      <if test="editTime != null">
+        EDIT_TIME,
+      </if>
+      <if test="editor != null">
+        EDITOR,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyDateStr != null">
+        #{dutyDateStr,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null">
+        #{teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null">
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null">
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xrj.bean.BizAdministrationDutyExample" resultType="java.lang.Long">
+    select count(*) from biz_administration_duty
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update biz_administration_duty
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dutyDateStr != null">
+        DUTY_DATE_STR = #{record.dutyDateStr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherId != null">
+        TEACHER_ID = #{record.teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherName != null">
+        TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seq != null">
+        SEQ = #{record.seq,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null">
+        CREATOR = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.editTime != null">
+        EDIT_TIME = #{record.editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.editor != null">
+        EDITOR = #{record.editor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update biz_administration_duty
+    set ID = #{record.id,jdbcType=VARCHAR},
+      DUTY_DATE_STR = #{record.dutyDateStr,jdbcType=VARCHAR},
+      TEACHER_ID = #{record.teacherId,jdbcType=VARCHAR},
+      TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      SEQ = #{record.seq,jdbcType=INTEGER},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      CREATOR = #{record.creator,jdbcType=VARCHAR},
+      EDIT_TIME = #{record.editTime,jdbcType=TIMESTAMP},
+      EDITOR = #{record.editor,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.BizAdministrationDuty">
+    update biz_administration_duty
+    <set>
+      <if test="dutyDateStr != null">
+        DUTY_DATE_STR = #{dutyDateStr,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null">
+        TEACHER_ID = #{teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null">
+        TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null">
+        SEQ = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        CREATOR = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editTime != null">
+        EDIT_TIME = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editor != null">
+        EDITOR = #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xrj.bean.BizAdministrationDuty">
+    update biz_administration_duty
+    set DUTY_DATE_STR = #{dutyDateStr,jdbcType=VARCHAR},
+      TEACHER_ID = #{teacherId,jdbcType=VARCHAR},
+      TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      SEQ = #{seq,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATOR = #{creator,jdbcType=VARCHAR},
+      EDIT_TIME = #{editTime,jdbcType=TIMESTAMP},
+      EDITOR = #{editor,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+   <select id="list" parameterType="com.xrj.bean.BizAdministrationDuty" resultMap="BaseResultMap">
+    select
+     <include refid="Base_Column_List" />
+   		from biz_administration_duty where STATUS = 'NORMAL'
+   	     <if test="beginDate != null and beginDate != ''">
+   	     	<![CDATA[
+   	         and DUTY_DATE_STR >= #{beginDate,jdbcType=VARCHAR}
+   	         ]]>
+   	     </if>
+   	     <if test="endDate != null and endDate != ''">
+   	     	<![CDATA[
+   	         and DUTY_DATE_STR <= #{endDate,jdbcType=VARCHAR}
+   	         ]]>
+   	     </if>
+   	  <if test="teacherName != null and teacherName != ''">
+   		 and DUTY_DATE_STR in (
+		select DISTINCT DUTY_DATE_STR from biz_administration_duty where STATUS = 'NORMAL'
+         and  teacher_name like concat('%',#{teacherName,jdbcType=VARCHAR} ,'%')
+         <if test="beginDate != null and beginDate != ''">
+         	<![CDATA[
+   	         and DUTY_DATE_STR >= #{beginDate,jdbcType=VARCHAR}
+   	         ]]>
+   	     </if>
+   	     <if test="endDate != null and endDate != ''">
+   	     	<![CDATA[
+   	         and DUTY_DATE_STR <= #{endDate,jdbcType=VARCHAR}
+   	         ]]>
+   	     </if>
+   	     )
+      </if>
+    
+	ORDER BY DUTY_DATE_STR, SEQ
+  </select>
+</mapper>

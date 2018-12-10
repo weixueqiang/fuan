@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.EasyConsumeProductMapper">
+	<resultMap id="BaseResultMap" type="com.xrj.bean.EasyConsumeProduct">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="NUMBER" property="number" jdbcType="DECIMAL" />
+		<result column="UNIT" property="unit" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="ADD_USER_ID" property="addUserId" jdbcType="VARCHAR" />
+		<result column="ADD_USER_NAME" property="addUserName" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="GOODS_TYPE" property="goodsType" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		ID, NAME, NUMBER, UNIT, STATUS, ADD_USER_ID, ADD_USER_NAME,
+		CREATE_TIME,
+		UPDATE_TIME,
+		GOODS_TYPE
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.xrj.bean.EasyConsumeProductExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from easy_consume_product
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from easy_consume_product
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		easy_consume_product
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.xrj.bean.EasyConsumeProductExample">
+		delete from easy_consume_product
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.xrj.bean.EasyConsumeProduct">
+		insert into
+		easy_consume_product (ID, NAME, NUMBER,
+		UNIT, STATUS, ADD_USER_ID,
+		ADD_USER_NAME, CREATE_TIME, UPDATE_TIME,
+		GOODS_TYPE)
+		values
+		(#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		#{number,jdbcType=DECIMAL},
+		#{unit,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR}, #{addUserId,jdbcType=VARCHAR},
+		#{addUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{goodsType,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.xrj.bean.EasyConsumeProduct">
+		insert into easy_consume_product
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="number != null">
+				NUMBER,
+			</if>
+			<if test="unit != null">
+				UNIT,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="addUserId != null">
+				ADD_USER_ID,
+			</if>
+			<if test="addUserName != null">
+				ADD_USER_NAME,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+			<if test="goodsType != null">
+				GOODS_TYPE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="number != null">
+				#{number,jdbcType=DECIMAL},
+			</if>
+			<if test="unit != null">
+				#{unit,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="addUserId != null">
+				#{addUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="addUserName != null">
+				#{addUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="goodsType != null">
+				#{goodsType,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.xrj.bean.EasyConsumeProductExample"
+		resultType="java.lang.Integer">
+		select count(*) from easy_consume_product
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update easy_consume_product
+		<set>
+			<if test="record.id != null">
+				ID = #{record.id,jdbcType=VARCHAR},
+			</if>
+			<if test="record.name != null">
+				NAME = #{record.name,jdbcType=VARCHAR},
+			</if>
+			<if test="record.number != null">
+				NUMBER = #{record.number,jdbcType=DECIMAL},
+			</if>
+			<if test="record.unit != null">
+				UNIT = #{record.unit,jdbcType=VARCHAR},
+			</if>
+			<if test="record.status != null">
+				STATUS = #{record.status,jdbcType=VARCHAR},
+			</if>
+			<if test="record.addUserId != null">
+				ADD_USER_ID = #{record.addUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.addUserName != null">
+				ADD_USER_NAME = #{record.addUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createTime != null">
+				CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updateTime != null">
+				UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.goodsType != null">
+				GOODS_TYPE = #{record.goodsType,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update easy_consume_product
+		set ID = #{record.id,jdbcType=VARCHAR},
+		NAME = #{record.name,jdbcType=VARCHAR},
+		NUMBER =
+		#{record.number,jdbcType=DECIMAL},
+		UNIT =
+		#{record.unit,jdbcType=VARCHAR},
+		STATUS =
+		#{record.status,jdbcType=VARCHAR},
+		ADD_USER_ID =
+		#{record.addUserId,jdbcType=VARCHAR},
+		ADD_USER_NAME =
+		#{record.addUserName,jdbcType=VARCHAR},
+		CREATE_TIME =
+		#{record.createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME =
+		#{record.updateTime,jdbcType=TIMESTAMP},
+		GOODS_TYPE =
+		#{record.goodsType,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.EasyConsumeProduct">
+		update easy_consume_product
+		<set>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="number != null">
+				NUMBER = #{number,jdbcType=DECIMAL},
+			</if>
+			<if test="unit != null">
+				UNIT = #{unit,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="addUserId != null">
+				ADD_USER_ID = #{addUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="addUserName != null">
+				ADD_USER_NAME = #{addUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="goodsType != null">
+				GOODS_TYPE = #{goodsType,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.xrj.bean.EasyConsumeProduct">
+		update
+		easy_consume_product
+		set NAME = #{name,jdbcType=VARCHAR},
+		NUMBER =
+		#{number,jdbcType=DECIMAL},
+		UNIT = #{unit,jdbcType=VARCHAR},
+		STATUS =
+		#{status,jdbcType=VARCHAR},
+		ADD_USER_ID =
+		#{addUserId,jdbcType=VARCHAR},
+		ADD_USER_NAME =
+		#{addUserName,jdbcType=VARCHAR},
+		CREATE_TIME =
+		#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME =
+		#{updateTime,jdbcType=TIMESTAMP},
+		GOODS_TYPE =
+		#{goodsType,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.ScoreListMapper" >
+	<select id="setPageList" resultType="ScoreList">
+	SELECT ec.grade,ec.title,es.SEAT_NO seatNo,es.`NAME` studentName,bes.score,ber.TEACHER_ID teacherId,ber.SCORE_CONFIG_ID scoreConfigId 
+		from biz_examination_score bes 
+		<choose>
+			<when test="isCurYear">
+				join edu_class ec on ec.id=bes.CLASS_ID
+			</when>
+			<otherwise>
+				join edu_class_his ec on bes.CLASS_ID=ec.class_id and #{termId} in (ec.last_term_id,ec.next_term_id)
+			</otherwise>
+		</choose>
+		join edu_student es on es.id=bes.STUDENT_ID
+		join biz_examination_record ber on ber.id=bes.EXAMINATION_RECORD_ID
+		join biz_examination_schedule bes_ on bes_.id=ber.EXAMINATION_SCHEDULE_ID
+	where bes_.TERM_ID=#{termId} and ber.SUBJECT_ID=#{subjectId}
+		<if test="scheduleId !=null and scheduleId!=''">
+			and bes_.id=#{scheduleId}
+		</if>
+		<if test="gradeId !=null and gradeId !=''">
+			and ec.GRADE_ID=#{gradeId}
+		</if>
+		<if test="classId !=null and classId !=''">
+			and bes.CLASS_ID=#{classId}
+		</if>
+		<if test="studentId !=null and studentId !=''">
+		 	and bes.STUDENT_ID=#{studentId}
+		</if>
+	<if test="groupSql !=null and groupSql!=''">
+		group by ${groupSql}
+	</if>
+	ORDER BY ec.GRADE_ID,ec.TITLE+1,bes_.id,ber.id,ber.SUBJECT_ID,es.SEAT_NO
+	</select>
+</mapper>

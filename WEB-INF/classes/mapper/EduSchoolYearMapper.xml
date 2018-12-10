@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.EduSchoolYearMapper" >
+  <resultMap id="BaseResultMap" type="com.xrj.bean.EduSchoolYear" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="YEAR" property="year" jdbcType="VARCHAR" />
+    <result column="YEAR_NAME" property="yearName" jdbcType="VARCHAR" />
+    <result column="SCHOOL_ID" property="schoolId" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="BEGIN_TIME" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="SEQ" property="seq" jdbcType="INTEGER" />
+    <result column="IS_UP" property="isUp" jdbcType="VARCHAR" />
+    <result column="UP_TIME" property="upTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      ID, YEAR, YEAR_NAME, SCHOOL_ID, STATUS, BEGIN_TIME, END_TIME, SEQ, IS_UP, UP_TIME
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xrj.bean.EduSchoolYearExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from edu_school_year
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    ID,YEAR,YEAR_NAME,SCHOOL_ID,STATUS,BEGIN_TIME,END_TIME,SEQ,IS_UP,UP_TIME
+    from edu_school_year
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from edu_school_year
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xrj.bean.EduSchoolYearExample" >
+    delete from edu_school_year
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xrj.bean.EduSchoolYear" >
+    insert into edu_school_year (ID, YEAR, YEAR_NAME, 
+      SCHOOL_ID, STATUS, BEGIN_TIME, 
+      END_TIME, SEQ, IS_UP, 
+      UP_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, #{yearName,jdbcType=VARCHAR}, 
+      #{schoolId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{seq,jdbcType=INTEGER}, #{isUp,jdbcType=VARCHAR}, 
+      #{upTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xrj.bean.EduSchoolYear" >
+    insert into edu_school_year
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="year != null" >
+        YEAR,
+      </if>
+      <if test="yearName != null" >
+        YEAR_NAME,
+      </if>
+      <if test="schoolId != null" >
+        SCHOOL_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="beginTime != null" >
+        BEGIN_TIME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="seq != null" >
+        SEQ,
+      </if>
+      <if test="isUp != null" >
+        IS_UP,
+      </if>
+      <if test="upTime != null" >
+        UP_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="yearName != null" >
+        #{yearName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null" >
+        #{schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="isUp != null" >
+        #{isUp,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null" >
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xrj.bean.EduSchoolYearExample" resultType="java.lang.Integer" >
+    select count(*) from edu_school_year
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update edu_school_year
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null" >
+        YEAR = #{record.year,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yearName != null" >
+        YEAR_NAME = #{record.yearName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolId != null" >
+        SCHOOL_ID = #{record.schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beginTime != null" >
+        BEGIN_TIME = #{record.beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.seq != null" >
+        SEQ = #{record.seq,jdbcType=INTEGER},
+      </if>
+      <if test="record.isUp != null" >
+        IS_UP = #{record.isUp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upTime != null" >
+        UP_TIME = #{record.upTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update edu_school_year
+    set ID = #{record.id,jdbcType=VARCHAR},
+      YEAR = #{record.year,jdbcType=VARCHAR},
+      YEAR_NAME = #{record.yearName,jdbcType=VARCHAR},
+      SCHOOL_ID = #{record.schoolId,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      BEGIN_TIME = #{record.beginTime,jdbcType=TIMESTAMP},
+      END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      SEQ = #{record.seq,jdbcType=INTEGER},
+      IS_UP = #{record.isUp,jdbcType=VARCHAR},
+      UP_TIME = #{record.upTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.EduSchoolYear" >
+    update edu_school_year
+    <set >
+      <if test="year != null" >
+        YEAR = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="yearName != null" >
+        YEAR_NAME = #{yearName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null" >
+        SCHOOL_ID = #{schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        BEGIN_TIME = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seq != null" >
+        SEQ = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="isUp != null" >
+        IS_UP = #{isUp,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null" >
+        UP_TIME = #{upTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xrj.bean.EduSchoolYear" >
+    update edu_school_year
+    set YEAR = #{year,jdbcType=VARCHAR},
+      YEAR_NAME = #{yearName,jdbcType=VARCHAR},
+      SCHOOL_ID = #{schoolId,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      BEGIN_TIME = #{beginTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      SEQ = #{seq,jdbcType=INTEGER},
+      IS_UP = #{isUp,jdbcType=VARCHAR},
+      UP_TIME = #{upTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 自定义 -->
+   <resultMap type="EduSchoolYear" id="pageList" extends="BaseResultMap">
+	  	<collection property="termList" ofType="EduSchoolTerm">
+	  	<id column="termId" property="id" jdbcType="VARCHAR" />
+	    <result column="SCHOOL_ID" property="schoolId" jdbcType="VARCHAR" />
+	    <result column="YEAR_ID" property="yearId" jdbcType="VARCHAR" />
+	    <result column="SECTION" property="section" jdbcType="VARCHAR" />
+	    <result column="TERM_NAME" property="termName" jdbcType="VARCHAR" />
+	    <result column="termBeginTime" property="beginTime" jdbcType="TIMESTAMP" />
+	    <result column="termEndTime" property="endTime" jdbcType="TIMESTAMP" />
+	    <result column="termStatus" property="status" jdbcType="VARCHAR" />
+	    <result column="IS_IM_UPDATE" property="isImUpdate" jdbcType="VARCHAR" />
+	  	</collection>
+  </resultMap> 
+  <select id="setPageList" resultMap="pageList">
+  	SELECT esy.*, est.ID termId,est.YEAR_ID,est.SECTION,est.TERM_NAME,est.BEGIN_TIME termBeginTime,
+  		   est.END_TIME termEndTime,est.status termStatus,est.IS_IM_UPDATE
+		from edu_school_year esy 
+		left join edu_school_term est on esy.ID=est.YEAR_ID
+	ORDER BY esy.BEGIN_TIME desc ,est.BEGIN_TIME 
+  </select>
+  
+</mapper>

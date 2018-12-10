@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xrj.mapper.LaboratoryMapper">
+    <resultMap id="BaseResultMap" type="com.xrj.bean.Laboratory">
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="LABORATORY_NAME" property="laboratoryName" jdbcType="VARCHAR" />
+        <result column="DICTIONARIES_ID" property="dictionariesId" jdbcType="VARCHAR" />
+        <result column="LABORATORY_ADDRESS" property="laboratoryAddress" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                        close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                        close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        <if test="fields == null">
+            ID, LABORATORY_NAME, DICTIONARIES_ID, LABORATORY_ADDRESS, STATUS, CREATE_TIME
+        </if>
+        <if test="fields != null">
+            ${fields}
+        </if>
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+        parameterType="com.xrj.bean.LaboratoryExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from laboratory
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startRow != null">
+            limit #{startRow} , #{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    ID,LABORATORY_NAME,DICTIONARIES_ID,LABORATORY_ADDRESS,STATUS,CREATE_TIME
+    from laboratory
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from laboratory
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.xrj.bean.LaboratoryExample">
+        delete from laboratory
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.xrj.bean.Laboratory">
+    <!--<selectKey keyProperty="id" resultType="String" order="BEFORE">-->
+        <!--SELECT uuid_short()-->
+    <!--</selectKey>-->
+    insert into laboratory (ID, LABORATORY_NAME, DICTIONARIES_ID, 
+      LABORATORY_ADDRESS, STATUS, CREATE_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{laboratoryName,jdbcType=VARCHAR}, #{dictionariesId,jdbcType=VARCHAR}, 
+      #{laboratoryAddress,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.xrj.bean.Laboratory">
+        <!--<selectKey keyProperty="id" resultType="String" order="BEFORE">-->
+            <!--SELECT uuid_short()-->
+        <!--</selectKey>-->
+        insert into laboratory
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="laboratoryName != null">
+                LABORATORY_NAME,
+            </if>
+            <if test="dictionariesId != null">
+                DICTIONARIES_ID,
+            </if>
+            <if test="laboratoryAddress != null">
+                LABORATORY_ADDRESS,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="laboratoryName != null">
+                #{laboratoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="dictionariesId != null">
+                #{dictionariesId,jdbcType=VARCHAR},
+            </if>
+            <if test="laboratoryAddress != null">
+                #{laboratoryAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.xrj.bean.LaboratoryExample"
+        resultType="java.lang.Integer">
+        select count(*) from laboratory
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update laboratory
+        <set>
+            <if test="record.id != null">
+                ID = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.laboratoryName != null">
+                LABORATORY_NAME = #{record.laboratoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.dictionariesId != null">
+                DICTIONARIES_ID = #{record.dictionariesId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.laboratoryAddress != null">
+                LABORATORY_ADDRESS = #{record.laboratoryAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="record.status != null">
+                STATUS = #{record.status,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update laboratory
+        set ID = #{record.id,jdbcType=VARCHAR},
+        LABORATORY_NAME = #{record.laboratoryName,jdbcType=VARCHAR},
+        DICTIONARIES_ID = #{record.dictionariesId,jdbcType=VARCHAR},
+        LABORATORY_ADDRESS = #{record.laboratoryAddress,jdbcType=VARCHAR},
+        STATUS = #{record.status,jdbcType=VARCHAR},
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xrj.bean.Laboratory">
+        update laboratory
+        <set>
+            <if test="laboratoryName != null">
+                LABORATORY_NAME = #{laboratoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="dictionariesId != null">
+                DICTIONARIES_ID = #{dictionariesId,jdbcType=VARCHAR},
+            </if>
+            <if test="laboratoryAddress != null">
+                LABORATORY_ADDRESS = #{laboratoryAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xrj.bean.Laboratory">
+    update laboratory
+    set LABORATORY_NAME = #{laboratoryName,jdbcType=VARCHAR},
+      DICTIONARIES_ID = #{dictionariesId,jdbcType=VARCHAR},
+      LABORATORY_ADDRESS = #{laboratoryAddress,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <!-- 自定义 -->
+    <sql id="query_where">
+        <where>
+            <if test="laboratoryName != null and laboratoryName != ''">
+                <bind name="vLaboratoryName" value="'%' + laboratoryName + '%' "></bind>
+                AND l.LABORATORY_NAME LIKE #{vLaboratoryName}
+            </if>
+            <if test="status != null and status != ''">
+                AND l.STATUS = #{status}
+            </if>
+            <if test="dictionariesId != null and dictionariesId != ''">
+                AND l.DICTIONARIES_ID = #{dictionariesId}
+            </if>
+            <if test="laboratoryAddress != null and laboratoryAddress != ''">
+                <bind name="vLaboratoryAddress" value="'%' + laboratoryAddress + '%'"></bind>
+                AND l.LABORATORY_ADDRESS LIKE #{vLaboratoryAddress}
+            </if>
+        </where>
+    </sql>
+
+    <select id="list" resultType="com.xrj.bean.Laboratory" parameterType="com.xrj.bean.Laboratory">
+        SELECT l.*, d.NAME as dictionariesName FROM laboratory AS l
+        inner join dictionaries d on d.ID = l.DICTIONARIES_ID
+        <include refid="query_where"></include>
+        order by l.CREATE_TIME desc
+    </select>
+
+</mapper>
