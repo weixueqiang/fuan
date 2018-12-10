@@ -1,0 +1,21 @@
+# Maven #
+target/
+
+# IDEA #
+.idea/
+*.iml
+
+# Eclipse #
+.settings/
+.classpath
+.project
+
+# jrebel #
+src/main/resources/rebel.xml
+/ding_open_client_sdk.log
+/http_invoke.log
+/main.log
+/*.log.*
+/power_designer/*.pdb
+/src/main/java/com/xrj/utils/Env.java
+/Permanent_Data/
